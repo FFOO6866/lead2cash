@@ -78,15 +78,18 @@
 
 ## 8-Week Timeline (Sprint Structure)
 
-| Sprint | Duration | Focus | Deliverables | Size |
-|--------|----------|-------|--------------|------|
-| **Sprint 0** | Week 0-2 (Pre-POV) | Infrastructure setup (NOT a user story) | All TEs validated, CPI integrations tested, audit store ready | - |
-| **Sprint 1** | Week 1-2 | Epic 1: Opportunity Qualification | 3 stories complete, Sales Managers can see ranked opportunities | M (Medium) |
-| **Sprint 2** | Week 3-4 | Epic 2: Order Creation (Stories 2.1-2.2) | Order agent retrieves data, validates, populates IDoc | L (Large) |
-| **Sprint 3** | Week 5-6 | Epic 2: Order Creation (Stories 2.3-2.4) | IDoc submission, confirmation, audit trail | L (Large) |
-| **Sprint 4** | Week 7-8 | UAT + Iteration | 10 test orders with 3-5 pilot users, capture feedback | L (Large) |
+| Sprint | Duration | Dates | Focus | Deliverables | Size |
+|--------|----------|-------|-------|--------------|------|
+| **Sprint 0** | 2 weeks | Nov 11-22, 2025 | Infrastructure setup | All TEs validated, CPI integrations tested, audit store ready | - |
+| **Sprint 1** | 2 weeks | Nov 18-29, 2025 | Epic 1: Opportunity Qualification | 3 stories complete, Sales Managers can see ranked opportunities | M (Medium) |
+| **Sprint 2** | 2 weeks | Dec 2-13, 2025 | Epic 2: Order Creation (Stories 2.1-2.2) | Order agent retrieves data, validates, populates IDoc | L (Large) |
+| **Sprint 3** | 2 weeks | Dec 16-27, 2025 | Epic 2: Order Creation (Stories 2.3-2.4) | IDoc submission, confirmation, audit trail | L (Large) |
+| **Sprint 4** | 2 weeks | Jan 6-17, 2026 | UAT + Iteration | 10 test orders with 3-5 pilot users, capture feedback | L (Large) |
+| **Go-Live** | - | Feb 2026 | Production Deployment | Full rollout (if POV succeeds) | - |
 
-**Total Effort:** 8 weeks (MVP only)
+**Total Effort:** 8 weeks POV (Nov 2025 - Jan 2026) + 6 weeks production prep → **Go-Live: February 2026**
+
+**Detailed Timeline:** See `PROJECT-TIMELINE.md` for full schedule with dates, dependencies, and risk mitigation
 
 ---
 
