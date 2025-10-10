@@ -1,0 +1,50 @@
+name: Sync Template to Downstream Repositories
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/**'
+      - 'sdk-users/**'
+      - 'src/new_project/**'
+      - 'scripts/**'
+      - 'pyproject.toml'
+      - 'CLAUDE.md'
+      - 'apps/**'
+  workflow_dispatch:
+    inputs:
+      target_repo:
+        description: 'Specific repository to sync (optional, syncs all if empty)'
+        required: false
+        type: string
+      force_sync:
+        description: 'Force sync even if no changes detected'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  sync-template:
+    runs-on: ubuntu-latest
+    # Only run this workflow in the template repository
+    if: github.repository == 'Integrum-Global/new_project_template'
+    steps:
+      - name: Checkout template repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TEMPLATE_SYNC_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "Template Sync Bot"
+          git config --global user.email "bot@example.com"
+
+      - name: Run template sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.TEMPLATE_SYNC_TOKEN }}
+          TARGET_REPO: ${{ github.event.inputs.target_repo }}
+          FORCE_SYNC: ${{ github.event.inputs.force_sync }}
+        run: |
+          python scripts/sync_template.py

@@ -1,0 +1,82 @@
+name: Push Template Updates
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'sdk-users/**'
+      - 'CLAUDE.md'
+      - '.github/workflows/**'
+      - 'apps/_template/**'
+      - 'apps/qa_agentic_testing/**'
+      - 'apps/user_management/**'
+      - 'deployment/**'
+      - 'solutions/**'
+      - 'scripts/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'guides/**'
+      - 'docs/**'
+
+jobs:
+  trigger-downstream-syncs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trigger sync in downstream repositories
+        env:
+          GITHUB_TOKEN: ${{ secrets.ORG_WORKFLOW_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          # Get all repositories in the organization
+          echo "🔍 Finding downstream repositories..."
+          
+          # Get repos with kailash-template or kailash-sdk topic (indicates they use the template)
+          echo "🔍 Searching for repos with topic kailash-template or kailash-sdk..."
+          REPOS_TEMPLATE=$(gh api "search/repositories?q=org:Integrum-Global+topic:kailash-template&per_page=100" --jq '.items[].name' | grep -v -E "^(new_project_template|kailash_python_sdk)$" || true)
+          REPOS_SDK=$(gh api "search/repositories?q=org:Integrum-Global+topic:kailash-sdk&per_page=100" --jq '.items[].name' | grep -v -E "^(new_project_template|kailash_python_sdk)$" || true)
+          
+          # Combine and deduplicate repos
+          REPOS=$(echo -e "$REPOS_TEMPLATE\n$REPOS_SDK" | sort -u | grep -v '^$')
+          
+          # If no repos found with topics, try getting repos created from template
+          if [ -z "$REPOS" ]; then
+            echo "⚠️  No repos found with topics, checking template repository relationships..."
+            REPOS=$(gh repo list Integrum-Global --limit 200 --json name,templateRepository --jq '.[] | select(.templateRepository.name == "new_project_template" and .name != "kailash_python_sdk") | .name')
+          fi
+          
+          # Count repos
+          REPO_COUNT=$(echo "$REPOS" | wc -l)
+          echo "📊 Found $REPO_COUNT potential downstream repositories"
+          
+          # Trigger workflow in each downstream repo
+          SUCCESS_COUNT=0
+          FAILED_COUNT=0
+          
+          for repo in $REPOS; do
+            echo "🔄 Triggering sync for: $repo"
+            
+            # Check if the sync workflow exists in this repo
+            if gh workflow list -R "Integrum-Global/$repo" | grep -q "Sync from Template"; then
+              if gh workflow run sync-from-template.yml -R "Integrum-Global/$repo" 2>/dev/null; then
+                echo "✅ Successfully triggered sync for $repo"
+                ((SUCCESS_COUNT++))
+              else
+                echo "❌ Failed to trigger sync for $repo"
+                ((FAILED_COUNT++))
+              fi
+            else
+              echo "⚠️  Skipping $repo - no sync workflow found"
+            fi
+            
+            # Small delay to avoid rate limiting
+            sleep 1
+          done
+          
+          echo ""
+          echo "📊 Summary:"
+          echo "  - Successfully triggered: $SUCCESS_COUNT repositories"
+          echo "  - Failed to trigger: $FAILED_COUNT repositories"
+          echo ""
+          echo "💡 Monitor progress at: https://github.com/orgs/Integrum-Global/actions"

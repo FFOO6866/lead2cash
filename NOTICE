@@ -1,0 +1,27 @@
+Kailash Client Project Template
+Copyright 2025 Integrum Global Pte Ltd
+
+This template was developed at Integrum Global Pte Ltd to help users
+create projects using the Kailash SDK ecosystem.
+
+TEMPLATE COMPONENTS:
+- Project structure and configuration files
+- Example applications demonstrating SDK usage
+- AI agent configurations in .claude directory
+- Documentation and integration guides
+
+SDK ATTRIBUTION:
+This template is designed to work with:
+- Kailash Python SDK (https://pypi.org/project/kailash/)
+- Kailash Nexus (https://pypi.org/project/kailash-nexus/)
+- Kailash DataFlow (https://pypi.org/project/kailash-dataflow/)
+
+The Kailash SDK is Copyright 2025 Integrum Global Pte Ltd and is licensed
+under Apache License 2.0 with Additional Terms. The SDK license governs
+your use of the SDK packages, not this template.
+
+IMPORTANT:
+- This NOTICE file pertains only to the template repository
+- When creating your own project, replace this with your own NOTICE
+- The SDK components have their own licensing requirements
+- No attribution to this template is required in derivative projects

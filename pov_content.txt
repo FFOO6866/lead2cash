@@ -1,0 +1,319 @@
+b
+Agentic AI Proof of Value Proposal for Lead to Cash Management
+1. Background and Objectives
+Background — operating context
+Rolls-Royce Power Systems (RRPS) runs an end-to-end lead-to-cash (L2C) process spanning customer engagement, product configuration, order creation, fulfilment, and invoicing. The application landscape is stable and mature with clear system responsibilities:
+CEC is the commercial system of record for opportunities, quotations, and dates. Incoterms and payment are defaulted from MS5 customer master. 
+IPAS maintains configuration logic and bill-of-materials (BOM) used to translate a sold solution into manufacturable line items.
+MS5 (SAP ECC, SG instance) executes sales-order creation, order management, logistics, invoicing, and A/R.
+These cores are supported by established integration and governance layers: SAP CPI is the sanctioned route for system-to-system connectivity into SAP; document repositories manage evidence and contractual artefacts; security and audit are enforced through tenant isolation, identity management, and change control.
+Operational reviews highlight several persistent realities:
+Information captured upstream in CEC/IPAS is often re-keyed into MS5 to complete orders, lengthening cycle time and increasing inconsistency risk.
+Artefacts and policy dependencies that determine billing readiness (e.g., Incoterms clauses, approvals, FAT documentation) may sit outside the core transaction flow, making status hard to see at the moment it matters.
+Any improvement must stay within RRPS’ posture: workloads in the RRPS tenant, tightly controlled network paths, and CPI as the single route into SAP.
+Stakeholders expect any evaluation to respect existing business flows (the “sell-solution” motion), avoid disruptive re-platforming, and produce auditable records that stand up to internal assurance.
+In recent working sessions, RRPS and Integrum reviewed real user journeys, screen captures, and process notes to create a shared view of where friction appears, which artefacts are relied upon, which interfaces and schemas are available, and what technical/security constraints must be honoured. A joint action plan was formed to validate the as-is process, collate user guides and screenshots, trace data flows at screen/field level, review interface options, and lock the scope for a focused proof-of-value (POV). This plan anchors the proposal.
+Objectives — what the POV will prove
+The POV is not a redesign; it is a controlled evaluation conducted inside RRPS’ guardrails. It will:
+Quantify avoidable effort and delay in moving from “order-ready” to “order posted” using transaction-level evidence.
+Establish baseline versus pilot outcomes for accuracy and first-time-right posting so leadership can judge whether targeted automation and verification materially improve quality (definitions in Section 4: Metrics).
+Make billing readiness observable by demonstrating how required artefacts and policy checks can be evidenced, tracked, and audited alongside the transaction.
+Prove compliance with RRPS’ posture—data residency, security boundaries, and integration conventions—so any later scale-up, if approved, starts from a known-good pattern.
+Scope
+In scope: tracing how data already present in CEC and IPAS is used to complete orders in MS5 for a small, representative set of order types; a measurement framework aligned to RRPS standards and ISO guidance that captures baselines, pilot results, and the associated audit trail (see Section 4).
+Out of scope: structural changes to master data, pricing design, or re-platforming of CEC, IPAS, or MS5.
+
+
+2. Business Case
+Purpose
+Run a tightly scoped proof-of-value (POV) to determine whether RRPS can shorten the path from “order-ready” to “order posted,” raise first-time-right, and make billing readiness observable by reusing information that already exists in CEC and IPAS—without re-platforming or altering core business flows. Evidence will be gathered inside RRPS’ guardrails and assessed against the KPIs set out in Section 3: Metrics.
+Value drivers (why this matters)
+Throughput & effort. Less swivel-chair re-keying and reconciliation during order creation; faster turnaround for in-scope order types.
+Quality & compliance. Commercial checks (partners, terms, Incoterms-driven artefacts) become explicit and auditable, reducing rework.
+Working capital. Earlier visibility of billing prerequisites (e.g., FAT evidence) reduces avoidable delays to invoice readiness.
+
+What will change (agentic capabilities in scope)
+Sales Ops Agent (orchestrator). Assembles an order dossier from CEC and IPAS, proposes an explainable MS5 order (copy/lookup/derivation per field), coordinates checks and human approval, and posts via CPI with full provenance.
+Due Diligence Agent. Applies partner/terms/Incoterms policies; validates required artefacts (e.g., FAT); raises just-in-time tasks; stores an audit-ready DD summary; re-checks at billing milestones.
+Opportunity Assessment Agent. Scores late-stage opportunities for “order-ready,” flags gaps (partners, terms, dates, config health), based on data available from CEC.
+Data Mgmt Agent. Harmonises IPAS BOM → MS5 itemisation context; detects mismatches; serves canonical payloads/lookups to other agents.
+Financial Ops Agent. Monitors MS5 milestones/payment status; triggers compliant invoice steps when prerequisites are met; records control evidence.
+
+Proposed agentic scope
+
+
+Scope & boundaries
+Process span: CEC (late-stage opportunity) → IPAS (configuration/BOM) → MS5 (sales-order posting), with policy/document checks and billing-readiness prompts.
+Order coverage: a small, representative set agreed with Sales and Finance Operations.
+Guardrails: RRPS Azure tenant; SAP CPI as the sole SAP path; IPAS via existing proxy; no master-data or pricing redesign; no re-platforming.
+Out of scope: structural master-data changes, wholesale pricing model changes, and new customer channels.
+
+Stakeholder impacts
+
+Costs (POV level, opex-light)
+Configuration & mapping: field/rule mapping for selected order types; policy & artefact check catalogue; KPI instrumentation.
+Runtime & tooling: light AKS footprint in RRPS tenant; observability; identity/Key Vault; immutable audit store.
+Enablement & assurance: UAT with Sales/FinOps; operator walkthroughs; evidence-pack preparation.
+No new platforms; CPI reuse wherever possible. Any new iFlows/OData surfaces will be narrowly scoped and change-controlled.
+
+Risks & controls
+
+Delivery approach & timeline
+Weeks 1–2 — Discover & confirm: validate as-is flow and rules; confirm interfaces; agree the KPI definitions and evaluation scenarios.
+Weeks 3–6 — Configure & connect: implement mappings, checks, and instrumentation; dry-runs on representative data.
+Weeks 7–8 — UAT & refine: user testing with Sales/FinOps; finalise evidence capture and runbooks.
+Weeks 9–10 — Optional limited live cohort: collect pilot results; compile the decision pack.
+
+Acceptance at POV close
+Operational uplift: demonstrable reduction in manual effort and cycle time for in-scope orders.
+Quality uplift: higher first-time-right with auditable due-diligence evidence and artefacts.
+Governance fit: all activity proven to operate within RRPS’ security and integration guardrails.
+Evidence quality: a board-ready pack with baselines vs. pilot outcomes, scenarios, data sources, and audit trail—enabling a clear scale/iterate/stop decision.
+
+(Architecture placement and SAP integration specifics follow in Section 5: Architecture; the end-to-end hand-offs appear in Section 6: Data-Flow.)
+
+
+3. POV Metrics
+This scorecard compares a recent baseline with the pilot using identical definitions and data sources. It follows ISO/IEC TR 24030 practice: KPIs tied to objectives, clear data lineage, and scenario-based evaluation so results are comparable.
+
+KPIs (definitions and owners)
+
+Use-case linkage and expected improvement
+
+Data and comparability
+Sources: CEC (opportunities/partners/terms/dates), IPAS (BOM/config lines), MS5 (orders, timestamps, rework/billing blocks), agent logs (suggest/accept with rule IDs), CPI message IDs, document-repository links/hashes.
+Cohorts: same pilot order types for baseline and pilot; comparable business weeks; any mix variance disclosed in the readout.
+Controls: correlation IDs across agent → CPI → SAP; immutable audit for the POV window; minimal PII with redacted logs; no long-term model retention.
+
+Scorecard & readout
+Columns: KPI | Baseline | Pilot | Δ | Target band | Status (Green/Amber/Red).
+Interpretation: Green = at/above band (and Traceability = 100%) → candidate to scale; Amber = near band/variable → iterate; Red = below band or governance issues → fix or re-scope before scale.
+
+Success statement
+High acceptance of auto-filled fields, materially shorter order-ready-to-posted time, fewer rework events, and required artefacts present before billing events—each transaction fully traceable to source data and CPI calls.
+4. Solution Feasibility
+This section confirms that the POV can be delivered within RRPS guardrails and will behave reliably in day-to-day use. It covers functional behaviour by agent, the technical run-time and SAP integration, and a concise screen-to-field mapping with an automation coverage rationale.
+
+Functional feasibility
+Opportunity Assessment Agent
+Assesses whether a late-stage opportunity (based on the user defined stages) by checking partner completeness, terms/payment conditions, requested dates, and the state of configuration in IPAS. 
+
+Sales Ops Agent (orchestrator)
+Builds an order dossier from CEC (account/partners/terms/dates) and IPAS (configuration/BOM), calls Due Diligence, and MS5 order (each field labelled as copy/lookup/derivation). Supports user edits, then posts via SAP CPI. Captures the returned SAP document number and logs field-level provenance.
+
+Due Diligence Agent
+Applies commercial and policy checks (partners/roles, Incoterms, approvals, pricing prerequisites). Where terms require artefacts (e.g., FAT), raises just-in-time prompts with a link to the repository, re-checks on completion, and stores an auditable DD summary attached to the transaction.
+
+Data Management Agent
+Normalises IPAS BOM into a payload suitable for MS5 itemisation, validates material/quantity/UoM integrity, maps codes, and flags mismatches (e.g., unknown material, UoM conflict). Provides lookups to Sales Ops and FinOps agents.
+
+Financial Ops Agent
+Observes MS5 milestones and payment status; when prerequisites are satisfied (including DD artefacts), raises invoice triggers in line with policy. Records the control evidence so A/R has a clear line of sight.
+
+Technical feasibility
+Runtime placement
+Agents run as stateless microservices on AKS in the RRPS Azure tenant. North–south access is via an Ingress/API Gateway (TLS termination, authN/authZ, rate-limits, audit logging). State services include PostgreSQL (operational data), Redis (caching), and object storage (artefact pointers/metadata).
+
+SAP connectivity (single path via CPI)
+All SAP calls go AKS → SAP Integration Suite (CPI). Patterns:
+CEC: OData (read) via CPI for opportunities, partners, terms, activities.
+MS5 (ECC):
+Simulate/validate via BAPI (synchronous) to keep UI responsive.
+Create via IDoc ORDERS05 (asynchronous, durable, retryable).
+Attachments via CPI content adapter to GOS/ArchiveLink.
+Events (delivery/invoice milestones) published by CPI to agent webhooks.
+
+Security & privacy
+VNet isolation; IP allow-listing to CPI; least-privilege service principals; secrets in Azure Key Vault; TLS in transit; encrypted at rest. Logs are redacted; no long-term LLM retention. Each transaction carries a Correlation-ID and persists CPI Message IDs and SAP document numbers for replay and audit.
+
+Non-functional envelope (POV)
+99.5% agent API availability; proposal render ≤ ~3s p95 (excluding SAP round-trip); idempotent posting via correlation keys; exponential back-off on transient CPI/SAP errors; rate limits and throttling to protect backends. Central dashboards show request/error rates, latency, IDoc states, top business exceptions, and open DD tasks.
+
+Screen-to-field mapping (summary)
+This table shows representative mappings for the pilot order types. The Automation band reflects expected confidence during the POV.
+
+
+Automation coverage rationale
+Green (direct/lookup): master data keys, codes, BOM lines, UoM → high confidence auto-fill.
+Amber (rule-derived): plant, storage, requested dates, some texts → rule + user confirmation.
+Red (human-only): bespoke clauses, genuinely missing documents → prompts and tasks.
+
+Based on the pilot order types, we expect ≥ ~70% of the header/item fields to fall in Green, 15–25% in Amber, and the remainder in Red, aligning to the KPI targets in Chapter 3.
+
+Exceptions & error handling (what happens when things go wrong)
+Business gaps (e.g., partner role missing, disallowed payment term): Due Diligence raises a task with a precise fix; Sales Ops re-checks and proceeds.
+Data mismatches (e.g., material not found, UoM conflict): Data Mgmt flags the line, offers a lookup/fix or marks the item red for manual completion.
+Policy conflicts (e.g., Incoterms require artefact not provided): create is blocked with a governed explanation; the task includes the correct repository path.
+Technical faults (CPI timeout, IDoc error): the platform retries with back-off; correlation keeps requests idempotent; the user sees a concise, actionable message and a link to the activity log.
+
+Dependencies & readiness checklist (pre-build)
+Agreed pilot order type(s) and a final set of screenshots/user guides for mapping confirmation.
+Inventory of reusable CPI iFlows (OData/BAPI/IDoc) and any narrow new surfaces required.
+A short, versioned policy pack (Incoterms → artefacts, approval rules, allowed terms).
+Access and allow-lists: AKS → CPI egress ranges, OAuth2 client registration for CEC, CPI service users for ECC.
+Named SteerCo and business owners for UAT and acceptance.
+5. Architecture & SAP Integration
+The POV runs the agentic workload on AKS in the RRPS Azure tenant, with SAP Integration Suite (CPI) as the only route into SAP. Agents never call SAP directly. This keeps runtime inside RRPS’ trust boundary, simplifies assurance, and maximises reuse of existing CPI assets.
+
+Placement and trust boundaries
+Runtime: Agent services (Sales Ops, Due Diligence, Opportunity Assessment, Data Mgmt, FinOps, Supply Chain) and shared platform components run as containers on AKS.
+Ingress & API gateway: TLS termination, authentication/authorisation, rate-limiting, request logging.
+State services: PostgreSQL (operational data), Redis (cache), Object Storage (artefact pointers/metadata).
+SAP access: AKS → CPI over TLS with IP allow-listing from RRPS egress; CPI brokers to MS5 (ECC) and CEC.
+IPAS: reached via the existing proxy/firewall path; no new inbound exposure.
+
+Integration model (simple, repeatable patterns)
+Read CEC: OData via CPI (opportunities, partners, terms, activities).
+Validate sales orders: BAPI via CPI (synchronous) for simulation/price/availability and error messages.
+Create sales orders: IDoc ORDERS05 via CPI (asynchronous, durable); idempotent retries handled by CPI.
+Attach evidence (e.g., FAT): CPI content adapter → GOS/ArchiveLink; only references are stored in the agent platform.
+Observe milestones: CPI publishes events/webhooks (delivery/invoice status) back to the agents.
+
+Default flow: CEC OData read → BAPI simulate → IDoc create → ArchiveLink attach → events to agents.
+
+Interface catalogue (initial POV scope)
+CEC (via CPI): GET Opportunity (expand Account/Partners/Terms), GET BusinessPartner, PATCH Opportunity (readiness note), GET Activities/Notes.
+MS5 / ECC (via CPI): BAPI_SALESORDER_SIMULATE, ORDERS05 inbound, optional ORDRSP outbound; ArchiveLink/GOS upload; milestone events.
+IPAS: read-only configuration/BOM through the existing proxy.
+
+(CPI iFlows to be confirmed for reuse vs. net-new; changes will be narrowly scoped and change-controlled.)
+
+Security controls
+Network: VNet isolation; CPI allow-listing; no inbound SAP exposure.
+Identity: OAuth2 client credentials for CEC OData; dedicated CPI service accounts for ECC; least privilege everywhere.
+Secrets: stored and rotated in Azure Key Vault.
+Transport & storage: TLS 1.2+; encryption at rest; logs redacted.
+Auditability: every transaction carries a Correlation-ID; CPI Message IDs and SAP document numbers (e.g., VBELN) are persisted with field-level provenance.
+
+Canonical contracts (what we send/receive)
+Agents exchange a canonical JSON with CPI; CPI maps to OData/BAPI/IDoc.
+
+SalesOrderProposal (abridged)
+{
+  "header": {
+    "salesOrg": "1000", "distChannel": "10", "division": "00",
+    "soldTo": "CUST123", "shipTo": "CUST123-S", "billTo": "CUST123-B",
+    "incoterms": {"code": "DAP", "location": "Singapore"},
+    "paymentTerms": "0001", "requestedDate": "2025-09-30"
+  },
+  "items": [{"line": 10, "material": "MAT-001", "qty": 2, "uom": "EA", "plant": "SG01"}],
+  "attachments": [{"type": "FAT", "uri": "rrps://docs/abc123", "hash": "sha256:…"}],
+  "provenance": [{"field": "soldTo", "source": "CEC.Account.Id"}],
+  "meta": {"correlationId": "klx-2025-000123", "dryRun": true}
+}
+dryRun=true → CPI calls BAPI simulate and returns messages/pricing.
+dryRun=false → CPI converts to ORDERS05 for create and returns the CPI Message ID; agents then record VBELN when available.
+
+Error model (to users/ops)
+{"correlationId":"klx-2025-000123","status":"BUSINESS_ERROR",
+issues":[{"code":"INCOTERMS_MISSING","field":"header.incoterms.code","severity":"ERROR"}]}
+
+Business vs. technical faults are separated for clear action.
+
+Sequencing (how a transaction flows)
+Happy path
+Sales Ops Agent assembles the dossier (CEC + IPAS).
+Simulate via CPI/BAPI; show proposal with explanations; user approves.
+Create via CPI/IDoc; persist Message ID, await/receive VBELN.
+Due Diligence attaches evidence when required (ArchiveLink).
+FinOps listens for milestones and raises compliant invoice triggers.
+Common exceptions
+Missing partner/term → Due Diligence raises a task; re-check when resolved.
+Policy violation (e.g., disallowed payment term) → block with governed explanation.
+CPI/SAP transient error → retry with back-off; idempotent create via correlation keys.
+
+Non-functional envelope (POV)
+Availability: ≥ 99.5% for agent APIs during POV.
+Performance: proposal render ≤ ~3s p95 (excluding SAP round-trip); create is asynchronous to keep UX responsive.
+Resilience: queued IDocs; exponential back-off; circuit breakers; rate-limits and throttling to protect SAP.
+Operability: dashboards for request/error rates, latency, IDoc states, top business exceptions, open DD tasks; audit export on request.
+
+Environments and promotion
+DEV → QA → UAT → PROD with configuration-as-code for CPI iFlows and agent workflows.
+Test data: masked CEC/ECC records; synthetic artefacts for FAT.
+Cut-over: feature-flagged; run in “proposal-only” shadow mode before enabling posting.
+
+Readiness checklist (to lock before build)
+Agreed pilot order types and screen artefacts for mapping confirmation.
+CPI inventory (OData, BAPI, IDoc) marked for reuse vs. creation.
+Policy pack (Incoterms → artefacts, approvals, allowed terms).
+AKS→CPI egress allow-lists; OAuth2 registration for CEC; CPI service users for ECC.
+Named owners for UAT and acceptance.
+
+Outcome
+This architecture delivers the POV inside RRPS’ security and integration posture: AKS-hosted agents, CPI-mediated SAP access, rule-driven explainable proposals, and end-to-end traceability. The next chapter describes the Data-Flow that these components execute from opportunity through to invoice readiness.
+
+
+6 — Dataflow
+This chapter provides a concise Input–Process–Output view of the lead-to-cash data path: commercial context originates in CEC, configuration comes from IPAS, the agentic layer on AKS consolidates and validates this as an order dossier, and all SAP transactions occur in MS5/ECC exclusively through SAP CPI. It sets the trust boundaries and ownership (Integrum for the agent payloads/orchestration; RRPS/CPI for IDoc iFlows and mappings), confirms that business approvals occur outside ECC, and specifies the interfaces and artefact handling at a high level (CPI-mediated reads/writes; ArchiveLink/GOS for documents). The section also defines the telemetry and audit anchors—correlation IDs, CPI message IDs, VBELN, and field-level provenance—so the flow is observable, governable, and aligned to the metrics in Chapter 4, without altering existing business processes.
+
+Sales Operations Support (Enquiry) - Input–Process–Output Flow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sales Operations Support (New Order) - Input–Process–Output Flow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Financial Operations Support (Billing Readiness) - Input–Process–Output Flow
+
+
+
+
+
+7. Investment Summary
+
+
+
+8. Acceptance & Confirmation
+We appreciate the opportunity to present this proposal and are available to discuss any aspect in greater detail to ensure alignment with your needs. Should you have any questions or require additional information, please feel free to contact Dr. Jack Hong at jack@integrum.global or +65 8023 8808.
+To proceed, kindly review the proposal and confirm acceptance by signing below. Your confirmation will allow us to initiate the implementation process in accordance with the outlined scope, timeline, and investment structure.
+
+
+
+
+
+
+Authorized Signatory:
+Name: 
+Designation: 
+Company: 
+Date: 
+
+
+
+
+
+Authorized Signatory (Integrum Pte. Ltd):
+Name: Dr. Jack HONG
+Designation: CEO
+Company: Integrum Pte. Ltd
+Date: 5 September 2025
+Appendix — Glossary
+

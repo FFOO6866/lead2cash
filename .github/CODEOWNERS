@@ -1,0 +1,12 @@
+# GitHub folder is protected - only template maintainers can modify
+# This ensures developers cannot accidentally break the sync mechanism
+#
+# IMPORTANT: Replace @YOUR-ORG/template-maintainers with your actual GitHub team
+/.github/ Integrum-Global/template-maintainers
+/.github/workflows/ Integrum-Global/template-maintainers
+
+# Template sync documentation is also protected
+/reference/template-sync.md Integrum-Global/template-maintainers
+
+# Scripts that manage template syncing
+/scripts/sync_template.py Integrum-Global/template-maintainers

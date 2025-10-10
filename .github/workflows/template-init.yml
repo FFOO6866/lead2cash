@@ -1,0 +1,136 @@
+name: Template Repository Initialization
+
+# This workflow runs automatically when a repository is created from this template
+on:
+  # Detect if this is a new repository created from template
+  push:
+    branches:
+      - main
+  # Also allow manual triggering for existing repos
+  workflow_dispatch:
+    inputs:
+      force_setup:
+        description: 'Force setup even if already configured'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  template-init:
+    runs-on: ubuntu-latest
+    # Only run if this appears to be a new repository from template
+    if: |
+      github.run_number == 1 ||
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, 'Initial commit')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Check if setup is needed
+        id: check_setup
+        run: |
+          # Check if repository already has kailash-template topic
+          TOPICS=$(gh api /repos/${{ github.repository }} --jq '.topics[]' 2>/dev/null || echo "")
+
+          if echo "$TOPICS" | grep -q "kailash-template" && [ "${{ github.event.inputs.force_setup }}" != "true" ]; then
+            echo "setup_needed=false" >> $GITHUB_OUTPUT
+            echo "Repository already configured with kailash-template topic"
+          else
+            echo "setup_needed=true" >> $GITHUB_OUTPUT
+            echo "Repository needs template setup"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run template setup
+        if: steps.check_setup.outputs.setup_needed == 'true'
+        run: |
+          echo "🚀 Initializing repository from Kailash template..."
+          python scripts/setup_new_repo.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Commit setup changes
+        if: steps.check_setup.outputs.setup_needed == 'true'
+        run: |
+          # Configure git
+          git config --local user.email "action@github.com"
+          git config --local user.name "Template Setup Action"
+
+          # Check if there are changes to commit
+          if [[ -n $(git status --porcelain) ]]; then
+            git add -A
+            git commit -m "$(cat <<'EOF'
+          feat: automatic template setup and configuration
+
+          🤖 Automated template initialization:
+          - Added kailash-template topic for automatic sync
+          - Created default labels for issue tracking
+          - Setup environment files (.env.example, .gitignore)
+          - Initialized project structure and solution template
+          - Configured repository for Kailash SDK development
+
+          This repository will now automatically receive template updates.
+          See CLAUDE.md for development guidance.
+
+          Generated with Template Setup Action
+          EOF
+          )"
+
+            git push origin main
+            echo "✅ Setup changes committed and pushed"
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create setup summary
+        if: steps.check_setup.outputs.setup_needed == 'true'
+        run: |
+          echo "## 🎉 Client Project Repository Successfully Initialized!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Your repository has been automatically configured for Kailash SDK client development:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ What was configured:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Template Sync**: Added \`kailash-template\` topic for automatic SDK updates" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: Setup \`.env.example\` with Kailash SDK configuration" >> $GITHUB_STEP_SUMMARY
+          echo "- **Gitignore**: Configured to protect client secrets and data" >> $GITHUB_STEP_SUMMARY
+          echo "- **Data Structure**: Created \`data/inputs/\` and \`data/outputs/\` directories" >> $GITHUB_STEP_SUMMARY
+          echo "- **Project Template**: Apps and solutions structure available in template" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚀 Next Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. **Review CLAUDE.md** for development guidance and Kailash SDK patterns" >> $GITHUB_STEP_SUMMARY
+          echo "2. **Configure environment**: Copy \`.env.example\` to \`.env\` and add your Kailash API keys" >> $GITHUB_STEP_SUMMARY
+          echo "3. **Create your first app**: Copy \`apps/_template/\` to \`apps/your_app_name/\`" >> $GITHUB_STEP_SUMMARY
+          echo "4. **Install Kailash SDK**: Run \`pip install kailash-sdk\` in your virtual environment" >> $GITHUB_STEP_SUMMARY
+          echo "5. **Start building**: Check \`sdk-users/developer/\` for SDK usage examples" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔄 Automatic SDK Updates:" >> $GITHUB_STEP_SUMMARY
+          echo "Your repository will automatically receive SDK documentation updates via PR when the template is updated." >> $GITHUB_STEP_SUMMARY
+          echo "Only \`sdk-users/\` and \`CLAUDE.md\` are automatically synced - your client code remains untouched." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Happy building with Kailash SDK! 🚀**"
+
+      - name: Setup already complete
+        if: steps.check_setup.outputs.setup_needed == 'false'
+        run: |
+          echo "## ✅ Repository Already Configured" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This repository is already properly configured for Kailash SDK development." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Template sync is enabled" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository will automatically receive template updates" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "To force re-setup, run this workflow manually with the 'force_setup' option."

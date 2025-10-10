@@ -1,0 +1,184 @@
+{
+  "workflow": {
+    "name": "sample_data_processing",
+    "description": "Sample workflow for testing MCP bridge functionality",
+    "version": "1.0.0",
+    "nodes": [
+      {
+        "id": "reader",
+        "type": "CSVReaderNode",
+        "parameters": {
+          "file_path": "test_data.csv",
+          "delimiter": ",",
+          "has_header": true
+        }
+      },
+      {
+        "id": "transformer",
+        "type": "DataTransformerNode",
+        "parameters": {
+          "operation": "filter",
+          "conditions": [
+            {
+              "field": "age",
+              "operator": ">",
+              "value": 18
+            }
+          ]
+        }
+      },
+      {
+        "id": "api_call",
+        "type": "HTTPRequestNode",
+        "parameters": {
+          "url": "https://api.example.com/process",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      },
+      {
+        "id": "analyzer",
+        "type": "LLMAgentNode",
+        "parameters": {
+          "provider": "openai",
+          "model": "gpt-4",
+          "use_real_mcp": true,
+          "system_prompt": "Analyze the processed data and provide insights."
+        }
+      }
+    ],
+    "connections": [
+      {
+        "from_node": "reader",
+        "from_output": "data",
+        "to_node": "transformer",
+        "to_input": "input_data"
+      },
+      {
+        "from_node": "transformer",
+        "from_output": "transformed_data",
+        "to_node": "api_call",
+        "to_input": "body"
+      },
+      {
+        "from_node": "api_call",
+        "from_output": "response",
+        "to_node": "analyzer",
+        "to_input": "data_to_analyze"
+      }
+    ]
+  },
+  "mcp_tools": [
+    {
+      "name": "process_csv_data",
+      "description": "Process CSV data through transformation pipeline",
+      "maps_to_nodes": ["reader", "transformer"],
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "file_path": {
+            "type": "string",
+            "description": "Path to CSV file to process"
+          },
+          "filter_conditions": {
+            "type": "array",
+            "description": "Filter conditions to apply",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {"type": "string"},
+                "operator": {"type": "string"},
+                "value": {"type": ["string", "number"]}
+              }
+            }
+          }
+        },
+        "required": ["file_path"]
+      }
+    },
+    {
+      "name": "analyze_with_ai",
+      "description": "Analyze data using AI agent",
+      "maps_to_nodes": ["analyzer"],
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "Data to analyze"
+          },
+          "analysis_type": {
+            "type": "string",
+            "enum": ["insights", "summary", "trends"],
+            "description": "Type of analysis to perform",
+            "default": "insights"
+          }
+        },
+        "required": ["data"]
+      }
+    },
+    {
+      "name": "full_processing_pipeline",
+      "description": "Complete data processing pipeline from CSV to insights",
+      "maps_to_workflow": "sample_data_processing",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "csv_file": {
+            "type": "string",
+            "description": "Path to CSV file"
+          },
+          "api_endpoint": {
+            "type": "string",
+            "description": "API endpoint for processing",
+            "default": "https://api.example.com/process"
+          },
+          "analysis_prompt": {
+            "type": "string",
+            "description": "Custom prompt for AI analysis",
+            "default": "Analyze the processed data and provide insights."
+          }
+        },
+        "required": ["csv_file"]
+      }
+    }
+  ],
+  "test_scenarios": [
+    {
+      "name": "basic_csv_processing",
+      "description": "Test basic CSV processing functionality",
+      "input": {
+        "file_path": "tests/fixtures/data/sample.csv"
+      },
+      "expected_output": {
+        "type": "processed_data",
+        "record_count": ">0"
+      }
+    },
+    {
+      "name": "ai_analysis",
+      "description": "Test AI analysis functionality",
+      "input": {
+        "data": "Sample data for analysis: [1, 2, 3, 4, 5]"
+      },
+      "expected_output": {
+        "type": "analysis_result",
+        "contains": ["insight", "analysis"]
+      }
+    },
+    {
+      "name": "full_pipeline",
+      "description": "Test complete processing pipeline",
+      "input": {
+        "csv_file": "tests/fixtures/data/sample.csv",
+        "analysis_prompt": "Provide a summary of the data trends."
+      },
+      "expected_output": {
+        "type": "pipeline_result",
+        "stages_completed": 4
+      }
+    }
+  ]
+}

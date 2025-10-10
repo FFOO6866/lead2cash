@@ -1,0 +1,211 @@
+# Kailash Project Template Configuration
+# This file configures the sprint design template for Kailash/DataFlow/Nexus projects
+
+project:
+  name: "RRPS Lead-to-Cash Agentic POV"
+  description: "10-week Proof of Value for Rolls-Royce Power Systems Lead-to-Cash automation using agentic AI"
+  organization: "Integrum-Global"
+  repository: "rrps-lead2cash"
+
+# Technology Stack Configuration
+technology:
+  backend:
+    framework: "Kailash SDK"
+    database: "PostgreSQL"
+    components:
+      - "DataFlow (ORM + Auto-generated nodes)"
+      - "Nexus (Multi-channel deployment)"
+      - "Kaizen (AI agents)"
+
+  frontend:
+    framework: "Flutter"  # Options: Flutter, React, Vue, etc.
+    responsive_breakpoints:
+      mobile: 600
+      tablet: 1024
+      desktop: 1440
+
+  documentation:
+    kailash_docs_url: "https://docs.kailash.ai"
+    dataflow_docs_url: "https://docs.kailash.ai/dataflow"
+    nexus_docs_url: "https://docs.kailash.ai/nexus"
+    architecture_doc_url: "{{ARCHITECTURE_DOC_URL}}"
+
+# Story 0 (Infrastructure) Configuration
+story_0:
+  story_points: 21
+  effort:
+    weeks: 2
+    hours: 70-80
+  setup_sprint_days: 3
+
+  core_model_name: "OrderProposal"  # Primary model for validation
+  test_data_size: "100+"
+  perf_test_size: "500+"  # 500 orders for POV
+
+  performance_benchmarks:
+    query_ms: 200
+    filter_ms: 500
+
+  time_estimates:
+    sdk_install: "3-4"
+    dataflow_validation: "4-5"
+    nexus_test: 3
+    design_system: 8
+    api_tooling: 2
+    env_validation: 2
+
+  design_system_path: "lib/core/responsive/README.md"
+
+# Feature Story Defaults
+feature_story_defaults:
+  performance:
+    query_perf_ms: 200
+    mutation_perf_ms: 300
+    page_load_ms: 1000
+    api_response_ms: 500
+
+  test_coverage:
+    unit_test_coverage: 80
+
+  time_estimates:
+    # Backend
+    data_model_hours: 4
+    workflow_hours: 8
+    nexus_deploy_hours: 2
+    backend_total: 14
+
+    # Frontend
+    ui_component_hours: 6
+    state_mgmt_hours: 4
+    integration_hours: 4
+    frontend_total: 14
+
+# Sprint Configuration
+sprint:
+  duration_weeks: 2
+  story_points_per_sprint: 40  # Adjust based on team velocity
+
+  sprint_schedule:
+    - number: 0
+      name: "Infrastructure Validation"
+      duration_weeks: 2
+      stories: ["Story 0"]
+
+    - number: 1
+      name: "Core Features"
+      duration_weeks: 2
+      target_points: 40
+
+    - number: 2
+      name: "User Management & Basic Features"
+      duration_weeks: 2
+      target_points: 40
+
+# Story Structure & Patterns
+story_patterns:
+  # Story categories with typical point ranges
+  categories:
+    infrastructure:
+      points: 21
+      description: "Foundation setup and validation"
+
+    crud_operations:
+      points: 21
+      description: "Create, Read, Update, Delete functionality"
+
+    advanced_features:
+      points: 13
+      description: "Complex business logic and integrations"
+
+    basic_features:
+      points: 8
+      description: "Standard features with moderate complexity"
+
+    simple_features:
+      points: 5
+      description: "Simple features with minimal complexity"
+
+    ai_features:
+      points: 36
+      description: "AI-driven features (consider breaking down)"
+
+# Quality Gates
+quality_gates:
+  story_0:
+    - name: "DataFlow Validation"
+      criteria:
+        - "All 9 nodes auto-generated successfully"
+        - "Query/filter/create nodes functional"
+        - "Performance benchmarks met"
+        - "No blocking bugs"
+      decisions:
+        success: "Proceed with DataFlow for all stories"
+        partial: "Document workarounds, continue with caution"
+        failure: "Fallback to Core SDK, update all plans"
+
+  feature_stories:
+    - name: "Code Review"
+      criteria: ["Approved by 2+ reviewers", "No unresolved comments"]
+    - name: "Testing"
+      criteria: ["Unit tests ≥80% coverage", "Integration tests passing", "E2E tests passing"]
+    - name: "Performance"
+      criteria: ["Query < 200ms", "Mutations < 300ms", "Page load < 1s"]
+    - name: "Documentation"
+      criteria: ["API docs updated", "Component docs updated", "User guide updated"]
+
+# GitHub Project Automation
+github_automation:
+  labels:
+    - "infrastructure"
+    - "story-0"
+    - "critical"
+    - "feature"
+    - "user-story"
+    - "kailash-sdk"
+    - "dataflow"
+    - "nexus"
+    - "kaizen"
+    - "backend"
+    - "frontend"
+    - "blocked"
+    - "in-progress"
+    - "ready-for-review"
+
+  project_fields:
+    - name: "Status"
+      type: "single_select"
+      options:
+        - "Backlog"
+        - "Ready"
+        - "In Progress"
+        - "In Review"
+        - "Testing"
+        - "Done"
+
+    - name: "Priority"
+      type: "single_select"
+      options:
+        - "Critical"
+        - "High"
+        - "Medium"
+        - "Low"
+
+    - name: "Story Points"
+      type: "number"
+
+    - name: "Sprint"
+      type: "iteration"
+
+    - name: "Team"
+      type: "single_select"
+      options:
+        - "Backend"
+        - "Frontend"
+        - "Full Stack"
+        - "DevOps"
+
+# Dependency Management
+dependencies:
+  story_0_blocks_all: true
+  validate_dependencies_before_start: true
+  dependency_graph_required: true

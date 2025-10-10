@@ -1,0 +1,67 @@
+name: Notify Downstream Repos
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'sdk-users/**'
+      - 'CLAUDE.md'
+      - '.github/workflows/**'
+      - 'apps/_template/**'
+      - 'apps/qa_agentic_testing/**'
+      - 'apps/studio/**'
+      - 'apps/user_management/**'
+      - 'deployment/**'
+      - 'solutions/**'
+      - 'scripts/**'
+
+jobs:
+  create-sync-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create sync notification issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "📢 Template has been updated. Creating notification issues..."
+          
+          # Get list of downstream repos (exclude template and kailash_python_sdk)
+          REPOS=$(gh api "search/repositories?q=org:Integrum-Global+topic:kailash-template&per_page=100" --jq '.items[].name' | grep -v -E "^(new_project_template|kailash_python_sdk)$" || true)
+          
+          if [ -z "$REPOS" ]; then
+            REPOS=$(gh repo list Integrum-Global --limit 200 --json name,templateRepository --jq '.[] | select(.templateRepository.name == "new_project_template" and .name != "kailash_python_sdk") | .name')
+          fi
+          
+          ISSUE_COUNT=0
+          for repo in $REPOS; do
+            if [ -n "$repo" ]; then
+              # Check if similar issue already exists
+              EXISTING=$(gh issue list -R "Integrum-Global/$repo" --search "Template sync available" --state open --json number --jq '.[0].number' || echo "")
+              
+              if [ -z "$EXISTING" ]; then
+                echo "The Kailash template has been updated." > /tmp/issue_body.md
+                echo "" >> /tmp/issue_body.md
+                echo "## To sync the latest changes:" >> /tmp/issue_body.md
+                echo "" >> /tmp/issue_body.md
+                echo "1. Go to the **Actions** tab" >> /tmp/issue_body.md
+                echo "2. Click on **Sync from Template** workflow" >> /tmp/issue_body.md
+                echo "3. Click **Run workflow**" >> /tmp/issue_body.md
+                echo "4. Review and merge the created PR" >> /tmp/issue_body.md
+                echo "" >> /tmp/issue_body.md
+                echo "## What's updated:" >> /tmp/issue_body.md
+                echo "- SDK documentation (sdk-users/)" >> /tmp/issue_body.md
+                echo "- Development patterns (CLAUDE.md)" >> /tmp/issue_body.md
+                echo "- Example applications" >> /tmp/issue_body.md
+                echo "- Deployment configurations" >> /tmp/issue_body.md
+                echo "" >> /tmp/issue_body.md
+                echo "This issue will auto-close when sync is completed." >> /tmp/issue_body.md
+                
+                gh issue create -R "Integrum-Global/$repo" \
+                  --title "🔄 Template sync available" \
+                  --body-file /tmp/issue_body.md \
+                  --label "template-sync" 2>/dev/null && ((ISSUE_COUNT++)) || true
+              fi
+            fi
+          done
+          
+          echo "✅ Created $ISSUE_COUNT notification issues"

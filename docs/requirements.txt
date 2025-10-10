@@ -1,0 +1,8 @@
+# Documentation dependencies
+sphinx>=8.2.3
+sphinx-rtd-theme>=3.0.2
+sphinx-copybutton>=0.5.2
+sphinxcontrib-mermaid>=1.0.0
+sphinx-autobuild>=2024.10.3
+autodoc>=0.5.0
+myst-parser>=4.0.1

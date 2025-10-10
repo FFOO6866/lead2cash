@@ -1,0 +1,60 @@
+Kailash Client Project Template License
+========================================
+
+This template repository is provided to help you create projects using the 
+Kailash SDK. The template itself is licensed as follows:
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   Copyright 2025 Integrum Global Pte Ltd
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+===========================================================================
+IMPORTANT NOTES FOR TEMPLATE USERS
+===========================================================================
+
+1. TEMPLATE LICENSE VS. YOUR PROJECT LICENSE
+   - This license applies ONLY to the template structure and example code
+   - You are free to choose ANY license for your project created from this template
+   - Your project does NOT need to use Apache License 2.0
+   - You can use proprietary, MIT, GPL, or any other license for your work
+
+2. KAILASH SDK LICENSING
+   - The Kailash SDK (kailash, kailash-nexus, kailash-dataflow) has its own license
+   - The SDK is licensed under Apache 2.0 with Additional Terms
+   - The SDK's Additional Terms prohibit standalone commercial distribution
+   - See https://pypi.org/project/kailash/ for SDK license details
+   - Your use of the SDK is governed by the SDK license, not this template license
+
+3. DOCUMENTATION AND AGENTS
+   - The .claude directory contains AI agent configurations
+   - These agents are provided to help you work effectively with the SDK
+   - The documentation and agents are part of this template and covered by this license
+
+4. CREATING YOUR PROJECT
+   When you create a project from this template:
+   - Remove or replace this LICENSE file with your chosen license
+   - Update the NOTICE file to reflect your project
+   - The SDK dependencies will be governed by their own licenses
+   - You own all the code you write in your project
+
+5. ATTRIBUTION
+   - No attribution to this template is required in your projects
+   - SDK attribution requirements are specified in the SDK license
+
+For questions about licensing, please refer to:
+- Template repository: https://github.com/Integrum-Global/new_project_template
+- Kailash SDK: https://pypi.org/project/kailash/

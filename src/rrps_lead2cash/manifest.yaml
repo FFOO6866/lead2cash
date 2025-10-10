@@ -1,0 +1,47 @@
+name: rrps-lead2cash
+version: 0.1.0
+type: hybrid
+description: Agentic Lead-to-Cash automation for RRPS - CEC to IPAS to MS5 order creation with multi-channel deployment
+
+capabilities:
+  api:
+    enabled: true
+    port: 8000
+    framework: fastapi
+    endpoints:
+      - /health
+      - /api/v1/
+      - /tools
+    docs_url: /docs
+    openapi_url: /openapi.json
+  
+  mcp:
+    enabled: true
+    protocol: http
+    tools:
+      - assess_opportunity
+      - create_order
+      - validate_due_diligence
+      - normalize_bom
+      - trigger_invoice
+      - health_check
+
+dependencies:
+  required: []
+  optional:
+    - postgres
+    - redis
+
+deployment:
+  dockerfile: Dockerfile
+  health_check: /health
+  environment:
+    - LOG_LEVEL=INFO
+    - API_HOST=0.0.0.0
+    - API_PORT=8000
+
+tags:
+  - api
+  - mcp
+  - hybrid
+  - template

@@ -1,0 +1,97 @@
+{
+  "name": "kailash-parameter-validator",
+  "version": "1.0.0",
+  "description": "MCP tool for validating Kailash SDK workflow parameters",
+  "author": "Kailash SDK",
+  "license": "MIT",
+  "main": "src/server.py",
+  "mcpServers": {
+    "parameter-validator": {
+      "command": "python",
+      "args": [
+        "-m",
+        "apps.kailash-mcp.tools.parameter-validator.src.server"
+      ],
+      "env": {},
+      "timeout": 30000
+    }
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "validate_workflow",
+        "description": "Validate Kailash workflow for parameter and connection errors",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workflow_code": {
+              "type": "string",
+              "description": "Python code defining the Kailash workflow"
+            }
+          },
+          "required": ["workflow_code"]
+        }
+      },
+      {
+        "name": "check_node_parameters",
+        "description": "Validate node parameter declarations",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "node_code": {
+              "type": "string",
+              "description": "Python code defining the node class"
+            }
+          },
+          "required": ["node_code"]
+        }
+      },
+      {
+        "name": "validate_connections",
+        "description": "Validate workflow connection syntax",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "connections": {
+              "type": "array",
+              "description": "Array of connection objects to validate",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "source": {"type": "string"},
+                  "output": {"type": "string"},
+                  "target": {"type": "string"},
+                  "input": {"type": "string"}
+                }
+              }
+            }
+          },
+          "required": ["connections"]
+        }
+      },
+      {
+        "name": "suggest_fixes",
+        "description": "Generate fix suggestions for validation errors",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "description": "Array of validation errors to fix",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "code": {"type": "string"},
+                  "message": {"type": "string"},
+                  "node_id": {"type": "string"},
+                  "parameter": {"type": "string"}
+                }
+              }
+            }
+          },
+          "required": ["errors"]
+        }
+      }
+    ]
+  }
+}

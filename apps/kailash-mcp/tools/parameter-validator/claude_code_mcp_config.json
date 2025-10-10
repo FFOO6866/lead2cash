@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "kailash-parameter-validator": {
+      "command": "python",
+      "args": [
+        "/Users/esperie/repos/projects/kailash_python_sdk/apps/kailash-mcp/tools/parameter-validator/src/server.py"
+      ],
+      "cwd": "/Users/esperie/repos/projects/kailash_python_sdk/apps/kailash-mcp/tools/parameter-validator",
+      "env": {
+        "PYTHONPATH": "/Users/esperie/repos/projects/kailash_python_sdk/src"
+      }
+    }
+  }
+}

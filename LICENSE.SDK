@@ -1,0 +1,72 @@
+Kailash SDK Licensing Information
+=================================
+
+This file clarifies the licensing terms for the Kailash SDK components that 
+this template uses as dependencies.
+
+SDK COMPONENTS AND LICENSES
+---------------------------
+
+1. Kailash Core SDK (kailash)
+   - PyPI: https://pypi.org/project/kailash/
+   - License: Apache License 2.0 with Additional Terms
+   - Additional Terms: Prohibits standalone commercial distribution
+   
+2. Kailash Nexus (kailash-nexus)
+   - PyPI: https://pypi.org/project/kailash-nexus/
+   - License: Apache License 2.0 with Additional Terms
+   - Additional Terms: Prohibits standalone commercial distribution
+   
+3. Kailash DataFlow (kailash-dataflow)
+   - PyPI: https://pypi.org/project/kailash-dataflow/
+   - License: Apache License 2.0 with Additional Terms
+   - Additional Terms: Prohibits standalone commercial distribution
+
+SDK LICENSE SUMMARY
+-------------------
+
+The Kailash SDK is licensed under Apache License 2.0 with the following
+Additional Terms:
+
+1. PROHIBITION ON STANDALONE COMMERCIAL DISTRIBUTION
+   The SDK may not be sold, licensed, or distributed on a standalone 
+   basis for commercial purposes.
+
+2. PERMITTED USES
+   - Using the SDK as a component of a larger application or service
+   - Creating and distributing applications that use the SDK
+   - Using the SDK internally within an organization
+   - Providing services that use the SDK
+   - Educational and non-commercial research use
+
+IMPORTANT FOR TEMPLATE USERS
+----------------------------
+
+When you create a project from this template:
+
+1. Your project DEPENDS on the SDK but is not bound by the SDK's distribution restrictions
+2. You can create commercial applications using the SDK
+3. You cannot extract and resell the SDK itself
+4. Your application's license is independent of the SDK license
+5. The SDK source code is readable in your site-packages after installation
+
+The SDK's Additional Terms prevent competitors from repackaging and selling
+the SDK itself, while allowing you full freedom to build commercial applications
+that use the SDK.
+
+For the complete SDK license terms, install the SDK and check:
+- Python: site-packages/kailash/LICENSE
+- Or view on PyPI: https://pypi.org/project/kailash/
+
+COMPLIANCE NOTES
+----------------
+
+To ensure compliance when using the Kailash SDK:
+
+1. DO NOT extract the SDK code and distribute it separately
+2. DO NOT create a "Kailash SDK wrapper" that merely repackages the SDK
+3. DO build applications that use the SDK as a dependency
+4. DO include proper attribution in your project documentation
+5. DO respect the SDK's copyright and license notices
+
+Questions about SDK licensing should be directed to Integrum Global Pte Ltd.

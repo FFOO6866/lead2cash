@@ -1,0 +1,373 @@
+# Security Scanning and Compliance Pipeline
+name: Security
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Weekly on Monday at 2 AM
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  # Dependency scanning
+  dependency-scan:
+    name: Dependency Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --policy-path=.snyk
+
+      - name: Monitor dependencies with Dependabot
+        uses: github/dependabot-action@v2
+
+      - name: License scanning with FOSSA
+        uses: fossas/fossa-action@main
+        with:
+          api-key: ${{ secrets.FOSSA_API_KEY }}
+
+      - name: Check for known vulnerabilities
+        run: |
+          pip install safety
+          safety check --json --output safety-report.json
+
+      - name: Upload vulnerability reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: vulnerability-reports
+          path: |
+            safety-report.json
+            snyk-report.json
+
+  # Container scanning
+  container-scan:
+    name: Container Security Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build image for scanning
+        run: docker build -t scanning-image:${{ github.sha }} .
+
+      - name: Run Trivy scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: scanning-image:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          vuln-type: 'os,library'
+
+      - name: Run Grype scanner
+        uses: anchore/scan-action@v3
+        with:
+          image: scanning-image:${{ github.sha }}
+          fail-build: true
+          severity-cutoff: high
+
+      - name: Run Syft for SBOM generation
+        uses: anchore/sbom-action@v1
+        with:
+          image: scanning-image:${{ github.sha }}
+          format: spdx-json
+          output-file: sbom.spdx.json
+
+      - name: Upload scan results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.spdx.json
+
+  # Infrastructure scanning
+  infrastructure-scan:
+    name: Infrastructure Security Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Terraform security scan with Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: deployment/terraform
+          framework: terraform
+          output_format: sarif
+          output_file_path: checkov-terraform.sarif
+
+      - name: Kubernetes security scan with Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: deployment/kubernetes
+          framework: kubernetes
+          output_format: sarif
+          output_file_path: checkov-k8s.sarif
+
+      - name: Helm security scan with Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: deployment/helm
+          framework: helm
+          output_format: sarif
+          output_file_path: checkov-helm.sarif
+
+      - name: Cloud security posture with Prowler
+        run: |
+          docker run -v $PWD:/scan \
+            toniblyx/prowler:latest \
+            -g cis_level2 \
+            -f json \
+            -o /scan/prowler-report.json
+
+      - name: Upload scan results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'checkov-*.sarif'
+
+  # Code security analysis
+  code-security:
+    name: Code Security Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python, javascript
+          queries: security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/python
+            p/javascript
+            p/dockerfile
+            p/kubernetes
+            p/terraform
+            p/owasp-top-ten
+            p/cwe-top-25
+
+      - name: Run GitLeaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Compliance checks
+  compliance-check:
+    name: Compliance Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: CIS Kubernetes Benchmark
+        run: |
+          docker run --rm -v $PWD:/scan \
+            aquasec/kube-bench:latest \
+            --config-dir /scan/deployment/security/cis-benchmarks
+
+      - name: PCI DSS compliance check
+        run: |
+          # Run PCI DSS compliance checks
+          docker run --rm -v $PWD:/scan \
+            opensecurity/compliance-scanner:latest \
+            --standard pci-dss \
+            --config /scan/deployment/security/compliance/pci-dss.yaml
+
+      - name: HIPAA compliance check
+        run: |
+          # Run HIPAA compliance checks
+          docker run --rm -v $PWD:/scan \
+            opensecurity/compliance-scanner:latest \
+            --standard hipaa \
+            --config /scan/deployment/security/compliance/hipaa.yaml
+
+      - name: SOC2 compliance check
+        run: |
+          # Run SOC2 compliance checks
+          docker run --rm -v $PWD:/scan \
+            opensecurity/compliance-scanner:latest \
+            --standard soc2 \
+            --config /scan/deployment/security/compliance/soc2.yaml
+
+      - name: Generate compliance report
+        run: |
+          # Aggregate all compliance results
+          python scripts/generate-compliance-report.py \
+            --output compliance-report-${{ github.sha }}.pdf
+
+      - name: Upload compliance report
+        uses: actions/upload-artifact@v4
+        with:
+          name: compliance-report
+          path: compliance-report-*.pdf
+
+  # Security policy enforcement
+  policy-enforcement:
+    name: Security Policy Enforcement
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: OPA policy validation
+        run: |
+          # Validate OPA policies
+          docker run --rm -v $PWD:/policies \
+            openpolicyagent/opa:latest \
+            test /policies/deployment/security/policies/*.rego
+
+      - name: Validate security controls
+        run: |
+          # Run security control validation
+          python scripts/validate-security-controls.py \
+            --config deployment/security/controls.yaml
+
+      - name: Check security requirements
+        run: |
+          # Verify security requirements are met
+          python scripts/check-security-requirements.py \
+            --requirements deployment/security/requirements.yaml
+
+  # Runtime security simulation
+  runtime-security:
+    name: Runtime Security Testing
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy test environment
+        run: |
+          # Deploy isolated test environment
+          kubectl create namespace security-test-${{ github.run_id }}
+          kubectl apply -f deployment/kubernetes/security-test/ \
+            -n security-test-${{ github.run_id }}
+
+      - name: Run Falco runtime security
+        run: |
+          # Deploy Falco and run tests
+          helm install falco falcosecurity/falco \
+            --namespace security-test-${{ github.run_id }} \
+            --set falco.grpc.enabled=true \
+            --set falco.grpcOutput.enabled=true
+
+      - name: Simulate attacks
+        run: |
+          # Run attack simulations
+          docker run --rm \
+            aquasec/kube-hunter:latest \
+            --remote security-test-${{ github.run_id }}.cluster.local
+
+      - name: Analyze results
+        run: |
+          # Collect and analyze security events
+          kubectl logs -n security-test-${{ github.run_id }} \
+            -l app=falco \
+            --tail=-1 > falco-events.log
+          
+          python scripts/analyze-security-events.py \
+            --input falco-events.log \
+            --output security-analysis.json
+
+      - name: Cleanup
+        if: always()
+        run: |
+          kubectl delete namespace security-test-${{ github.run_id }}
+
+  # Security metrics and reporting
+  security-metrics:
+    name: Security Metrics and Reporting
+    needs: 
+      - dependency-scan
+      - container-scan
+      - infrastructure-scan
+      - code-security
+      - compliance-check
+      - policy-enforcement
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Generate security dashboard
+        run: |
+          # Generate comprehensive security metrics
+          python scripts/generate-security-dashboard.py \
+            --vulnerability-reports vulnerability-reports/ \
+            --scan-results scan-results/ \
+            --compliance-report compliance-report/ \
+            --output security-dashboard.html
+
+      - name: Calculate security score
+        run: |
+          # Calculate overall security score
+          python scripts/calculate-security-score.py \
+            --metrics security-metrics.json \
+            --output security-score.json
+
+      - name: Post metrics to monitoring
+        run: |
+          # Send metrics to Prometheus/Grafana
+          curl -X POST http://prometheus-pushgateway:9091/metrics/job/security-scan \
+            --data-binary @security-metrics.txt
+
+      - name: Create security report issue
+        if: github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const score = JSON.parse(fs.readFileSync('security-score.json'));
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Weekly Security Report - Score: ${score.overall}/100`,
+              body: fs.readFileSync('security-dashboard.html', 'utf8'),
+              labels: ['security', 'report']
+            });
+
+      - name: Upload security dashboard
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-dashboard
+          path: |
+            security-dashboard.html
+            security-score.json
+            security-metrics.json

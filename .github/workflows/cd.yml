@@ -1,0 +1,341 @@
+# Continuous Deployment Pipeline
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      skip_tests:
+        description: 'Skip tests (emergency use only)'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  HELM_VERSION: '3.13.0'
+  KUBECTL_VERSION: '1.28.0'
+
+jobs:
+  # Prepare deployment
+  prepare:
+    name: Prepare Deployment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.determine-env.outputs.environment }}
+      version: ${{ steps.version.outputs.version }}
+      image_tag: ${{ steps.image.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Determine environment
+        id: determine-env
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" =~ ^refs/tags/v.* ]]; then
+            echo "environment=prod" >> $GITHUB_OUTPUT
+          else
+            echo "environment=dev" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get version
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" =~ ^refs/tags/v.* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "version=sha-${GITHUB_SHA::8}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Determine image tag
+        id: image
+        run: |
+          echo "tag=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
+
+  # Run tests (unless skipped)
+  test:
+    name: Pre-deployment Tests
+    needs: prepare
+    if: github.event.inputs.skip_tests != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run smoke tests
+        run: |
+          echo "Running smoke tests for ${{ needs.prepare.outputs.environment }}"
+          # Add actual smoke test commands here
+
+  # Deploy to Kubernetes
+  deploy-k8s:
+    name: Deploy to Kubernetes
+    needs: [prepare, test]
+    if: always() && (needs.test.result == 'success' || needs.test.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ needs.prepare.outputs.environment }}
+      url: ${{ steps.deploy.outputs.url }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        if: vars.CLOUD_PROVIDER == 'aws'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Configure GCP credentials
+        if: vars.CLOUD_PROVIDER == 'gcp'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Configure Azure credentials
+        if: vars.CLOUD_PROVIDER == 'azure'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: Get Kubernetes credentials
+        run: |
+          case "${{ vars.CLOUD_PROVIDER }}" in
+            aws)
+              aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
+              ;;
+            gcp)
+              gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --zone ${{ vars.GCP_ZONE }}
+              ;;
+            azure)
+              az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }}
+              ;;
+          esac
+
+      - name: Deploy with Helm
+        id: deploy
+        run: |
+          # Create namespace if it doesn't exist
+          kubectl create namespace kailash-${{ needs.prepare.outputs.environment }} --dry-run=client -o yaml | kubectl apply -f -
+          
+          # Deploy application
+          helm upgrade --install kailash-app ./deployment/helm/kailash \
+            --namespace kailash-${{ needs.prepare.outputs.environment }} \
+            --values ./deployment/helm/kailash/values.yaml \
+            --values ./deployment/helm/kailash/values-${{ needs.prepare.outputs.environment }}.yaml \
+            --set image.repository=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} \
+            --set image.tag=${{ needs.prepare.outputs.version }} \
+            --set environment=${{ needs.prepare.outputs.environment }} \
+            --wait \
+            --timeout 10m
+          
+          # Get application URL
+          APP_URL=$(kubectl get ingress -n kailash-${{ needs.prepare.outputs.environment }} \
+            -o jsonpath='{.items[0].spec.rules[0].host}')
+          echo "url=https://${APP_URL}" >> $GITHUB_OUTPUT
+
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/kailash-app \
+            -n kailash-${{ needs.prepare.outputs.environment }} \
+            --timeout=5m
+
+      - name: Run health checks
+        run: |
+          # Wait for service to be ready
+          sleep 30
+          
+          # Check health endpoint
+          curl -f ${{ steps.deploy.outputs.url }}/health || exit 1
+
+  # Database migrations
+  db-migrate:
+    name: Database Migrations
+    needs: [prepare, deploy-k8s]
+    runs-on: ubuntu-latest
+    environment: ${{ needs.prepare.outputs.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure cloud credentials
+        # Same as deploy-k8s job
+        run: echo "Configure credentials"
+
+      - name: Run migrations
+        run: |
+          kubectl run migrations \
+            --image=${{ needs.prepare.outputs.image_tag }} \
+            --namespace=kailash-${{ needs.prepare.outputs.environment }} \
+            --rm \
+            --attach \
+            --restart=Never \
+            -- python manage.py migrate
+
+  # Post-deployment tests
+  post-deploy-tests:
+    name: Post-deployment Tests
+    needs: [prepare, deploy-k8s, db-migrate]
+    runs-on: ubuntu-latest
+    environment: ${{ needs.prepare.outputs.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run E2E tests
+        run: |
+          # Run end-to-end tests against deployed environment
+          npm install -g @playwright/test
+          playwright test --config=tests/e2e/playwright.config.ts
+        env:
+          BASE_URL: ${{ needs.deploy-k8s.outputs.url }}
+          TEST_ENV: ${{ needs.prepare.outputs.environment }}
+
+      - name: Run API tests
+        run: |
+          # Run API tests
+          npm install -g newman
+          newman run tests/api/postman-collection.json \
+            --environment tests/api/env-${{ needs.prepare.outputs.environment }}.json
+
+      - name: Performance tests
+        if: needs.prepare.outputs.environment == 'staging'
+        run: |
+          # Run performance tests on staging only
+          docker run -i loadimpact/k6 run - <tests/performance/load-test.js
+
+  # Update deployment status
+  update-status:
+    name: Update Deployment Status
+    needs: [prepare, deploy-k8s, db-migrate, post-deploy-tests]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update deployment status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: '${{ needs.prepare.outputs.environment }}',
+              description: 'Deployment to ${{ needs.prepare.outputs.environment }}',
+              auto_merge: false,
+              required_contexts: []
+            });
+            
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.data.id,
+              state: '${{ job.status }}',
+              environment_url: '${{ needs.deploy-k8s.outputs.url }}',
+              description: 'Deployment ${{ job.status }}'
+            });
+
+      - name: Notify Slack
+        if: always()
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "text": "Deployment to ${{ needs.prepare.outputs.environment }} ${{ job.status }}",
+              "attachments": [{
+                "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
+                "fields": [
+                  {
+                    "title": "Environment",
+                    "value": "${{ needs.prepare.outputs.environment }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Version",
+                    "value": "${{ needs.prepare.outputs.version }}",
+                    "short": true
+                  },
+                  {
+                    "title": "URL",
+                    "value": "${{ needs.deploy-k8s.outputs.url }}",
+                    "short": false
+                  }
+                ]
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # Rollback on failure
+  rollback:
+    name: Rollback Deployment
+    needs: [prepare, deploy-k8s, post-deploy-tests]
+    if: failure() && needs.prepare.outputs.environment == 'prod'
+    runs-on: ubuntu-latest
+    environment: ${{ needs.prepare.outputs.environment }}
+    steps:
+      - name: Configure cloud credentials
+        # Same as deploy-k8s job
+        run: echo "Configure credentials"
+
+      - name: Rollback deployment
+        run: |
+          helm rollback kailash-app \
+            --namespace kailash-${{ needs.prepare.outputs.environment }} \
+            --wait
+
+      - name: Notify rollback
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "text": "⚠️ Production deployment rolled back!",
+              "attachments": [{
+                "color": "warning",
+                "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ needs.prepare.outputs.version }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Reason",
+                    "value": "Post-deployment tests failed",
+                    "short": true
+                  }
+                ]
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

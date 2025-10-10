@@ -1,0 +1,195 @@
+{
+  "baseline": [
+    {
+      "session_id": "baseline_WF101_20250725_080228",
+      "condition": "baseline",
+      "challenge_id": "WF101",
+      "duration_seconds": 0.000102996826171875,
+      "iterations_simulated": 2,
+      "errors_found": 6,
+      "error_types": [
+        "PAR004",
+        "PAR004",
+        "CON002",
+        "CON002",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/baseline_WF101_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:31.016698"
+    },
+    {
+      "session_id": "baseline_WF102_20250725_080228",
+      "condition": "baseline",
+      "challenge_id": "WF102",
+      "duration_seconds": 0.0001881122589111328,
+      "iterations_simulated": 2,
+      "errors_found": 6,
+      "error_types": [
+        "PAR004",
+        "PAR004",
+        "CON002",
+        "CON002",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/baseline_WF102_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:33.027950"
+    },
+    {
+      "session_id": "baseline_WF201_20250725_080228",
+      "condition": "baseline",
+      "challenge_id": "WF201",
+      "duration_seconds": 0.00031113624572753906,
+      "iterations_simulated": 2,
+      "errors_found": 3,
+      "error_types": [
+        "PAR004",
+        "CON002",
+        "CON002"
+      ],
+      "output_file": "testing/automated_ab_results/baseline_WF201_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:35.037793"
+    },
+    {
+      "session_id": "baseline_WF202_20250725_080228",
+      "condition": "baseline",
+      "challenge_id": "WF202",
+      "duration_seconds": 0.00020694732666015625,
+      "iterations_simulated": 2,
+      "errors_found": 6,
+      "error_types": [
+        "PAR004",
+        "PAR004",
+        "CON002",
+        "CON002",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/baseline_WF202_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:37.054500"
+    },
+    {
+      "session_id": "baseline_WF301_20250725_080228",
+      "condition": "baseline",
+      "challenge_id": "WF301",
+      "duration_seconds": 0.00014901161193847656,
+      "iterations_simulated": 2,
+      "errors_found": 6,
+      "error_types": [
+        "PAR004",
+        "PAR004",
+        "CON002",
+        "CON002",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/baseline_WF301_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:39.062566"
+    }
+  ],
+  "mcp_enhanced": [
+    {
+      "session_id": "mcp_WF101_20250725_080228",
+      "condition": "mcp_enhanced",
+      "challenge_id": "WF101",
+      "duration_seconds": 0.00022029876708984375,
+      "iterations_simulated": 0,
+      "errors_found": 3,
+      "error_types": [
+        "PAR004",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/mcp_WF101_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:33.026135"
+    },
+    {
+      "session_id": "mcp_WF102_20250725_080228",
+      "condition": "mcp_enhanced",
+      "challenge_id": "WF102",
+      "duration_seconds": 0.00023484230041503906,
+      "iterations_simulated": 0,
+      "errors_found": 3,
+      "error_types": [
+        "PAR004",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/mcp_WF102_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:35.033596"
+    },
+    {
+      "session_id": "mcp_WF201_20250725_080228",
+      "condition": "mcp_enhanced",
+      "challenge_id": "WF201",
+      "duration_seconds": 0.0006260871887207031,
+      "iterations_simulated": 0,
+      "errors_found": 0,
+      "error_types": [],
+      "output_file": "testing/automated_ab_results/mcp_WF201_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:37.052348"
+    },
+    {
+      "session_id": "mcp_WF202_20250725_080228",
+      "condition": "mcp_enhanced",
+      "challenge_id": "WF202",
+      "duration_seconds": 0.00019502639770507812,
+      "iterations_simulated": 0,
+      "errors_found": 3,
+      "error_types": [
+        "PAR004",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/mcp_WF202_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:39.061130"
+    },
+    {
+      "session_id": "mcp_WF301_20250725_080228",
+      "condition": "mcp_enhanced",
+      "challenge_id": "WF301",
+      "duration_seconds": 0.0002319812774658203,
+      "iterations_simulated": 0,
+      "errors_found": 3,
+      "error_types": [
+        "PAR004",
+        "CON003",
+        "CON004"
+      ],
+      "output_file": "testing/automated_ab_results/mcp_WF301_20250725_080228.py",
+      "timestamp": "2025-07-25T08:02:41.067898"
+    }
+  ],
+  "test_id": "20250725_080228",
+  "start_time": "2025-07-25T08:02:28.814486",
+  "end_time": "2025-07-25T08:02:41.068047",
+  "statistics": {
+    "baseline": {
+      "avg_duration": 0.00019164085388183593,
+      "avg_errors": 5.4,
+      "total_iterations": 10,
+      "error_types": {
+        "PAR004": 9,
+        "CON002": 10,
+        "CON003": 4,
+        "CON004": 4
+      }
+    },
+    "mcp_enhanced": {
+      "avg_duration": 0.0003016471862792969,
+      "avg_errors": 2.4,
+      "total_iterations": 0,
+      "error_types": {
+        "PAR004": 4,
+        "CON003": 4,
+        "CON004": 4
+      }
+    },
+    "improvements": {
+      "time_improvement_percent": -57.40233889027123,
+      "error_reduction_percent": 55.55555555555556,
+      "iteration_reduction_percent": 100.0
+    }
+  }
+}

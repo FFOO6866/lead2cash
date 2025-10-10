@@ -1,0 +1,47 @@
+# Template Repository Configuration
+# This file configures automatic setup for repositories created from this template
+
+name: Kailash SDK Solution Template
+description: Template for creating business solutions using the Kailash SDK
+
+# Automatic topic assignment
+auto_topics:
+  - kailash-template
+  - kailash-sdk
+  - business-solutions
+
+# Template initialization settings
+init:
+  # Automatically run setup script after template creation
+  run_setup: true
+  setup_script: "scripts/setup_new_repo.py"
+
+# Features to enable on new repositories
+features:
+  issues: true
+  projects: true
+  wiki: false
+  pages: false
+  discussions: false
+
+# Branch protection (applied after first commit)
+branch_protection:
+  main:
+    required_reviews: 1
+    dismiss_stale_reviews: true
+    require_code_owner_reviews: false
+    required_status_checks:
+      - "template-sync-check"
+      - "basic-validation"
+
+# Default labels for issue tracking
+default_labels:
+  - name: "template-sync"
+    color: "0075ca"
+    description: "Issues related to template synchronization"
+  - name: "solution-development"
+    color: "008672"
+    description: "Solution-specific development tasks"
+  - name: "kailash-sdk"
+    color: "1d76db"
+    description: "Issues related to Kailash SDK usage"

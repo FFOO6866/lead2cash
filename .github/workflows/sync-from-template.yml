@@ -1,0 +1,193 @@
+name: Sync from Template
+
+on:
+  # Manual trigger only - downstream repos run this workflow
+  workflow_dispatch:
+    inputs:
+      create_pr:
+        description: 'Create PR (true) or just show diff (false)'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.ORG_WORKFLOW_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Pull template updates
+        env:
+          GITHUB_TOKEN: ${{ secrets.ORG_WORKFLOW_TOKEN || secrets.GITHUB_TOKEN }}
+          TEMPLATE_REPO: Integrum-Global/new_project_template
+        run: |
+          # Add template as remote
+          git remote add template https://github.com/${TEMPLATE_REPO}.git || true
+          git fetch template main
+
+          # Create sync branch
+          BRANCH_NAME="template-sync-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b $BRANCH_NAME
+
+          # Get list of files to sync from template (ALWAYS REPLACE - removes old contents)
+          SYNC_FILES=(
+            # SDK guidance - always sync entire directory, remove old contents
+            "sdk-users"
+            # Template project structure - always replace with latest
+            "src/new_project"
+            # Essential GitHub workflows for template sync
+            ".github/workflows/sync-from-template.yml"
+            ".github/workflows/template-sync-check.yml"
+            ".github/workflows/template-init.yml"
+            ".github/workflows/README.md"
+            # Example apps - always sync/replace from template
+            "apps/qa_agentic_testing"
+            "apps/user_management"
+          )
+
+          # Files to sync only if missing (preserve existing)
+          SYNC_IF_MISSING=(
+            # Root files - create if missing but don't overwrite client customizations
+            "CLAUDE.md"
+            "README.md"
+            "pyproject.toml"
+            "CHANGELOG.md"
+            ".gitignore"
+            ".env.example"
+
+            # Test infrastructure - sync if missing for consistent test setup
+            "tests/test-environment"
+            "tests/utils"
+            "tests/.docker-ports.lock"
+            "tests/README.md"
+
+            # Template structure - sync if missing but preserve client implementations
+            "solutions"
+            "deployment"
+            "data"
+            "docs"
+            "src"
+            # src/ directory is NEVER overwritten - this is where client projects live
+          )
+
+          # Files that need special merge handling
+          MERGE_FILES=(
+            # No files need special merging with current sync-if-missing strategy
+          )
+
+          # Directories that should be merged (add new, preserve existing)
+          MERGE_DIRS=(
+            # No directories need merging with current sync-if-missing strategy
+          )
+
+          # IMPORTANT: Only src/new_project is synced as a template
+          # Client projects in src/your_project_name/ are NEVER synced
+          # Create your projects with different names than "new_project"
+          
+          # Sync each file/directory (always overwrite - removes old contents completely)
+          for item in "${SYNC_FILES[@]}"; do
+            if git ls-tree template/main --name-only | grep -q "^$item"; then
+              echo "Syncing (with replacement): $item"
+              # Remove existing directory/file completely to ensure clean replacement
+              if [ -e "$item" ]; then
+                rm -rf "$item"
+              fi
+              # Sync from template
+              git checkout template/main -- "$item" 2>/dev/null || true
+            fi
+          done
+
+          # Sync files/directories only if they don't exist (preserve existing)
+          for item in "${SYNC_IF_MISSING[@]}"; do
+            # Check if item exists in template
+            if git ls-tree template/main --name-only | grep -q "^$item"; then
+              # For specific files, only sync if missing
+              if [[ "$item" == *"/"* ]] && [[ "$item" != *"/" ]]; then
+                # This is a specific file path
+                if [ ! -e "$item" ]; then
+                  echo "Syncing missing file: $item"
+                  # Create parent directory if needed
+                  mkdir -p "$(dirname "$item")"
+                  git checkout template/main -- "$item" 2>/dev/null || true
+                fi
+              else
+                # This is a directory - sync if directory doesn't exist
+                if [ ! -e "$item" ]; then
+                  echo "Syncing missing directory: $item"
+                  git checkout template/main -- "$item" 2>/dev/null || true
+                  # If it's a directory, sync all its contents recursively
+                  if [ -d "$item" ]; then
+                    git checkout template/main -- "$item/**" 2>/dev/null || true
+                  fi
+                fi
+              fi
+            fi
+          done
+
+          # Handle files that need merging
+          for item in "${MERGE_FILES[@]}"; do
+            if git ls-tree template/main --name-only | grep -q "^$item"; then
+              if [ -e "$item" ]; then
+                # File exists, need to merge
+                echo "Merging $item..."
+
+                # Get the template version
+                git show template/main:"$item" > "${item}.template"
+
+                # For CLAUDE.md, preserve project-specific instructions
+                if grep -q "## Project-Specific Instructions" "$item"; then
+                  # Extract project-specific section
+                  sed -n '/## Project-Specific Instructions/,$p' "$item" > "${item}.project"
+
+                  # Check if template already has project-specific section
+                  if ! grep -q "## Project-Specific Instructions" "${item}.template"; then
+                    # Append project section to template
+                    cat "${item}.template" > "$item"
+                    echo "" >> "$item"
+                    cat "${item}.project" >> "$item"
+                  else
+                    # Template already has the section, just use template version
+                    cp "${item}.template" "$item"
+                  fi
+                  rm -f "${item}.project"
+                else
+                  # No project-specific section, use template version
+                  cp "${item}.template" "$item"
+                fi
+
+                rm -f "${item}.template"
+              else
+                # File doesn't exist, just sync from template
+                git checkout template/main -- "$item" 2>/dev/null || true
+              fi
+            fi
+          done
+
+          # Handle directories that need merging (add new files, preserve existing)
+          for item in "${MERGE_DIRS[@]}"; do
+            if git ls-tree template/main --name-only | grep -q "^$item"; then
+              echo "Merging directory: $item"
+              # Get new files from template without overwriting existing ones
+              git checkout template/main -- "$item" 2>/dev/null || true
+            fi
+          done
+
+          # Check if there are changes
+          if [[ -n $(git status --porcelain) ]]; then
+            git add -A
+            git commit -m "Sync template updates from ${TEMPLATE_REPO} - Automated sync at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+            # Push and create PR
+            git push origin HEAD
+
+            # Create PR with a simple one-line body to avoid YAML issues
+            gh pr create \
+              --title "Sync template updates" \
+              --body "Automated template sync from ${TEMPLATE_REPO}. REPLACES: sdk-users/, src/new_project/, GitHub workflows, example apps. SYNCS IF MISSING: tests/test-environment, tests/utils, tests/.docker-ports.lock, tests/README.md. Your client code in src/your_project/ is never touched." \
+              --base main
+          else
+            echo "No changes to sync"
+          fi

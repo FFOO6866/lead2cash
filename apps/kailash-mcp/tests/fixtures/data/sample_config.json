@@ -1,0 +1,51 @@
+{
+  "server": {
+    "name": "test-mcp-forge-server",
+    "version": "0.1.0",
+    "host": "localhost",
+    "port": 8080,
+    "transport": ["http", "websocket"],
+    "max_connections": 100,
+    "timeout": 30,
+    "enable_cors": true,
+    "auth_required": false
+  },
+  "client": {
+    "timeout": 10,
+    "retry_attempts": 3,
+    "retry_delay": 1.0,
+    "connection_pool_size": 10,
+    "enable_compression": true
+  },
+  "tools": {
+    "auto_discover": true,
+    "validation_strict": true,
+    "execution_timeout": 30,
+    "rate_limiting": {
+      "enabled": false,
+      "max_requests_per_minute": 60
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "output": "stdout",
+    "file": null
+  },
+  "monitoring": {
+    "enabled": false,
+    "metrics_endpoint": "/metrics",
+    "health_endpoint": "/health"
+  },
+  "kailash_bridge": {
+    "enabled": true,
+    "auto_convert_workflows": true,
+    "expose_all_nodes": false,
+    "allowed_node_types": [
+      "CSVReaderNode",
+      "HTTPRequestNode",
+      "LLMAgentNode",
+      "DataTransformerNode"
+    ]
+  }
+}

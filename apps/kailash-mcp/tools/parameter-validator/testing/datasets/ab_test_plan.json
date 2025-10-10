@@ -1,0 +1,843 @@
+{
+  "metadata": {
+    "test_type": "A/B Testing - MCP Parameter Validation Tool",
+    "total_challenges": 10,
+    "total_sessions": 20,
+    "conditions": {
+      "baseline": "Claude Code without MCP Parameter Validation Tool",
+      "mcp_enhanced": "Claude Code with MCP Parameter Validation Tool enabled"
+    },
+    "bias_prevention": [
+      "External challenge dataset (no lookahead bias)",
+      "Randomized session order",
+      "Fresh Claude Code session for each test",
+      "Automated evaluation criteria"
+    ]
+  },
+  "challenges": [
+    {
+      "challenge_id": "WF101",
+      "level": 1,
+      "pattern": "linear",
+      "domain": "research_automation",
+      "title": "Analysis Automation",
+      "description": "Create a simple workflow system for automated processing and analysis.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 8 nodes in the workflow",
+        "Use only standard Kailash SDK nodes"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "missing_imports",
+          "description": "Required import statements missing",
+          "detection_difficulty": "easy"
+        }
+      ],
+      "estimated_nodes": [
+        2,
+        4
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 1,
+        "expected_duration_minutes": 15
+      }
+    },
+    {
+      "challenge_id": "WF102",
+      "level": 1,
+      "pattern": "linear",
+      "domain": "api_integration",
+      "title": "API Response Aggregator",
+      "description": "Develop an integration workflow that coordinates multiple external APIs, handles authentication, and manages response data. Design for simple integration scenarios.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 8 nodes in the workflow",
+        "Use only standard Kailash SDK nodes"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "unused_imports",
+          "description": "Imported modules not actually used",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "deprecated_patterns",
+          "description": "Using cycle=True instead of CycleBuilder API",
+          "detection_difficulty": "medium"
+        }
+      ],
+      "estimated_nodes": [
+        2,
+        4
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 1,
+        "expected_duration_minutes": 15
+      }
+    },
+    {
+      "challenge_id": "WF201",
+      "level": 2,
+      "pattern": "linear",
+      "domain": "financial_analysis",
+      "title": "Portfolio Analyzer",
+      "description": "Create a moderate workflow system for automated processing and analysis.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 8 nodes in the workflow",
+        "Use only standard Kailash SDK nodes"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "missing_parameters",
+          "description": "Required node parameters not provided",
+          "detection_difficulty": "medium"
+        },
+        {
+          "type": "import_order_issues",
+          "description": "Imports not ordered according to PEP 8",
+          "detection_difficulty": "easy"
+        }
+      ],
+      "estimated_nodes": [
+        2,
+        4
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 2,
+        "expected_duration_minutes": 20
+      }
+    },
+    {
+      "challenge_id": "WF202",
+      "level": 2,
+      "pattern": "parallel",
+      "domain": "inventory_management",
+      "title": "Reorder Point Calculator with Parallel Processing",
+      "description": "Create a moderate workflow system for automated processing and analysis. Optimize for concurrent processing of multiple data streams.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 8 nodes in the workflow",
+        "Use only standard Kailash SDK nodes"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "missing_imports",
+          "description": "Required import statements missing",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "import_order_issues",
+          "description": "Imports not ordered according to PEP 8",
+          "detection_difficulty": "easy"
+        }
+      ],
+      "estimated_nodes": [
+        4,
+        8
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 2,
+        "expected_duration_minutes": 20
+      }
+    },
+    {
+      "challenge_id": "WF301",
+      "level": 3,
+      "pattern": "cyclic",
+      "domain": "inventory_management",
+      "title": "Reorder Point Calculator with Feedback Loop",
+      "description": "Create a complex workflow system for automated processing and analysis. Include iterative refinement based on quality feedback.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations",
+        "Include performance optimization for large data volumes",
+        "Implement circuit breaker pattern for external services",
+        "Support parallel processing where applicable",
+        "Implement convergence criteria to avoid infinite loops"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 12 nodes in the workflow",
+        "Include at least one cycle or parallel branch"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced",
+          "Parallel processing utilized where beneficial"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage",
+          "Optimized for concurrent execution"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "relative_imports",
+          "description": "Using relative instead of absolute imports",
+          "detection_difficulty": "medium"
+        },
+        {
+          "type": "unused_imports",
+          "description": "Imported modules not actually used",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "missing_imports",
+          "description": "Required import statements missing",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "deprecated_patterns",
+          "description": "Using cycle=True instead of CycleBuilder API",
+          "detection_difficulty": "medium"
+        }
+      ],
+      "estimated_nodes": [
+        3,
+        6
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 3,
+        "expected_duration_minutes": 25
+      }
+    },
+    {
+      "challenge_id": "WF302",
+      "level": 3,
+      "pattern": "parallel",
+      "domain": "social_media",
+      "title": "Content Scheduler with Parallel Processing",
+      "description": "Create a complex workflow system for automated processing and analysis. Optimize for concurrent processing of multiple data streams.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations",
+        "Include performance optimization for large data volumes",
+        "Implement circuit breaker pattern for external services",
+        "Support parallel processing where applicable"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 12 nodes in the workflow",
+        "Include at least one cycle or parallel branch"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced",
+          "Parallel processing utilized where beneficial"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage",
+          "Optimized for concurrent execution"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "missing_imports",
+          "description": "Required import statements missing",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "import_order_issues",
+          "description": "Imports not ordered according to PEP 8",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "deprecated_patterns",
+          "description": "Using cycle=True instead of CycleBuilder API",
+          "detection_difficulty": "medium"
+        }
+      ],
+      "estimated_nodes": [
+        4,
+        8
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 3,
+        "expected_duration_minutes": 25
+      }
+    },
+    {
+      "challenge_id": "WF401",
+      "level": 4,
+      "pattern": "cyclic",
+      "domain": "data_pipeline",
+      "title": "Batch Processing Pipeline with Feedback Loop",
+      "description": "Design a data pipeline that ingests, processes, and stores information from multiple sources. Handle enterprise-grade data transformation requirements. Include iterative refinement based on quality feedback.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations",
+        "Include performance optimization for large data volumes",
+        "Implement circuit breaker pattern for external services",
+        "Support parallel processing where applicable",
+        "Implement comprehensive audit logging",
+        "Support dynamic workflow reconfiguration",
+        "Include metrics collection and reporting",
+        "Ensure enterprise-grade reliability patterns",
+        "Implement convergence criteria to avoid infinite loops"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 20 nodes in the workflow",
+        "Demonstrate enterprise architecture patterns",
+        "Include both cycles and parallel processing"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced",
+          "Parallel processing utilized where beneficial",
+          "Enterprise patterns demonstrated",
+          "Comprehensive error recovery"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected",
+          "Production-ready code quality",
+          "Proper documentation and comments"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage",
+          "Optimized for concurrent execution"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "wrong_connection_syntax",
+          "description": "Using 2-parameter instead of 4-parameter connection syntax",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "unused_imports",
+          "description": "Imported modules not actually used",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "deprecated_patterns",
+          "description": "Using cycle=True instead of CycleBuilder API",
+          "detection_difficulty": "medium"
+        },
+        {
+          "type": "import_order_issues",
+          "description": "Imports not ordered according to PEP 8",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "relative_imports",
+          "description": "Using relative instead of absolute imports",
+          "detection_difficulty": "medium"
+        },
+        {
+          "type": "missing_imports",
+          "description": "Required import statements missing",
+          "detection_difficulty": "easy"
+        }
+      ],
+      "estimated_nodes": [
+        3,
+        6
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 4,
+        "expected_duration_minutes": 30
+      }
+    },
+    {
+      "challenge_id": "WF402",
+      "level": 4,
+      "pattern": "hybrid",
+      "domain": "monitoring_system",
+      "title": "Performance Tracker - Advanced Integration",
+      "description": "Create a monitoring workflow that collects system metrics, analyzes performance data, and triggers alerts when needed. Implement enterprise-grade monitoring capabilities. Combine multiple processing patterns for maximum efficiency.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations",
+        "Include performance optimization for large data volumes",
+        "Implement circuit breaker pattern for external services",
+        "Support parallel processing where applicable",
+        "Implement comprehensive audit logging",
+        "Support dynamic workflow reconfiguration",
+        "Include metrics collection and reporting",
+        "Ensure enterprise-grade reliability patterns"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 20 nodes in the workflow",
+        "Demonstrate enterprise architecture patterns",
+        "Include both cycles and parallel processing"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced",
+          "Parallel processing utilized where beneficial",
+          "Enterprise patterns demonstrated",
+          "Comprehensive error recovery"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected",
+          "Production-ready code quality",
+          "Proper documentation and comments"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage",
+          "Optimized for concurrent execution"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "unused_imports",
+          "description": "Imported modules not actually used",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "incorrect_parameter_types",
+          "description": "Parameter values don't match expected types",
+          "detection_difficulty": "medium"
+        },
+        {
+          "type": "import_order_issues",
+          "description": "Imports not ordered according to PEP 8",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "relative_imports",
+          "description": "Using relative instead of absolute imports",
+          "detection_difficulty": "medium"
+        }
+      ],
+      "estimated_nodes": [
+        8,
+        15
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 4,
+        "expected_duration_minutes": 30
+      }
+    },
+    {
+      "challenge_id": "WF309",
+      "level": 3,
+      "pattern": "parallel",
+      "domain": "social_media",
+      "title": "Social Media Monitor with Parallel Processing",
+      "description": "Create a complex workflow system for automated processing and analysis. Optimize for concurrent processing of multiple data streams.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations",
+        "Include performance optimization for large data volumes",
+        "Implement circuit breaker pattern for external services",
+        "Support parallel processing where applicable"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 12 nodes in the workflow",
+        "Include at least one cycle or parallel branch"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced",
+          "Parallel processing utilized where beneficial"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage",
+          "Optimized for concurrent execution"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "import_order_issues",
+          "description": "Imports not ordered according to PEP 8",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "missing_imports",
+          "description": "Required import statements missing",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "unused_imports",
+          "description": "Imported modules not actually used",
+          "detection_difficulty": "easy"
+        }
+      ],
+      "estimated_nodes": [
+        4,
+        8
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 3,
+        "expected_duration_minutes": 25
+      }
+    },
+    {
+      "challenge_id": "WF310",
+      "level": 3,
+      "pattern": "parallel",
+      "domain": "content_analysis",
+      "title": "Document Classifier with Parallel Processing",
+      "description": "Create a content analysis pipeline that processes text documents, performs sentiment analysis, and generates insights. Implement complex analysis techniques. Optimize for concurrent processing of multiple data streams.",
+      "requirements": [
+        "Use appropriate Kailash SDK nodes for the task",
+        "Implement proper error handling for external dependencies",
+        "Include logging and monitoring capabilities",
+        "Ensure data validation at input and output stages",
+        "Support configurable parameters for different environments",
+        "Implement retry logic for unreliable operations",
+        "Include performance optimization for large data volumes",
+        "Implement circuit breaker pattern for external services",
+        "Support parallel processing where applicable"
+      ],
+      "constraints": [
+        "Use LocalRuntime for execution",
+        "Maximum 12 nodes in the workflow",
+        "Include at least one cycle or parallel branch"
+      ],
+      "success_criteria": {
+        "functional": [
+          "Workflow executes without errors",
+          "All nodes properly connected",
+          "Expected output format produced",
+          "Parallel processing utilized where beneficial"
+        ],
+        "code_quality": [
+          "Proper import statements",
+          "Correct parameter declarations",
+          "No deprecated patterns used",
+          "Error handling implemented",
+          "Appropriate node types selected"
+        ],
+        "performance": [
+          "Reasonable execution time",
+          "Efficient resource usage",
+          "Optimized for concurrent execution"
+        ]
+      },
+      "planted_errors": [
+        {
+          "type": "deprecated_patterns",
+          "description": "Using cycle=True instead of CycleBuilder API",
+          "detection_difficulty": "medium"
+        },
+        {
+          "type": "import_order_issues",
+          "description": "Imports not ordered according to PEP 8",
+          "detection_difficulty": "easy"
+        },
+        {
+          "type": "wrong_connection_syntax",
+          "description": "Using 2-parameter instead of 4-parameter connection syntax",
+          "detection_difficulty": "easy"
+        }
+      ],
+      "estimated_nodes": [
+        4,
+        8
+      ],
+      "metadata": {
+        "created_for_testing": true,
+        "bias_free": true,
+        "difficulty_level": 3,
+        "expected_duration_minutes": 25
+      }
+    }
+  ],
+  "test_sessions": [
+    {
+      "session_id": "WF401_mcp",
+      "challenge_id": "WF401",
+      "condition": "mcp_enhanced",
+      "order": 618
+    },
+    {
+      "session_id": "WF201_baseline",
+      "challenge_id": "WF201",
+      "condition": "baseline",
+      "order": 64
+    },
+    {
+      "session_id": "WF102_baseline",
+      "challenge_id": "WF102",
+      "condition": "baseline",
+      "order": 447
+    },
+    {
+      "session_id": "WF310_baseline",
+      "challenge_id": "WF310",
+      "condition": "baseline",
+      "order": 753
+    },
+    {
+      "session_id": "WF302_baseline",
+      "challenge_id": "WF302",
+      "condition": "baseline",
+      "order": 401
+    },
+    {
+      "session_id": "WF301_baseline",
+      "challenge_id": "WF301",
+      "condition": "baseline",
+      "order": 279
+    },
+    {
+      "session_id": "WF201_mcp",
+      "challenge_id": "WF201",
+      "condition": "mcp_enhanced",
+      "order": 72
+    },
+    {
+      "session_id": "WF202_mcp",
+      "challenge_id": "WF202",
+      "condition": "mcp_enhanced",
+      "order": 455
+    },
+    {
+      "session_id": "WF309_mcp",
+      "challenge_id": "WF309",
+      "condition": "mcp_enhanced",
+      "order": 784
+    },
+    {
+      "session_id": "WF402_baseline",
+      "challenge_id": "WF402",
+      "condition": "baseline",
+      "order": 152
+    },
+    {
+      "session_id": "WF202_baseline",
+      "challenge_id": "WF202",
+      "condition": "baseline",
+      "order": 369
+    },
+    {
+      "session_id": "WF309_baseline",
+      "challenge_id": "WF309",
+      "condition": "baseline",
+      "order": 628
+    },
+    {
+      "session_id": "WF301_mcp",
+      "challenge_id": "WF301",
+      "condition": "mcp_enhanced",
+      "order": 782
+    },
+    {
+      "session_id": "WF310_mcp",
+      "challenge_id": "WF310",
+      "condition": "mcp_enhanced",
+      "order": 547
+    },
+    {
+      "session_id": "WF402_mcp",
+      "challenge_id": "WF402",
+      "condition": "mcp_enhanced",
+      "order": 509
+    },
+    {
+      "session_id": "WF101_mcp",
+      "challenge_id": "WF101",
+      "condition": "mcp_enhanced",
+      "order": 485
+    },
+    {
+      "session_id": "WF401_baseline",
+      "challenge_id": "WF401",
+      "condition": "baseline",
+      "order": 552
+    },
+    {
+      "session_id": "WF101_baseline",
+      "challenge_id": "WF101",
+      "condition": "baseline",
+      "order": 640
+    },
+    {
+      "session_id": "WF302_mcp",
+      "challenge_id": "WF302",
+      "condition": "mcp_enhanced",
+      "order": 77
+    },
+    {
+      "session_id": "WF102_mcp",
+      "challenge_id": "WF102",
+      "condition": "mcp_enhanced",
+      "order": 869
+    }
+  ]
+}
