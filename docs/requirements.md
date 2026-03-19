@@ -108,6 +108,7 @@
 ### Integration
 - **SAP CPI**: Middleware for MS5 (C4C, IPAS, S/4HANA MS5)
 - **Custom Clients**: CEC OData, IPAS, MS5 BAPI, MS5 IDoc, ArchiveLink
+- **Aravo** (Direct REST): KYP third-party risk/compliance — direct API, NOT via CPI
 
 ### Frontend (Out of scope for POV)
 - API-first design; UI can be Nexus CLI or third-party tool
@@ -165,6 +166,25 @@
   - [ ] Submit 1 test IDoc ORDERS05
   - [ ] Receive test VBELN from SAP
   - [ ] Idempotency test: retry with same correlation_id returns existing VBELN
+
+#### 2b. Aravo KYP Integration Testing (TE-16)
+
+- [ ] **Aravo KYP Client** (TE-16):
+  - [ ] Basic Auth connection to Aravo Reports API successful
+  - [ ] Report ID configured via `ARAVO_REPORT_ID` environment variable
+  - [ ] Fetch full KYP report (all third-party engagements)
+  - [ ] Parse 12-column response into AravoEngagement models
+  - [ ] Fuzzy match by customer name tested with known records
+  - [ ] KYP assessment logic validated:
+    - [ ] BLOCKED: Rejected/Denied/Very High risk correctly identified
+    - [ ] PENDING: TP Completing DDQ / Pending Approval correctly identified
+    - [ ] CONDITIONAL: High risk / Pending reviews correctly flagged
+    - [ ] APPROVED: All checks pass
+  - [ ] Response time < 5 seconds (entire report fetch + match)
+  - [ ] SSL/TLS connection validated (set `ARAVO_VERIFY_SSL=false` if cert issues)
+
+**Note:** Aravo is a direct REST API call — does NOT route through SAP CPI.
+See ADR-002 for architecture decision.
 
 #### 3. Audit Store Infrastructure (Minimal for POV)
 
@@ -230,18 +250,25 @@
 - **MS5 BAPI** (8h): BAPI_SALESORDER_SIMULATE + error parsing + circuit breaker
 - **MS5 IDoc** (8h): ORDERS05 submission + idempotency test
 
-#### 5. Audit Store Setup (8-12h)
+#### 5. Aravo KYP Client Setup (4-6h) — TE-16
+- Configure Aravo credentials in `.env` (ARAVO_USERNAME, ARAVO_PASSWORD, ARAVO_REPORT_ID)
+- Test Aravo REST API connectivity (2h)
+- Validate fuzzy matching with 5+ known customer names (1h)
+- Verify KYP assessment decision rules (1h)
+- Document Aravo ETL schedule and data freshness (1h)
+
+#### 6. Audit Store Setup (8-12h)
 - Create PostgreSQL tables (2h)
 - Define Pydantic models (3h)
 - Test DataFlow node generation (3h)
 - Populate test data (2h)
 
-#### 6. Documentation (6-8h)
+#### 7. Documentation (6-8h)
 - CPI endpoint documentation (3h)
 - Common issues log (2h)
 - Team walkthrough session (2h)
 
-**Total Estimated Effort:** 60-80 hours
+**Total Estimated Effort:** 64-86 hours (includes TE-16 Aravo KYP: 4-6h)
 
 ---
 
@@ -249,6 +276,7 @@
 
 **✅ PROCEED TO SPRINT 1:**
 - All CPI integrations tested successfully
+- Aravo KYP client connected and returning assessments (TE-16)
 - DataFlow alpha works for audit store use case
 - Performance benchmarks met (queries < 200ms)
 - Team trained on SDK patterns
@@ -329,29 +357,40 @@
 - [ ] User selects readiness filter: "Not Ready" → Shows opportunities with <40% AI confidence score
 - [ ] Each opportunity shows AI confidence score (e.g., "85% Ready") with human-readable reasoning
 - [ ] Reasoning includes missing prerequisites (e.g., "Missing: Delivery date, Payment terms")
+- [ ] **KYP compliance status** is included in readiness assessment:
+  - [ ] KYP APPROVED → Green indicator, no impact on score
+  - [ ] KYP CONDITIONAL → Amber indicator, score reduced by 10 points, shows conditions
+  - [ ] KYP BLOCKED → Red indicator, opportunity flagged as "Not Ready" regardless of other criteria
+  - [ ] KYP PENDING → Amber indicator, shows "KYP review in progress"
+  - [ ] KYP NOT_FOUND → Red indicator, shows "Partner not registered in Aravo"
 - [ ] Results sorted by confidence score (highest first)
 
-#### Technical Implementation (TE-4: Opportunity Readiness Agent)
+#### Technical Implementation (TE-4: Opportunity Readiness Agent + TE-16: Aravo KYP Client)
 
 **Workflow:** `AssessOpportunityReadinessWorkflow`
 
 **Nodes:**
 1. `CustomNode<CECODataClient>` → Retrieve opportunities from Story 1.1 results
-2. **Kaizen Agent: OpportunityReadinessAgent**
-   - Input: Opportunity data (customer, product, amount, close date, notes)
-   - LLM Signature: `"opportunity -> readiness_score, missing_fields, reasoning"`
-   - Prompt: "Assess if this opportunity is ready to convert to SAP order. Check for: customer confirmed, product configured, pricing approved, delivery date set, payment terms agreed."
-   - Output: `{score: 0.85, missing: ["delivery_date"], reasoning: "Customer and pricing confirmed. Need delivery date."}`
-3. `FilterByScoreNode` → Apply user-selected filter (≥70%, 40-69%, <40%)
-4. `SortByScoreNode` → Sort by score descending
-5. `TextOutputNode` → Format results with confidence score + reasoning
+2. `CustomNode<AravoKYPClient>` → Query Aravo KYP status for the opportunity's customer name
+   - Direct REST API call to Aravo (not via CPI)
+   - Returns: KYPAssessment (status, risk_rating, issues, blocking flag)
+3. **Kaizen Agent: OpportunityReadinessAgent**
+   - Input: Opportunity data + KYP assessment result
+   - LLM Signature: `"opportunity, kyp_assessment -> readiness_score, missing_fields, reasoning"`
+   - Prompt: "Assess if this opportunity is ready to convert to SAP order. Check for: customer confirmed, product configured, pricing approved, delivery date set, payment terms agreed, KYP compliance status."
+   - Output: `{score: 0.85, missing: ["delivery_date"], kyp_status: "APPROVED", reasoning: "Customer and pricing confirmed. KYP approved. Need delivery date."}`
+4. `FilterByScoreNode` → Apply user-selected filter (≥70%, 40-69%, <40%)
+5. `SortByScoreNode` → Sort by score descending
+6. `TextOutputNode` → Format results with confidence score + KYP status + reasoning
 
 **Edge Cases:**
 - Opportunity with incomplete data → Score as <40%, list all missing fields
 - LLM API timeout → Fallback to rule-based scoring (check for null fields)
+- Aravo API unavailable → Log error, assess without KYP (flag as "KYP check unavailable")
+- Customer name mismatch → Fuzzy matching (threshold 0.6), flag if low confidence match
 - User selects no filter → Show all opportunities sorted by score
 
-**Dependencies:** TE-4 (Kaizen OpportunityReadinessAgent), TE-2 (CEC OData Client)
+**Dependencies:** TE-4 (Kaizen OpportunityReadinessAgent), TE-2 (CEC OData Client), TE-16 (Aravo KYP Client)
 
 ---
 

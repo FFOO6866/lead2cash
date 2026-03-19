@@ -25,65 +25,7 @@ class BaseService:
     pass
 
 
-# Template for future service - commented out for now
-# class ExampleService(BaseService):
-    """
-    Service for ExampleEntity operations.
-    
-    This is a template - replace with your actual business logic.
-    """
-    
-    def create_entity(self, entity_data: ExampleEntityCreate) -> ExampleEntity:
-        """Create a new entity."""
-        entity = ExampleEntity(**entity_data.dict())
-        self.db.add(entity)
-        self.db.commit()
-        self.db.refresh(entity)
-        return entity
-    
-    def get_entity(self, entity_id: int) -> Optional[ExampleEntity]:
-        """Get entity by ID."""
-        return self.db.query(ExampleEntity).filter(
-            ExampleEntity.id == entity_id,
-            ExampleEntity.is_active == True
-        ).first()
-    
-    def get_entities(self, skip: int = 0, limit: int = 100) -> List[ExampleEntity]:
-        """Get list of entities."""
-        return self.db.query(ExampleEntity).filter(
-            ExampleEntity.is_active == True
-        ).offset(skip).limit(limit).all()
-    
-    def update_entity(self, entity_id: int, entity_data: ExampleEntityUpdate) -> Optional[ExampleEntity]:
-        """Update an entity."""
-        entity = self.get_entity(entity_id)
-        if not entity:
-            return None
-        
-        update_data = entity_data.dict(exclude_unset=True)
-        for field, value in update_data.items():
-            setattr(entity, field, value)
-        
-        self.db.commit()
-        self.db.refresh(entity)
-        return entity
-    
-    def delete_entity(self, entity_id: int) -> bool:
-        """Soft delete an entity."""
-        entity = self.get_entity(entity_id)
-        if not entity:
-            return False
-        
-        entity.is_active = False
-        self.db.commit()
-        return True
-    
-    def search_entities(self, query: str) -> List[ExampleEntity]:
-        """Search entities by name."""
-        return self.db.query(ExampleEntity).filter(
-            ExampleEntity.name.ilike(f"%{query}%"),
-            ExampleEntity.is_active == True
-        ).all()
+# Template for future service - see services/ directory for implementations
 
 
 # Add your app-specific services here

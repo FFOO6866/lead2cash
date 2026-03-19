@@ -6,10 +6,14 @@ This module defines canonical data models for the agentic lead-to-cash automatio
 - OpportunityData: CEC opportunity enriched with assessment results
 - BOMData: IPAS configuration/BOM normalized for MS5 itemization
 - DDSummary: Due diligence check results and audit trail
+- KYPAssessment: Know Your Partner compliance from Aravo
+- TwoTierValidation: Combined KYP + SAP validation
 - POVMetrics: KPI tracking for baseline vs. pilot comparison
 
 Based on POV Proposal Chapter 5 (Architecture) and Chapter 6 (Dataflow).
 """
+
+from __future__ import annotations
 
 from datetime import datetime
 from typing import Optional, List, Dict, Any, Literal
@@ -52,6 +56,14 @@ class AutomationBand(str, Enum):
     GREEN = "green"    # Direct/lookup - high confidence
     AMBER = "amber"    # Rule-derived - needs confirmation
     RED = "red"        # Human-only - prompts required
+
+
+class TwoTierValidationStatus(str, Enum):
+    """Combined validation outcome from Tier 1 (KYP) + Tier 2 (SAP)."""
+    APPROVED = "APPROVED"
+    CONDITIONAL = "CONDITIONAL"
+    BLOCKED = "BLOCKED"
+    PENDING = "PENDING"
 
 
 # ============================================================================
@@ -114,6 +126,127 @@ class PolicyCheck(BaseModel):
 # ============================================================================
 # Canonical Models (main data structures)
 # ============================================================================
+
+# ============================================================================
+# IPAS Models (XML-sourced order data for MS5 entry)
+# ============================================================================
+
+class IPASDocumentProperties(BaseModel):
+    """IPAS XML DocumentProperties section."""
+    created: str = Field(..., description="Creation timestamp (YYYYMMDD HH:MM:SS)")
+    type: str = Field(default="IPAS", description="Document type")
+    format_version: str = Field(default="1.0", description="IPAS SUN FORMAT version")
+    source: str = Field(default="IPAS7.1", description="Source system")
+    target_id: str = Field(default="", description="Target system ID")
+    target_desc: str = Field(default="", description="Target description")
+    message_id: str = Field(..., description="Unique message identifier")
+    draft_version: str = Field(default="0", description="Draft version number")
+
+
+class IPASBOMItem(BaseModel):
+    """Single BOM item within an engine (material line)."""
+    item_number: str = Field(..., description="Item sequence number")
+    engine_number: str = Field(..., description="Parent engine number")
+    material: str = Field(..., description="Material number (e.g., XS522010.00005)")
+    material_desc: str = Field(default="", description="Material description")
+    quantity: int = Field(default=1, description="Quantity")
+    item_type: str = Field(default="M", description="Item type (M=Material)")
+    assembly_note: str = Field(default="", description="Assembly note (e.g., M/A)")
+    delivery_date: str = Field(default="", description="Delivery date (YYYYMMDD)")
+    packaging_group: str = Field(default="", description="Packaging group")
+    ship_to_party: str = Field(default="", description="Ship-to party override")
+    sub_object_number: str = Field(default="", description="Sub-object reference")
+
+
+class IPASEngine(BaseModel):
+    """Single engine within an IPAS order."""
+    engine_number: str = Field(..., description="Engine sequence (0001, 0002, ...)")
+    engine_type: str = Field(..., description="Engine type (e.g., 12V2000G65SZ)")
+    quantity: int = Field(default=1, description="Number of units")
+    delivery_date: str = Field(..., description="Delivery date (YYYYMMDD)")
+    ship_to_party: str = Field(default="", description="Ship-to party")
+    shipping_type: str = Field(default="", description="Shipping type code")
+    packaging_group: str = Field(default="", description="Packaging group")
+    gross_price: float = Field(default=0.0, description="Gross price per engine")
+    absolute_discount: float = Field(default=0.0, description="Absolute discount amount")
+    acceptance_with_customer: str = Field(default="0", description="Customer acceptance flag")
+    exhaust_regulation: str = Field(default="", description="Exhaust regulation code")
+    take_from_stock: str = Field(default="0", description="Take from stock flag")
+    items: List[IPASBOMItem] = Field(default_factory=list, description="BOM items for this engine")
+
+
+class IPASHeader(BaseModel):
+    """IPAS order header — core commercial and technical data."""
+    ipas_order_status: str = Field(default="", description="Order status code")
+    ipas_project_number: str = Field(default="", description="IPAS project number")
+    ipas_order_number: str = Field(..., description="IPAS order number (primary key)")
+    ipas_order_version: str = Field(default="00", description="Order version")
+    document_date: str = Field(default="", description="Document date (YYYYMMDD)")
+    engine_type: str = Field(default="", description="Primary engine type")
+    series: str = Field(default="", description="Engine series")
+    cylinder: str = Field(default="", description="Number of cylinders")
+    power: str = Field(default="", description="Power rating")
+    engine_speed: str = Field(default="", description="Engine speed (RPM)")
+    sold_to_party: str = Field(default="", description="SAP sold-to customer number")
+    bill_to_party: str = Field(default="", description="SAP bill-to party")
+    ship_to_party: str = Field(default="", description="SAP ship-to party")
+    end_customer: str = Field(default="", description="End customer SAP number")
+    end_customer_country: str = Field(default="", description="End customer country code")
+    purchase_order_number: str = Field(default="", description="Customer PO number")
+    purchase_order_date: str = Field(default="", description="Customer PO date")
+    incoterms_1: str = Field(default="", description="Incoterms code (EXW, FOB, etc.)")
+    incoterms_2: str = Field(default="", description="Incoterms location")
+    currency_code: str = Field(default="", description="Currency (CNY, EUR, USD)")
+    terms_of_payment: str = Field(default="", description="Payment terms code")
+    distribution_channel: str = Field(default="", description="Distribution channel")
+    application_coarse: str = Field(default="", description="Application coarse code")
+    application_fine: str = Field(default="", description="Application fine code")
+    business_type: str = Field(default="", description="Business type code")
+    classification_society: str = Field(default="", description="Classification society code")
+    emission_cert_authority: str = Field(default="", description="Emission cert authority")
+    billing_plan_rel: str = Field(default="", description="Billing plan relevance (X=yes)")
+    product_category: str = Field(default="", description="Product category code")
+    power_unit: str = Field(default="KW", description="Power unit (KW, HP)")
+
+
+class IPASPartner(BaseModel):
+    """Partner information from IPAS XML."""
+    type: str = Field(..., description="Partner role (Bill-to, Commercial_Contact)")
+    customer_code: str = Field(default="", description="Customer code")
+    name1: str = Field(default="", description="Name line 1")
+    name2: str = Field(default="", description="Name line 2")
+    country: str = Field(default="", description="Country")
+    city: str = Field(default="", description="City")
+    # Employee fields
+    partner_id: str = Field(default="", description="Employee partner ID")
+    first_name: str = Field(default="", description="First name")
+    last_name: str = Field(default="", description="Last name")
+    department: str = Field(default="", description="Department")
+    phone: str = Field(default="", description="Phone")
+    email: str = Field(default="", description="Email")
+
+
+class IPASOrder(BaseModel):
+    """Complete IPAS order parsed from XML — one order per file."""
+    document_properties: IPASDocumentProperties
+    header: IPASHeader
+    engines: List[IPASEngine] = Field(default_factory=list, description="Engines in this order")
+    partners: List[IPASPartner] = Field(default_factory=list, description="Partner information")
+
+    # Computed summary fields
+    total_engines: int = Field(default=0, description="Number of engines")
+    total_bom_items: int = Field(default=0, description="Total BOM items across all engines")
+    total_value: float = Field(default=0.0, description="Sum of gross prices for all engines")
+    source_file: str = Field(default="", description="Source XML filename")
+
+
+class IPASSummary(BaseModel):
+    """Summary of all IPAS orders available."""
+    total_orders: int = Field(default=0, description="Number of IPAS XML files parsed")
+    total_engines: int = Field(default=0, description="Total engines across all orders")
+    total_value: float = Field(default=0.0, description="Total value across all orders")
+    orders: List[Dict[str, Any]] = Field(default_factory=list, description="Order summaries")
+
 
 class SalesOrderProposal(BaseModel):
     """
@@ -199,6 +332,11 @@ class OpportunityData(BaseModel):
     assessed_at: Optional[datetime] = Field(None, description="Assessment timestamp")
     assessed_by: Optional[str] = Field(None, description="Agent/user who assessed")
 
+    # KYP compliance (populated by Aravo KYP check during qualification)
+    kyp_status: Optional[str] = Field(None, description="KYP outcome: APPROVED, CONDITIONAL, BLOCKED, PENDING, NOT_FOUND")
+    kyp_risk_rating: Optional[str] = Field(None, description="Aravo risk rating (Low, Medium, High, Very High)")
+    kyp_assessed_at: Optional[datetime] = Field(None, description="KYP assessment timestamp")
+
 
 class BOMData(BaseModel):
     """
@@ -251,6 +389,9 @@ class DDSummary(BaseModel):
     tasks_created: List[Dict[str, Any]] = Field(default_factory=list,
                                                   description="Just-in-time tasks raised (e.g., upload FAT)")
 
+    # KYP assessment (Tier 1 — from Aravo)
+    kyp_assessment: Optional[KYPAssessment] = Field(None, description="KYP compliance assessment from Aravo")
+
     # Metadata
     checked_at: datetime = Field(default_factory=datetime.utcnow, description="DD check timestamp")
     checked_by: str = Field(default="DueDiligenceAgent", description="Agent that performed checks")
@@ -298,6 +439,114 @@ class POVMetrics(BaseModel):
 
     # Metadata
     captured_at: datetime = Field(default_factory=datetime.utcnow, description="Metrics capture timestamp")
+
+
+# ============================================================================
+# KYP / Aravo Models (Know Your Partner - Due Diligence Tier 1)
+# ============================================================================
+
+class AravoEngagement(BaseModel):
+    """Single engagement row from Aravo KYP report."""
+    active: bool = Field(..., description="Whether the engagement is active")
+    third_party_id: str = Field(..., description="Aravo third party identifier")
+    third_party_name: str = Field(..., description="Third party company name")
+    proposer: str = Field(..., description="Person who proposed the engagement")
+    onboarding_status: str = Field(..., description="Third party onboarding status")
+    third_party_status: str = Field(..., description="Third party approval status")
+    ec_review_status: str = Field(..., description="Ethics & Compliance review status")
+    sec_review_status: str = Field(..., description="Security & Export Control review status")
+    risk_rating: str = Field(..., description="Engagement risk rating")
+    engagement_id: int = Field(..., description="Aravo engagement ID")
+    engagement_name: str = Field(..., description="Description of the engagement")
+    partner_type: str = Field(..., description="Customer or Supplier")
+
+
+class AravoReportMeta(BaseModel):
+    """Metadata from Aravo report API response."""
+    api_version: str = Field(..., description="Aravo API version")
+    data_size: int = Field(..., description="Number of report records")
+    report_id: str = Field(..., description="Aravo report ID")
+    report_name: str = Field(..., description="Report name")
+    etl_datetime: str = Field(..., description="Last ETL timestamp from Aravo")
+
+
+class KYPAssessment(BaseModel):
+    """
+    KYP (Know Your Partner) compliance assessment result.
+
+    Produced by querying the Aravo third-party risk management platform.
+    Used as Tier 1 validation during opportunity qualification (Epic 1).
+    Direct REST API call to Aravo — does NOT go through SAP CPI.
+    """
+    # Identification
+    customer_name: str = Field(..., description="Customer/partner name queried")
+    matched: bool = Field(..., description="Whether a match was found in Aravo")
+
+    # Aravo engagement data (populated if matched)
+    third_party_id: Optional[str] = Field(None, description="Aravo third party identifier")
+    engagement_id: Optional[int] = Field(None, description="Aravo engagement ID")
+    engagement_name: Optional[str] = Field(None, description="Engagement description")
+    partner_type: Optional[str] = Field(None, description="Customer or Supplier")
+    proposer: Optional[str] = Field(None, description="Engagement proposer")
+
+    # KYP status fields
+    onboarding_status: Optional[str] = Field(None, description="Onboarding lifecycle status")
+    third_party_status: Optional[str] = Field(None, description="Overall approval status")
+    risk_rating: Optional[str] = Field(None, description="Engagement risk rating")
+    ec_review_status: Optional[str] = Field(None, description="Ethics & Compliance review")
+    sec_review_status: Optional[str] = Field(None, description="Security & Export Control review")
+
+    # Assessment outcome
+    kyp_status: str = Field(..., description="KYP outcome: APPROVED, CONDITIONAL, BLOCKED, PENDING, NOT_FOUND")
+    issues: List[str] = Field(default_factory=list, description="KYP issues or conditions")
+    blocking: bool = Field(default=False, description="Whether KYP blocks proceeding")
+
+    # Metadata
+    assessed_at: datetime = Field(default_factory=datetime.utcnow, description="Assessment timestamp")
+    source: str = Field(default="Aravo", description="Source system")
+    report_etl_datetime: Optional[str] = Field(None, description="Aravo report ETL timestamp")
+
+
+class TwoTierValidationRequest(BaseModel):
+    """Request model for two-tier customer validation."""
+    customer: str = Field(..., min_length=1, max_length=100, description="Customer name or SAP ID")
+    order_value: float = Field(default=0.0, ge=0.0, description="Order value for credit check")
+
+
+class CustomerValidationRequest(BaseModel):
+    """Request model for customer validation via Due Diligence agent."""
+    customer_id: str = Field(..., min_length=1, max_length=20, description="Customer ID")
+    order_value: float = Field(default=0.0, ge=0.0, description="Order value for credit check")
+    sales_org: Optional[str] = Field(None, max_length=10, description="Sales organization")
+
+
+class TwoTierValidationResponse(BaseModel):
+    """
+    Combined two-tier customer validation response.
+
+    Tier 1: KYP Compliance Assessment (Aravo — external due diligence)
+    Tier 2: SAP/ECC Validation (transactional due diligence via CPI)
+    """
+    # Overall result
+    status: TwoTierValidationStatus = Field(..., description="Combined validation outcome")
+    customer: str = Field(..., description="Customer name or ID validated")
+
+    # Tier 1: KYP results
+    tier1_kyp: Optional[KYPAssessment] = Field(None, description="KYP compliance assessment from Aravo")
+
+    # Tier 2: SAP results (placeholder — implemented via CPI in TE-12)
+    tier2_sap: Optional[Dict[str, Any]] = Field(None, description="SAP master data and credit validation")
+
+    # Combined issues
+    issues: List[str] = Field(default_factory=list, description="All validation issues from both tiers")
+    conditions: List[str] = Field(default_factory=list, description="Conditions for proceeding")
+
+    # Metadata
+    validated_at: datetime = Field(default_factory=datetime.utcnow, description="Validation timestamp")
+    correlation_id: str = Field(
+        default_factory=lambda: f"val-{datetime.utcnow().strftime('%Y%m%d')}-{uuid.uuid4().hex[:8]}",
+        description="Validation correlation ID"
+    )
 
 
 # ============================================================================

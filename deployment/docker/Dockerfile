@@ -84,4 +84,4 @@ LABEL version="${BUILD_VERSION}" \
       maintainer="Kailash SDK Team"
 
 # Default command
-CMD ["python", "-m", "uvicorn", "src.new_project.core.gateway:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+CMD ["python", "-m", "uvicorn", "rrps_lead2cash.core.gateway:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]

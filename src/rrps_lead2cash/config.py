@@ -71,11 +71,20 @@ class AppConfig:
     # IPAS Configuration
     ipas_proxy_url: str = os.getenv("IPAS_PROXY_URL")
     ipas_timeout: int = int(os.getenv("IPAS_TIMEOUT", "30"))
+    ipas_xml_dir: str = os.getenv("IPAS_XML_DIR", "")
 
     # MS5/ECC Configuration
     ms5_sales_org: str = os.getenv("MS5_SALES_ORG", "1000")
     ms5_dist_channel: str = os.getenv("MS5_DIST_CHANNEL", "10")
     ms5_division: str = os.getenv("MS5_DIVISION", "00")
+
+    # Aravo KYP Configuration (Direct REST API — NOT via CPI)
+    aravo_base_url: str = os.getenv("ARAVO_BASE_URL", "https://prod.aravo.co.uk")
+    aravo_api_version: str = os.getenv("ARAVO_API_VERSION", "v5.0")
+    aravo_report_id: str = os.getenv("ARAVO_REPORT_ID", "")
+    aravo_auth_token: str = os.getenv("ARAVO_AUTH_TOKEN", "")  # Pre-encoded Basic Auth token
+    aravo_timeout: int = int(os.getenv("ARAVO_TIMEOUT", "30"))
+    aravo_verify_ssl: bool = os.getenv("ARAVO_VERIFY_SSL", "True").lower() == "true"
 
     # POV Configuration
     pov_pilot_mode: bool = os.getenv("POV_PILOT_MODE", "True").lower() == "true"
@@ -108,6 +117,10 @@ class AppConfig:
     def get_api_url(self) -> str:
         """Get full API URL."""
         return f"http://{self.api_host}:{self.api_port}{self.api_prefix}"
+
+    def get_aravo_report_url(self) -> str:
+        """Get Aravo KYP report endpoint URL."""
+        return f"{self.aravo_base_url}/aems/restservices/{self.aravo_api_version}/reports/{self.aravo_report_id}"
 
 
 # Global configuration instance
