@@ -1,0 +1,2490 @@
+[
+  {
+    "id": "AUTH-0001",
+    "title": "No-auth rejected: summary",
+    "stage": "1. Auth & Security",
+    "description": "Verify /api/v1/ipas/summary rejects requests without API key",
+    "steps": [
+      "GET /api/v1/ipas/summary (no X-API-Key header)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 90.31819994561374,
+    "findings": [
+      "Code: 401 \u2014 BLOCKED"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0002",
+    "title": "No-auth rejected: summary",
+    "stage": "1. Auth & Security",
+    "description": "Verify /api/v1/finops/summary rejects requests without API key",
+    "steps": [
+      "GET /api/v1/finops/summary (no X-API-Key header)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 45.000000041909516,
+    "findings": [
+      "Code: 401 \u2014 BLOCKED"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0003",
+    "title": "No-auth rejected: BatamFast",
+    "stage": "1. Auth & Security",
+    "description": "Verify /api/v1/validation/kyp/BatamFast rejects requests without API key",
+    "steps": [
+      "GET /api/v1/validation/kyp/BatamFast (no X-API-Key header)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 61.03069998789579,
+    "findings": [
+      "Code: 401 \u2014 BLOCKED"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0004",
+    "title": "No-auth rejected: agents",
+    "stage": "1. Auth & Security",
+    "description": "Verify /api/v1/agents rejects requests without API key",
+    "steps": [
+      "GET /api/v1/agents (no X-API-Key header)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 51.22330004815012,
+    "findings": [
+      "Code: 401 \u2014 BLOCKED"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0005",
+    "title": "No-auth rejected: cpi-config",
+    "stage": "1. Auth & Security",
+    "description": "Verify /api/v1/debug/cpi-config rejects requests without API key",
+    "steps": [
+      "GET /api/v1/debug/cpi-config (no X-API-Key header)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 63.71200003195554,
+    "findings": [
+      "Code: 401 \u2014 BLOCKED"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0006",
+    "title": "No-auth rejected: status",
+    "stage": "1. Auth & Security",
+    "description": "Verify /api/v1/marine-intel/status rejects requests without API key",
+    "steps": [
+      "GET /api/v1/marine-intel/status (no X-API-Key header)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 47.96779993921518,
+    "findings": [
+      "Code: 401 \u2014 BLOCKED"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0007",
+    "title": "Public endpoint: /health",
+    "stage": "1. Auth & Security",
+    "description": "Verify /health is accessible without auth",
+    "steps": [
+      "GET /health (no auth)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 60.15939998906106,
+    "findings": [
+      "Code: 200"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0008",
+    "title": "Invalid API key rejected",
+    "stage": "1. Auth & Security",
+    "description": "Verify invalid API key is rejected",
+    "steps": [
+      "GET /api/v1/ipas/summary with wrong X-API-Key"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 38.200899958610535,
+    "findings": [
+      "Code: 401"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0009",
+    "title": "Empty API key rejected",
+    "stage": "1. Auth & Security",
+    "description": "Verify empty API key is rejected",
+    "steps": [
+      "GET /api/v1/ipas/summary with empty X-API-Key"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.568300012499094,
+    "findings": [
+      "Code: 401"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0010",
+    "title": "Auth/me returns service account",
+    "stage": "1. Auth & Security",
+    "description": "API-key-only requests should resolve to service account",
+    "steps": [
+      "GET /api/v1/auth/me"
+    ],
+    "passed": "api-service",
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.104100060649216,
+    "findings": [
+      "Code: 200, user: api-service"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0011",
+    "title": "Login rejects bad credentials",
+    "stage": "1. Auth & Security",
+    "description": "Login endpoint should reject invalid credentials",
+    "steps": [
+      "POST /api/v1/auth/login {admin/wrong}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.101299996487796,
+    "findings": [
+      "Code: 401"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0012",
+    "title": "PUT rejected on GET endpoint",
+    "stage": "1. Auth & Security",
+    "description": "Read-only endpoint should reject PUT",
+    "steps": [
+      "PUT /api/v1/ipas/orders"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 13.684599893167615,
+    "findings": [
+      "Code: 405"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0013",
+    "title": "DELETE rejected on GET endpoint",
+    "stage": "1. Auth & Security",
+    "description": "Read-only endpoint should reject DELETE",
+    "steps": [
+      "DELETE /api/v1/ipas/orders"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.934000024572015,
+    "findings": [
+      "Code: 405"
+    ],
+    "error": null
+  },
+  {
+    "id": "AUTH-0014",
+    "title": "PATCH rejected on GET endpoint",
+    "stage": "1. Auth & Security",
+    "description": "Read-only endpoint should reject PATCH",
+    "steps": [
+      "PATCH /api/v1/ipas/orders"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.039899921044707,
+    "findings": [
+      "Code: 405"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0015",
+    "title": "Schema: health",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /health \u2014 verify response has required fields",
+    "steps": [
+      "GET /health",
+      "Check 3 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.879199935123324,
+    "findings": [
+      "Code: 200",
+      "All 3 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0016",
+    "title": "Schema: metrics",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /metrics \u2014 verify response has required fields",
+    "steps": [
+      "GET /metrics",
+      "Check 2 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.597099951468408,
+    "findings": [
+      "Code: 200",
+      "All 2 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0017",
+    "title": "Schema: status",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/status \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/status",
+      "Check 4 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.57459999155253,
+    "findings": [
+      "Code: 200",
+      "All 4 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0018",
+    "title": "Schema: agents",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/agents \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/agents",
+      "Check 3 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.947499920614064,
+    "findings": [
+      "Code: 200",
+      "All 3 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0019",
+    "title": "Schema: summary",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/ipas/summary \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/ipas/summary",
+      "Check 4 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.422299969941378,
+    "findings": [
+      "Code: 200",
+      "All 4 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0020",
+    "title": "Schema: orders",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/ipas/orders \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/ipas/orders",
+      "Check 2 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 23.651600000448525,
+    "findings": [
+      "Code: 200",
+      "All 2 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0021",
+    "title": "Schema: 1207814",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/ipas/orders/1207814 \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/ipas/orders/1207814",
+      "Check 4 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 20.58080001734197,
+    "findings": [
+      "Code: 200",
+      "All 4 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0022",
+    "title": "Schema: summary",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/finops/summary \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/finops/summary",
+      "Check 5 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 28.843399952165782,
+    "findings": [
+      "Code: 200",
+      "All 5 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0023",
+    "title": "Schema: billing",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/finops/billing \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/finops/billing",
+      "Check 4 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 21.27440006006509,
+    "findings": [
+      "Code: 200",
+      "All 4 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0024",
+    "title": "Schema: aging",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/finops/aging \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/finops/aging",
+      "Check 3 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.21640001051128,
+    "findings": [
+      "Code: 200",
+      "All 3 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0025",
+    "title": "Schema: collections",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/finops/collections \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/finops/collections",
+      "Check 3 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.59959997050464,
+    "findings": [
+      "Code: 200",
+      "All 3 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0026",
+    "title": "Schema: health",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/scheduler/health \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/scheduler/health",
+      "Check 3 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 103.70760003570467,
+    "findings": [
+      "Code: 200",
+      "All 3 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0027",
+    "title": "Schema: jobs",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/scheduler/jobs \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/scheduler/jobs",
+      "Check 1 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 23.566599935293198,
+    "findings": [
+      "Code: 200",
+      "All 1 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0028",
+    "title": "Schema: history",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/scheduler/history \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/scheduler/history",
+      "Check 1 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.473099964670837,
+    "findings": [
+      "Code: 200",
+      "All 1 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0029",
+    "title": "Schema: status",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/marine-intel/status \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/marine-intel/status",
+      "Check 3 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 26.82579995598644,
+    "findings": [
+      "Code: 200",
+      "All 3 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0030",
+    "title": "Schema: opportunities",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/marine-intel/opportunities \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/marine-intel/opportunities",
+      "Check 2 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 54.317599977366626,
+    "findings": [
+      "Code: 200",
+      "All 2 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0031",
+    "title": "Schema: articles",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/marine-intel/articles?limit=3 \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/marine-intel/articles?limit=3",
+      "Check 2 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 28.552599949762225,
+    "findings": [
+      "Code: 200",
+      "All 2 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0032",
+    "title": "Schema: accounts",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/marine-intel/accounts \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/marine-intel/accounts",
+      "Check 2 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.43570005055517,
+    "findings": [
+      "Code: 200",
+      "All 2 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0033",
+    "title": "Schema: status",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/competitor-intel/status \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/competitor-intel/status",
+      "Check 2 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 98.02420006599277,
+    "findings": [
+      "Code: 200",
+      "All 2 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0034",
+    "title": "Schema: stats",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/intelligence/stats \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/intelligence/stats",
+      "Check 2 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 85.63830005005002,
+    "findings": [
+      "Code: 200",
+      "All 2 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0035",
+    "title": "Schema: competitors",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/insights/competitors \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/insights/competitors",
+      "Check 1 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 5689.698399975896,
+    "findings": [
+      "Code: 200",
+      "All 1 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0036",
+    "title": "Schema: industry",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/insights/industry \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/insights/industry",
+      "Check 1 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 6630.950100021437,
+    "findings": [
+      "Code: 200",
+      "All 1 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0037",
+    "title": "Schema: entity-registry",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/debug/entity-registry \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/debug/entity-registry",
+      "Check 1 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 98.30109996255487,
+    "findings": [
+      "Code: 200",
+      "All 1 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0038",
+    "title": "Schema: cpi-config",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/debug/cpi-config \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/debug/cpi-config",
+      "Check 1 required fields"
+    ],
+    "passed": false,
+    "category": "SCHEMA_FAIL",
+    "severity": "MEDIUM",
+    "response_time_ms": 13.514599995687604,
+    "findings": [
+      "Code: 200",
+      "MISSING: success"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0039",
+    "title": "Schema: me",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/auth/me \u2014 verify response has required fields",
+    "steps": [
+      "GET /api/v1/auth/me",
+      "Check 1 required fields"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.04460005182773,
+    "findings": [
+      "Code: 200",
+      "All 1 fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0040",
+    "title": "Schema: {name}",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/validation/kyp/BatamFast \u2014 verify response + nested schemas",
+    "steps": [
+      "GET /api/v1/validation/kyp/BatamFast",
+      "Check fields + nested objects"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.2304000146687,
+    "findings": [
+      "Code: 200",
+      "All fields valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0041",
+    "title": "Schema: cpi-kyp",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/debug/cpi-kyp?customer_id=0022005992 \u2014 verify response + nested schemas",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992",
+      "Check fields + nested objects"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 1126.6147999558598,
+    "findings": [
+      "Code: 200",
+      "All fields valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0042",
+    "title": "Schema: cpi-search",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "GET /api/v1/debug/cpi-search?name=ST+Engineering \u2014 verify response + nested schemas",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=ST+Engineering",
+      "Check fields + nested objects"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 606.887299916707,
+    "findings": [
+      "Code: 200",
+      "All fields valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "SCH-0043",
+    "title": "Schema: validate",
+    "stage": "2. Schema Validation (All Endpoints)",
+    "description": "POST /api/v1/validation/validate \u2014 verify response + nested schemas",
+    "steps": [
+      "POST /api/v1/validation/validate",
+      "Check fields + nested objects"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 776.71859995462,
+    "findings": [
+      "Code: 200",
+      "All fields valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0044",
+    "title": "Resolve: 'ST Engineering'",
+    "stage": "3. Customer Resolution",
+    "description": "Known customer 'ST Engineering' (SAP 0022005992) should be resolvable",
+    "steps": [
+      "GET /api/v1/validation/kyp/ST Engineering"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 46.687499969266355,
+    "findings": [
+      "KYP status: NOT_FOUND, code: 200"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0045",
+    "title": "Resolve: 'Batam Fast Ferry'",
+    "stage": "3. Customer Resolution",
+    "description": "Known customer 'Batam Fast Ferry' (SAP 0000100001) should be resolvable",
+    "steps": [
+      "GET /api/v1/validation/kyp/Batam Fast Ferry"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.32329998072237,
+    "findings": [
+      "KYP status: REQUIRES_EDD, code: 200"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0046",
+    "title": "Resolve: 'SSZ Suzhou'",
+    "stage": "3. Customer Resolution",
+    "description": "Known customer 'SSZ Suzhou' (SAP 0022049826) should be resolvable",
+    "steps": [
+      "GET /api/v1/validation/kyp/SSZ Suzhou"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 40.61219992581755,
+    "findings": [
+      "KYP status: NOT_FOUND, code: 200"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0047",
+    "title": "Resolve: 'Maersk'",
+    "stage": "3. Customer Resolution",
+    "description": "Known customer 'Maersk' (SAP 0000100002) should be resolvable",
+    "steps": [
+      "GET /api/v1/validation/kyp/Maersk"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 44.998600031249225,
+    "findings": [
+      "KYP status: NOT_FOUND, code: 200"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0048",
+    "title": "CPI search: 'ST Engineering'",
+    "stage": "3. Customer Resolution",
+    "description": "SAP CPI customer search for 'ST Engineering'",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=ST Engineering"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 451.0351000353694,
+    "findings": [
+      "Found 1 customers, expected match: True"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0049",
+    "title": "CPI search: 'Batam'",
+    "stage": "3. Customer Resolution",
+    "description": "SAP CPI customer search for 'Batam'",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=Batam"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 460.6675000395626,
+    "findings": [
+      "Found 1 customers, expected match: True"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0050",
+    "title": "Misspelled: 'Batam Fats Ferry'",
+    "stage": "3. Customer Resolution",
+    "description": "Does fuzzy matching resolve misspelled 'Batam Fats Ferry'?",
+    "steps": [
+      "GET /api/v1/validation/kyp/Batam Fats Ferry"
+    ],
+    "passed": true,
+    "category": "DESIGN_FLAW",
+    "severity": "LOW",
+    "response_time_ms": 44.17450004257262,
+    "findings": [
+      "KYP: NOT_FOUND \u2014 NOT resolved (no fuzzy match)"
+    ],
+    "error": null
+  },
+  {
+    "id": "RES-0051",
+    "title": "Misspelled: 'St Enginering'",
+    "stage": "3. Customer Resolution",
+    "description": "Does fuzzy matching resolve misspelled 'St Enginering'?",
+    "steps": [
+      "GET /api/v1/validation/kyp/St Enginering"
+    ],
+    "passed": true,
+    "category": "DESIGN_FLAW",
+    "severity": "LOW",
+    "response_time_ms": 35.22689989767969,
+    "findings": [
+      "KYP: NOT_FOUND \u2014 NOT resolved (no fuzzy match)"
+    ],
+    "error": null
+  },
+  {
+    "id": "KYP-0052",
+    "title": "KYP status: 'batamfast' = REQUIRES_EDD",
+    "stage": "4. KYP Compliance",
+    "description": "Verify KYP returns 'REQUIRES_EDD' for known customer 'batamfast'",
+    "steps": [
+      "GET /api/v1/validation/kyp/batamfast"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 34.49649992398918,
+    "findings": [
+      "Expected: REQUIRES_EDD, Got: REQUIRES_EDD"
+    ],
+    "error": null
+  },
+  {
+    "id": "KYP-0053",
+    "title": "KYP status: 'blocked marine' = BLOCKED",
+    "stage": "4. KYP Compliance",
+    "description": "Verify KYP returns 'BLOCKED' for known customer 'blocked marine'",
+    "steps": [
+      "GET /api/v1/validation/kyp/blocked marine"
+    ],
+    "passed": false,
+    "category": "DATA_WRONG",
+    "severity": "HIGH",
+    "response_time_ms": 34.92770006414503,
+    "findings": [
+      "Expected: BLOCKED, Got: NOT_FOUND"
+    ],
+    "error": null
+  },
+  {
+    "id": "KYP-0054",
+    "title": "KYP data quality: BatamFast",
+    "stage": "4. KYP Compliance",
+    "description": "BatamFast KYP should have real findings (issues, conditions, risk rating)",
+    "steps": [
+      "Check assessment.issues, conditions, risk_rating"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Issues: 4, Conditions: 5, Risk: MEDIUM"
+    ],
+    "error": null
+  },
+  {
+    "id": "KYP-0055",
+    "title": "Two-tier reflects KYP (BatamFast)",
+    "stage": "4. KYP Compliance",
+    "description": "Tier1 KYP in two-tier validation should match standalone KYP check",
+    "steps": [
+      "Compare /validation/kyp/BatamFast with /validation/validate tier1_kyp"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 776.2668000068516,
+    "findings": [
+      "Tier1 status: CONDITIONAL - EDD Required"
+    ],
+    "error": null
+  },
+  {
+    "id": "KYP-0056",
+    "title": "Blocked customer blocks validation",
+    "stage": "4. KYP Compliance",
+    "description": "Blocked marine customer should not be allowed to proceed",
+    "steps": [
+      "POST /validation/validate {blocked marine}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 856.0583000071347,
+    "findings": [
+      "can_proceed: False, overall: BLOCKED"
+    ],
+    "error": null
+  },
+  {
+    "id": "CRD-0057",
+    "title": "Credit source: ST Engineering via CPIClient",
+    "stage": "5. Credit Assessment",
+    "description": "Credit data for ST Engineering should come from real SAP CPI, not simulator",
+    "steps": [
+      "GET /debug/cpi-kyp?customer_id=0022005992"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 453.55810003820807,
+    "findings": [
+      "Source: CPIClient \u2014 REAL CPI"
+    ],
+    "error": null
+  },
+  {
+    "id": "CRD-0058",
+    "title": "Credit math: ST Engineering",
+    "stage": "5. Credit Assessment",
+    "description": "available_credit should equal credit_limit - credit_exposure",
+    "steps": [
+      "limit=100,000, exposure=0, available=100,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Expected available: 100,000, Got: 100,000, Diff: 0"
+    ],
+    "error": null
+  },
+  {
+    "id": "CRD-0059",
+    "title": "Customer country: ST Engineering",
+    "stage": "5. Credit Assessment",
+    "description": "CPI customer country should be 'SG'",
+    "steps": [
+      "Check customer.country"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Expected: SG, Got: SG"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0060",
+    "title": "IPAS has pending orders",
+    "stage": "6. IPAS Orders",
+    "description": "System should have parsed IPAS XML files into pending orders",
+    "steps": [
+      "GET /api/v1/ipas/summary"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 28.946099919267,
+    "findings": [
+      "Pending: 2 (expected >= 2: STE + SSZ)"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0061",
+    "title": "Order 1207814: engine type",
+    "stage": "6. IPAS Orders",
+    "description": "Order 1207814 should have engine type containing '8V2000M72'",
+    "steps": [
+      "GET /api/v1/ipas/orders/1207814",
+      "Check engines[].engine_type"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.917699947953224,
+    "findings": [
+      "Engine match: True, engines: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0062",
+    "title": "Order 1207814: sold-to party",
+    "stage": "6. IPAS Orders",
+    "description": "Sold-to should be 0022005992",
+    "steps": [
+      "Check customers.sold_to_party"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "MEDIUM",
+    "response_time_ms": 0,
+    "findings": [
+      "Expected: 0022005992, Got: 0022005992"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0063",
+    "title": "Order 1207814: value range",
+    "stage": "6. IPAS Orders",
+    "description": "Value should be 50,000-200,000 EUR",
+    "steps": [
+      "Check total value from engines"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Value: 62,630.00 EUR"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0064",
+    "title": "Order 1207814: BOM items",
+    "stage": "6. IPAS Orders",
+    "description": "Engine should have material BOM items",
+    "steps": [
+      "Check engines[].items"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "3 BOM items"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0065",
+    "title": "Order 1299003: engine type",
+    "stage": "6. IPAS Orders",
+    "description": "Order 1299003 should have engine type containing '12V2000G65SZ'",
+    "steps": [
+      "GET /api/v1/ipas/orders/1299003",
+      "Check engines[].engine_type"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.965099981054664,
+    "findings": [
+      "Engine match: True, engines: 2"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0066",
+    "title": "Order 1299003: sold-to party",
+    "stage": "6. IPAS Orders",
+    "description": "Sold-to should be 0022049826",
+    "steps": [
+      "Check customers.sold_to_party"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "MEDIUM",
+    "response_time_ms": 0,
+    "findings": [
+      "Expected: 0022049826, Got: 0022049826"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0067",
+    "title": "Order 1299003: value range",
+    "stage": "6. IPAS Orders",
+    "description": "Value should be 300,000-1,000,000 CNY",
+    "steps": [
+      "Check total value from engines"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Value: 682,644.24 CNY"
+    ],
+    "error": null
+  },
+  {
+    "id": "IPAS-0068",
+    "title": "Order 1299003: BOM items",
+    "stage": "6. IPAS Orders",
+    "description": "Engine should have material BOM items",
+    "steps": [
+      "Check engines[].items"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "2 BOM items"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0069",
+    "title": "Billing has items",
+    "stage": "7. FinOps",
+    "description": "FinOps billing should have simulated billing documents",
+    "steps": [
+      "GET /api/v1/finops/billing"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.210799946449697,
+    "findings": [
+      "13 billing items"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0070",
+    "title": "Milestones sum: 3228005112",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005112 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005112"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "2 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0071",
+    "title": "Milestones sum: 3228005113",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005113 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005113"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "1 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0072",
+    "title": "Milestones sum: 3228005117",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005117 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005117"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "1 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0073",
+    "title": "Milestones sum: 3228005114",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005114 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005114"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "3 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0074",
+    "title": "Milestones sum: 3228005115",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005115 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005115"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "2 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0075",
+    "title": "Milestones sum: 3228005116",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005116 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005116"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "2 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0076",
+    "title": "Milestones sum: 3228005118",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005118 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005118"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "1 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0077",
+    "title": "Milestones sum: 3228005119",
+    "stage": "7. FinOps",
+    "description": "Invoice 3228005119 milestones should sum to ~100%",
+    "steps": [
+      "Sum milestones[].percentage for 3228005119"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "1 milestones, sum=100% OK"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0078",
+    "title": "Aging math: CURRENT",
+    "stage": "7. FinOps",
+    "description": "Aging bucket CURRENT: count and amount should be consistent",
+    "steps": [
+      "Bucket CURRENT: count=7, amount=3,074,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Count: 7, Amount: 3,074,000 \u2014 consistent"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0079",
+    "title": "Aging math: 1-30",
+    "stage": "7. FinOps",
+    "description": "Aging bucket 1-30: count and amount should be consistent",
+    "steps": [
+      "Bucket 1-30: count=1, amount=95,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Count: 1, Amount: 95,000 \u2014 consistent"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0080",
+    "title": "Aging math: 30+",
+    "stage": "7. FinOps",
+    "description": "Aging bucket 30+: count and amount should be consistent",
+    "steps": [
+      "Bucket 30+: count=5, amount=327,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Count: 5, Amount: 327,000 \u2014 consistent"
+    ],
+    "error": null
+  },
+  {
+    "id": "FIN-0081",
+    "title": "Summary vs items: overdue count",
+    "stage": "7. FinOps",
+    "description": "Summary overdue_count should match count of OVERDUE billing items",
+    "steps": [
+      "Summary says 6 overdue, billing items have 6 OVERDUE"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Summary: 6, Actual: 6"
+    ],
+    "error": null
+  },
+  {
+    "id": "CHAT-0082",
+    "title": "Chat endpoint responds",
+    "stage": "8. Chat Agent (Primary UI)",
+    "description": "POST /api/v1/chat should accept messages (even if LLM is down)",
+    "steps": [
+      "POST /api/v1/chat {message: 'hello'}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 487.8281999845058,
+    "findings": [
+      "type: error, session: True"
+    ],
+    "error": null
+  },
+  {
+    "id": "CHAT-0083",
+    "title": "Chat LLM backend functional",
+    "stage": "8. Chat Agent (Primary UI)",
+    "description": "Chat should generate AI responses (not just errors)",
+    "steps": [
+      "Check response.type != 'error'"
+    ],
+    "passed": false,
+    "category": "BROKEN",
+    "severity": "CRITICAL",
+    "response_time_ms": 0,
+    "findings": [
+      "Type: error, Error: OpenAI API error: 401 - {\n  \"error\": {\n    \"message\": \"Incorrect API key provided: sk-proj-*********"
+    ],
+    "error": null
+  },
+  {
+    "id": "CHAT-0084",
+    "title": "Chat query: credit",
+    "stage": "8. Chat Agent (Primary UI)",
+    "description": "Sales query: 'What is the credit status of ST Engineering?'",
+    "steps": [
+      "POST /api/v1/chat {message: 'What is the credit status of ST Engineering?'}"
+    ],
+    "passed": true,
+    "category": "BUG",
+    "severity": "INFO",
+    "response_time_ms": 292.3445999622345,
+    "findings": [
+      "Type: error, has_response: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "CHAT-0085",
+    "title": "Chat query: orders",
+    "stage": "8. Chat Agent (Primary UI)",
+    "description": "Sales query: 'Show me pending IPAS orders'",
+    "steps": [
+      "POST /api/v1/chat {message: 'Show me pending IPAS orders'}"
+    ],
+    "passed": true,
+    "category": "BUG",
+    "severity": "INFO",
+    "response_time_ms": 306.28030002117157,
+    "findings": [
+      "Type: error, has_response: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "CHAT-0086",
+    "title": "Chat query: compliance",
+    "stage": "8. Chat Agent (Primary UI)",
+    "description": "Sales query: 'Check compliance for BatamFast'",
+    "steps": [
+      "POST /api/v1/chat {message: 'Check compliance for BatamFast'}"
+    ],
+    "passed": true,
+    "category": "BUG",
+    "severity": "INFO",
+    "response_time_ms": 265.045200008899,
+    "findings": [
+      "Type: error, has_response: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "AGT-0087",
+    "title": "Agent registry populated",
+    "stage": "9. Agent Orchestration",
+    "description": "System should have registered AI agents",
+    "steps": [
+      "GET /api/v1/agents"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 22.466400056146085,
+    "findings": [
+      "8 agents: ['DueDiligenceAgent', 'CompetitorIntelAgent', 'WebSearchAgent', 'MarineIntelAgent', 'KnowledgeBaseAgent', 'EntityResolutionAgent', 'BillingCollectionsAgent', 'SalesOpsAgent']"
+    ],
+    "error": null
+  },
+  {
+    "id": "AGT-0088",
+    "title": "Due diligence agent: ST Engineering",
+    "stage": "9. Agent Orchestration",
+    "description": "Due diligence agent should validate customer without errors",
+    "steps": [
+      "POST /agents/due-diligence/validate {customer_id: 0022005992}"
+    ],
+    "passed": false,
+    "category": "BROKEN",
+    "severity": "HIGH",
+    "response_time_ms": 19.606800051406026,
+    "findings": [
+      "Status: completed, can_proceed: False, BUG: asyncio.run() cannot be called from a running event loop"
+    ],
+    "error": null
+  },
+  {
+    "id": "AGT-0089",
+    "title": "Competitor intel query",
+    "stage": "9. Agent Orchestration",
+    "description": "Competitor intelligence should answer queries about competitors",
+    "steps": [
+      "POST /competitor-intel/query {query: 'Caterpillar marine engines'}"
+    ],
+    "passed": false,
+    "category": "BROKEN",
+    "severity": "MEDIUM",
+    "response_time_ms": 356.08039994258434,
+    "findings": [
+      "Code: 500, detail: An error occurred while querying competitor intelligence. Please try again or contact support."
+    ],
+    "error": null
+  },
+  {
+    "id": "AGT-0090",
+    "title": "Knowledge base: intelligence/ask",
+    "stage": "9. Agent Orchestration",
+    "description": "Knowledge base should answer questions about RRPS products",
+    "steps": [
+      "POST /intelligence/ask {question: 'What marine engines does RRPS offer?'}"
+    ],
+    "passed": false,
+    "category": "BROKEN",
+    "severity": "HIGH",
+    "response_time_ms": 368.49200003780425,
+    "findings": [
+      "Answer preview: Error generating answer: 401..."
+    ],
+    "error": null
+  },
+  {
+    "id": "AGT-0091",
+    "title": "Workflow: customer_validation",
+    "stage": "9. Agent Orchestration",
+    "description": "Customer validation workflow should execute successfully",
+    "steps": [
+      "POST /workflows/customer_validation/execute"
+    ],
+    "passed": false,
+    "category": "BROKEN",
+    "severity": "MEDIUM",
+    "response_time_ms": 190.67489996086806,
+    "findings": [
+      "Code: 500, detail: An error occurred while executing workflow customer_validation. Please try again or contact support."
+    ],
+    "error": null
+  },
+  {
+    "id": "INT-0092",
+    "title": "Marine intel: recent articles exist",
+    "stage": "10. Intelligence Modules",
+    "description": "Marine intel should have recent articles from RSS feeds",
+    "steps": [
+      "GET /marine-intel/articles?limit=5"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 23.334700032137334,
+    "findings": [
+      "5 articles, 5 from last 20 days"
+    ],
+    "error": null
+  },
+  {
+    "id": "INT-0093",
+    "title": "Marine intel: opportunities exist",
+    "stage": "10. Intelligence Modules",
+    "description": "Marine intel should have scraped market opportunities",
+    "steps": [
+      "GET /marine-intel/opportunities"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 78.17660004366189,
+    "findings": [
+      "50 opportunities"
+    ],
+    "error": null
+  },
+  {
+    "id": "INT-0094",
+    "title": "Marine intel: semantic search",
+    "stage": "10. Intelligence Modules",
+    "description": "Semantic search over marine articles",
+    "steps": [
+      "POST /marine-intel/search {query: 'Singapore ferry'}"
+    ],
+    "passed": false,
+    "category": "BROKEN",
+    "severity": "MEDIUM",
+    "response_time_ms": 155.927799991332,
+    "findings": [
+      "Code: 500, Error: An error occurred while semantic search. Please try again or contact support."
+    ],
+    "error": null
+  },
+  {
+    "id": "INT-0095",
+    "title": "Insights search: MTU marine",
+    "stage": "10. Intelligence Modules",
+    "description": "Industry insights search should return results",
+    "steps": [
+      "POST /insights/search {query: 'MTU marine diesel engines'}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 9764.077999978326,
+    "findings": [
+      "Code: 200"
+    ],
+    "error": null
+  },
+  {
+    "id": "INT-0096",
+    "title": "Scheduler: jobs healthy",
+    "stage": "10. Intelligence Modules",
+    "description": "Background schedulers should be running and healthy",
+    "steps": [
+      "GET /scheduler/health"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 29.97170004528016,
+    "findings": [
+      "Health: healthy, 11/11 healthy"
+    ],
+    "error": null
+  },
+  {
+    "id": "INT-0097",
+    "title": "Scheduler: recent executions",
+    "stage": "10. Intelligence Modules",
+    "description": "Scheduler should have recent job execution history",
+    "steps": [
+      "GET /scheduler/history"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.85179995931685,
+    "findings": [
+      "20 total entries, 5 from today/yesterday"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0098",
+    "title": "IPAS date valid: 1299003.delivery_date",
+    "stage": "11. Data Correctness & Math",
+    "description": "Order 1299003 delivery_date should be valid ISO date in 2020-2027",
+    "steps": [
+      "Parse delivery_date: '20200810'"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "delivery_date: 20200810 \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0099",
+    "title": "IPAS date valid: 1299003.document_date",
+    "stage": "11. Data Correctness & Math",
+    "description": "Order 1299003 document_date should be valid ISO date in 2020-2027",
+    "steps": [
+      "Parse document_date: '20200522'"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "document_date: 20200522 \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0100",
+    "title": "IPAS date valid: 1207814.delivery_date",
+    "stage": "11. Data Correctness & Math",
+    "description": "Order 1207814 delivery_date should be valid ISO date in 2020-2027",
+    "steps": [
+      "Parse delivery_date: '20250630'"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "delivery_date: 20250630 \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0101",
+    "title": "IPAS date valid: 1207814.document_date",
+    "stage": "11. Data Correctness & Math",
+    "description": "Order 1207814 document_date should be valid ISO date in 2020-2027",
+    "steps": [
+      "Parse document_date: '20250115'"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "document_date: 20250115 \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0102",
+    "title": "Billing amounts all positive",
+    "stage": "11. Data Correctness & Math",
+    "description": "All billing amounts should be > 0",
+    "steps": [
+      "Check 13 billing items for negative amounts"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "0 negative amounts out of 13"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0103",
+    "title": "Currency valid: 3228005112",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'SGD' should be a known currency code",
+    "steps": [
+      "Check currency: SGD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: SGD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0104",
+    "title": "Currency valid: 3228005113",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'SGD' should be a known currency code",
+    "steps": [
+      "Check currency: SGD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: SGD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0105",
+    "title": "Currency valid: 3228005117",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'SGD' should be a known currency code",
+    "steps": [
+      "Check currency: SGD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: SGD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0106",
+    "title": "Currency valid: 3228005114",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'EUR' should be a known currency code",
+    "steps": [
+      "Check currency: EUR"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: EUR \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0107",
+    "title": "Currency valid: 3228005115",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'USD' should be a known currency code",
+    "steps": [
+      "Check currency: USD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: USD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0108",
+    "title": "Currency valid: 3228005116",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'EUR' should be a known currency code",
+    "steps": [
+      "Check currency: EUR"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: EUR \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0109",
+    "title": "Currency valid: 3228005118",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'SGD' should be a known currency code",
+    "steps": [
+      "Check currency: SGD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: SGD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0110",
+    "title": "Currency valid: 3228005119",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'EUR' should be a known currency code",
+    "steps": [
+      "Check currency: EUR"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: EUR \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0111",
+    "title": "Currency valid: 9200000001",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'SGD' should be a known currency code",
+    "steps": [
+      "Check currency: SGD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: SGD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0112",
+    "title": "Currency valid: 9200000002",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'SGD' should be a known currency code",
+    "steps": [
+      "Check currency: SGD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: SGD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0113",
+    "title": "Currency valid: 9200000003",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'EUR' should be a known currency code",
+    "steps": [
+      "Check currency: EUR"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: EUR \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0114",
+    "title": "Currency valid: 9200000004",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'EUR' should be a known currency code",
+    "steps": [
+      "Check currency: EUR"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: EUR \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0115",
+    "title": "Currency valid: 9200000005",
+    "stage": "11. Data Correctness & Math",
+    "description": "Billing currency 'USD' should be a known currency code",
+    "steps": [
+      "Check currency: USD"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Currency: USD \u2014 valid"
+    ],
+    "error": null
+  },
+  {
+    "id": "DATA-0116",
+    "title": "Credit utilization reasonable",
+    "stage": "11. Data Correctness & Math",
+    "description": "Credit utilization should be 0-100%",
+    "steps": [
+      "Check utilization: 0.0%"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Utilization: 0.0%"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0117",
+    "title": "CPI status matches actual client",
+    "stage": "12. Cross-Module Consistency",
+    "description": "Status says CPI is connected; debug endpoint should use CPIClient not simulator",
+    "steps": [
+      "Status CPI: configured/True",
+      "Debug CPI type: CPIClient"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Status: configured, Connected: True, Client: CPIClient"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0118",
+    "title": "IPAS summary matches order list",
+    "stage": "12. Cross-Module Consistency",
+    "description": "IPAS summary pending_count should match /ipas/orders count",
+    "steps": [
+      "Summary: 2, Orders: 2"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Summary: 2, Actual: 2"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0119",
+    "title": "Metrics SAP config matches status",
+    "stage": "12. Cross-Module Consistency",
+    "description": "Metrics sap_configured.cpi should be true when CPI is connected",
+    "steps": [
+      "Metrics CPI: True"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "CPI configured: True"
+    ],
+    "error": null
+  },
+  {
+    "id": "J-0120",
+    "title": "Journey: qualify ST Engineering",
+    "stage": "13. Real User Journeys",
+    "description": "Full qualification: KYP -> Validation -> Credit -> Billing -> IPAS",
+    "steps": [
+      "1. KYP(ST Engineering): NOT_FOUND [39ms]",
+      "2. Validate: BLOCKED, proceed=False [908ms]",
+      "3. Credit(0022005992): limit=100,000 [515ms]",
+      "4. Billing(0022005992): 3 items [24ms]",
+      "5. IPAS: 1 orders for 0022005992 [15ms]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 1500.7148998556659,
+    "findings": [
+      "Total: 1501ms, All steps OK: True",
+      "KYP=NOT_FOUND, Credit=100,000, Bills=3, Orders=1"
+    ],
+    "error": null
+  },
+  {
+    "id": "J-0121",
+    "title": "Journey: qualify Batam Fast Ferry",
+    "stage": "13. Real User Journeys",
+    "description": "Full qualification: KYP -> Validation -> Credit -> Billing -> IPAS",
+    "steps": [
+      "1. KYP(Batam Fast Ferry): REQUIRES_EDD [34ms]",
+      "2. Validate: BLOCKED, proceed=False [820ms]",
+      "3. Credit(0000100001): limit=0 [470ms]",
+      "4. Billing(0000100001): 3 items [22ms]",
+      "5. IPAS: 0 orders for 0000100001 [16ms]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 1361.221699975431,
+    "findings": [
+      "Total: 1361ms, All steps OK: True",
+      "KYP=REQUIRES_EDD, Credit=0, Bills=3, Orders=0"
+    ],
+    "error": null
+  },
+  {
+    "id": "J-0122",
+    "title": "Journey: daily pipeline review",
+    "stage": "13. Real User Journeys",
+    "description": "Sales manager morning review: IPAS + FinOps + Aging + Market Intel",
+    "steps": [
+      "1. IPAS pending: 2 [22ms]",
+      "2. FinOps overdue: 6 [19ms]",
+      "3. Aging 30+: 5 [18ms]",
+      "4. Market opps: 50 [63ms]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 121.77079997491091,
+    "findings": [
+      "Total: 122ms across 4 API calls"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0123",
+    "title": "SQLi: ' OR '1'='1 on kyp",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "SQL injection on /api/v1/validation/kyp/ \u2014 check for DB error leakage",
+    "steps": [
+      "GET /api/v1/validation/kyp/' OR '1'='1"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 45.0300999218598,
+    "findings": [
+      "Code: 200, db_error_leaked: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0124",
+    "title": "SQLi: ' OR '1'='1 on orders",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "SQL injection on /api/v1/ipas/orders/ \u2014 check for DB error leakage",
+    "steps": [
+      "GET /api/v1/ipas/orders/' OR '1'='1"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.38940002117306,
+    "findings": [
+      "Code: 404, db_error_leaked: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0125",
+    "title": "SQLi: '; DROP TABLE-- on kyp",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "SQL injection on /api/v1/validation/kyp/ \u2014 check for DB error leakage",
+    "steps": [
+      "GET /api/v1/validation/kyp/'; DROP TABLE--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 38.20579999592155,
+    "findings": [
+      "Code: 200, db_error_leaked: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0126",
+    "title": "SQLi: '; DROP TABLE-- on orders",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "SQL injection on /api/v1/ipas/orders/ \u2014 check for DB error leakage",
+    "steps": [
+      "GET /api/v1/ipas/orders/'; DROP TABLE--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.788400011137128,
+    "findings": [
+      "Code: 404, db_error_leaked: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0127",
+    "title": "SQLi: 1 UNION SELECT * FRO on kyp",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "SQL injection on /api/v1/validation/kyp/ \u2014 check for DB error leakage",
+    "steps": [
+      "GET /api/v1/validation/kyp/1 UNION SELECT * FROM users"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 33.381400047801435,
+    "findings": [
+      "Code: 200, db_error_leaked: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0128",
+    "title": "SQLi: 1 UNION SELECT * FRO on orders",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "SQL injection on /api/v1/ipas/orders/ \u2014 check for DB error leakage",
+    "steps": [
+      "GET /api/v1/ipas/orders/1 UNION SELECT * FROM users"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.467900041490793,
+    "findings": [
+      "Code: 404, db_error_leaked: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0129",
+    "title": "Reflection: script tag",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "Check if 'script tag' payload is echoed in API response (XSS risk if rendered)",
+    "steps": [
+      "GET /validation/kyp/<script>alert(1)</script>"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.979200093075633,
+    "findings": [
+      "Reflected: False, HTML tags in response: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0130",
+    "title": "Reflection: event handler",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "Check if 'event handler' payload is echoed in API response (XSS risk if rendered)",
+    "steps": [
+      "GET /validation/kyp/\" onmouseover=\"alert(1)\""
+    ],
+    "passed": false,
+    "category": "SECURITY",
+    "severity": "MEDIUM",
+    "response_time_ms": 35.224599996581674,
+    "findings": [
+      "Reflected: False, HTML tags in response: True"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0131",
+    "title": "Reflection: js protocol",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "Check if 'js protocol' payload is echoed in API response (XSS risk if rendered)",
+    "steps": [
+      "GET /validation/kyp/javascript:alert(1)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 31.887900084257126,
+    "findings": [
+      "Reflected: True, HTML tags in response: False \u2014 frontend MUST escape this"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0132",
+    "title": "PathTraversal: ../../../etc/passwd",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "Path traversal attempt",
+    "steps": [
+      "GET /ipas/orders/../../../etc/passwd"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 23.33520003594458,
+    "findings": [
+      "Code: 404, sensitive_data: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0133",
+    "title": "PathTraversal: ....//....//etc/pass",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "Path traversal attempt",
+    "steps": [
+      "GET /ipas/orders/....//....//etc/passwd"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.63410004787147,
+    "findings": [
+      "Code: 404, sensitive_data: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0134",
+    "title": "PathTraversal: %2e%2e%2f",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "Path traversal attempt",
+    "steps": [
+      "GET /ipas/orders/%2e%2e%2f"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.219700035639107,
+    "findings": [
+      "Code: 404, sensitive_data: False"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0135",
+    "title": "Null byte handling",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "Null byte in URL should not crash",
+    "steps": [
+      "GET /validation/kyp/%00"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.467099961824715,
+    "findings": [
+      "Code: 400"
+    ],
+    "error": null
+  },
+  {
+    "id": "SEC-0136",
+    "title": "10K char input",
+    "stage": "14. Adversarial & Edge Cases",
+    "description": "10,000 character input should not crash or hang",
+    "steps": [
+      "GET /validation/kyp/AAAA... (10000 chars)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 54.344499949365854,
+    "findings": [
+      "Code: 414, 54ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0137",
+    "title": "Latency: health",
+    "stage": "15. Performance & Stability",
+    "description": "/health avg latency should be < 200ms",
+    "steps": [
+      "GET /health x5"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 23.47230000887066,
+    "findings": [
+      "Avg: 23ms, P95: 50ms, Threshold: 200ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0138",
+    "title": "Latency: summary",
+    "stage": "15. Performance & Stability",
+    "description": "/api/v1/ipas/summary avg latency should be < 500ms",
+    "steps": [
+      "GET /api/v1/ipas/summary x5"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.938339991495013,
+    "findings": [
+      "Avg: 20ms, P95: 32ms, Threshold: 500ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0139",
+    "title": "Latency: summary",
+    "stage": "15. Performance & Stability",
+    "description": "/api/v1/finops/summary avg latency should be < 1000ms",
+    "steps": [
+      "GET /api/v1/finops/summary x5"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 20.90106001123786,
+    "findings": [
+      "Avg: 21ms, P95: 30ms, Threshold: 1000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0140",
+    "title": "Latency: BatamFast",
+    "stage": "15. Performance & Stability",
+    "description": "/api/v1/validation/kyp/BatamFast avg latency should be < 1000ms",
+    "steps": [
+      "GET /api/v1/validation/kyp/BatamFast x5"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.50424003135413,
+    "findings": [
+      "Avg: 37ms, P95: 45ms, Threshold: 1000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0141",
+    "title": "Latency: cpi-kyp",
+    "stage": "15. Performance & Stability",
+    "description": "/api/v1/debug/cpi-kyp?customer_id=0022005992 avg latency should be < 3000ms",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992 x5"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 507.82701997086406,
+    "findings": [
+      "Avg: 508ms, P95: 550ms, Threshold: 3000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0142",
+    "title": "Concurrent: 50 requests",
+    "stage": "15. Performance & Stability",
+    "description": "50 concurrent requests should all succeed",
+    "steps": [
+      "50x GET /api/v1/ipas/summary in parallel"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 355.62489996664226,
+    "findings": [
+      "Success: 50/50, Failures: 0, Wall: 356ms"
+    ],
+    "error": null
+  }
+]

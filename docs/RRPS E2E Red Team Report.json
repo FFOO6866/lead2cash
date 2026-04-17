@@ -1,0 +1,3821 @@
+[
+  {
+    "id": "CD-0001",
+    "title": "Resolve customer: 'BatamFast'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types 'BatamFast' to find customer",
+    "steps": [
+      "GET /api/v1/validation/kyp/BatamFast"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 121.23639998026192,
+    "findings": [
+      "Status: REQUIRES_EDD, 121ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0002",
+    "title": "Resolve customer: 'Batam Fast Ferry'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types 'Batam Fast Ferry' to find customer",
+    "steps": [
+      "GET /api/v1/validation/kyp/Batam Fast Ferry"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 37.935900036245584,
+    "findings": [
+      "Status: REQUIRES_EDD, 38ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0003",
+    "title": "Resolve customer: 'ST Engineering'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types 'ST Engineering' to find customer",
+    "steps": [
+      "GET /api/v1/validation/kyp/ST Engineering"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 30.67530004773289,
+    "findings": [
+      "Status: NOT_FOUND, 31ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0004",
+    "title": "Resolve customer: 'ST Engineering Marine Ltd'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types 'ST Engineering Marine Ltd' to find customer",
+    "steps": [
+      "GET /api/v1/validation/kyp/ST Engineering Marine Ltd"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.929700010456145,
+    "findings": [
+      "Status: NOT_FOUND, 36ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0005",
+    "title": "Resolve customer: 'Maersk'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types 'Maersk' to find customer",
+    "steps": [
+      "GET /api/v1/validation/kyp/Maersk"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 30.50190000794828,
+    "findings": [
+      "Status: NOT_FOUND, 31ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0006",
+    "title": "Resolve customer: 'SSZ'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types 'SSZ' to find customer",
+    "steps": [
+      "GET /api/v1/validation/kyp/SSZ"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.87220001220703,
+    "findings": [
+      "Status: NOT_FOUND, 33ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0007",
+    "title": "Lookup by SAP ID: 0022005992",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 0022005992",
+    "steps": [
+      "GET /api/v1/validation/kyp/0022005992"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 42.3941999906674,
+    "findings": [
+      "Code: 200, 42ms, status: NOT_FOUND"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0008",
+    "title": "Lookup by SAP ID: 0000100001",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 0000100001",
+    "steps": [
+      "GET /api/v1/validation/kyp/0000100001"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.49840003345162,
+    "findings": [
+      "Code: 200, 36ms, status: REQUIRES_EDD"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0009",
+    "title": "Lookup by SAP ID: 0022049826",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 0022049826",
+    "steps": [
+      "GET /api/v1/validation/kyp/0022049826"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 33.368300064466894,
+    "findings": [
+      "Code: 200, 33ms, status: NOT_FOUND"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0010",
+    "title": "Lookup by SAP ID: 0000100002",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 0000100002",
+    "steps": [
+      "GET /api/v1/validation/kyp/0000100002"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 43.65960007999092,
+    "findings": [
+      "Code: 200, 44ms, status: NOT_FOUND"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0011",
+    "title": "Lookup by SAP ID: 22005992",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 22005992",
+    "steps": [
+      "GET /api/v1/validation/kyp/22005992"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.78669996932149,
+    "findings": [
+      "Code: 200, 36ms, status: NOT_FOUND"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0012",
+    "title": "Lookup by SAP ID: 100001",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 100001",
+    "steps": [
+      "GET /api/v1/validation/kyp/100001"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 57.95329995453358,
+    "findings": [
+      "Code: 200, 58ms, status: REQUIRES_EDD"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0013",
+    "title": "Lookup by SAP ID: 0000000000",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 0000000000",
+    "steps": [
+      "GET /api/v1/validation/kyp/0000000000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 42.75220003910363,
+    "findings": [
+      "Code: 200, 43ms, status: NOT_FOUND"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0014",
+    "title": "Lookup by SAP ID: 9999999999",
+    "stage": "Customer Discovery",
+    "description": "Sales rep pastes SAP customer number 9999999999",
+    "steps": [
+      "GET /api/v1/validation/kyp/9999999999"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 40.167100029066205,
+    "findings": [
+      "Code: 200, 40ms, status: NOT_FOUND"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0015",
+    "title": "Fuzzy search: 'Batam'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'Batam'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Batam"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 33.53050001896918,
+    "findings": [
+      "KYP status: REQUIRES_EDD, 34ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0016",
+    "title": "Fuzzy search: 'ST Eng'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'ST Eng'",
+    "steps": [
+      "GET /api/v1/validation/kyp/ST Eng"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 49.889200017787516,
+    "findings": [
+      "KYP status: NOT_FOUND, 50ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0017",
+    "title": "Fuzzy search: 'batamfast'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'batamfast'",
+    "steps": [
+      "GET /api/v1/validation/kyp/batamfast"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 34.26350001245737,
+    "findings": [
+      "KYP status: REQUIRES_EDD, 34ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0018",
+    "title": "Fuzzy search: 'BATAMFAST'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'BATAMFAST'",
+    "steps": [
+      "GET /api/v1/validation/kyp/BATAMFAST"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.752099986188114,
+    "findings": [
+      "KYP status: REQUIRES_EDD, 37ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0019",
+    "title": "Fuzzy search: 'st engineering'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'st engineering'",
+    "steps": [
+      "GET /api/v1/validation/kyp/st engineering"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.36640002857894,
+    "findings": [
+      "KYP status: NOT_FOUND, 35ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0020",
+    "title": "Fuzzy search: 'maersk line'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'maersk line'",
+    "steps": [
+      "GET /api/v1/validation/kyp/maersk line"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.836099996231496,
+    "findings": [
+      "KYP status: NOT_FOUND, 36ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0021",
+    "title": "Fuzzy search: 'AP Moller'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'AP Moller'",
+    "steps": [
+      "GET /api/v1/validation/kyp/AP Moller"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 30.45750001911074,
+    "findings": [
+      "KYP status: NOT_FOUND, 30ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0022",
+    "title": "Fuzzy search: 'batam fast ferry pte'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'batam fast ferry pte'",
+    "steps": [
+      "GET /api/v1/validation/kyp/batam fast ferry pte"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.35460005514324,
+    "findings": [
+      "KYP status: REQUIRES_EDD, 35ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0023",
+    "title": "Fuzzy search: 'Neptune'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'Neptune'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Neptune"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 41.844399995170534,
+    "findings": [
+      "KYP status: NOT_FOUND, 42ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0024",
+    "title": "Fuzzy search: 'neptune energy'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'neptune energy'",
+    "steps": [
+      "GET /api/v1/validation/kyp/neptune energy"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 54.13890001364052,
+    "findings": [
+      "KYP status: NOT_FOUND, 54ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0025",
+    "title": "Fuzzy search: 'blocked marine'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'blocked marine'",
+    "steps": [
+      "GET /api/v1/validation/kyp/blocked marine"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.61219996865839,
+    "findings": [
+      "KYP status: NOT_FOUND, 37ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0026",
+    "title": "Fuzzy search: 'STE'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'STE'",
+    "steps": [
+      "GET /api/v1/validation/kyp/STE"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 33.27409992925823,
+    "findings": [
+      "KYP status: NOT_FOUND, 33ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0027",
+    "title": "Fuzzy search: 'BFF'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'BFF'",
+    "steps": [
+      "GET /api/v1/validation/kyp/BFF"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 31.85299993492663,
+    "findings": [
+      "KYP status: NOT_FOUND, 32ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0028",
+    "title": "Fuzzy search: 'STEng'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep types partial name 'STEng'",
+    "steps": [
+      "GET /api/v1/validation/kyp/STEng"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.90179996192455,
+    "findings": [
+      "KYP status: NOT_FOUND, 37ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0029",
+    "title": "Misspelled: 'Batam Fast Ferri'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep misspells customer name as 'Batam Fast Ferri'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Batam Fast Ferri"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.675799913704395,
+    "findings": [
+      "Resolved despite misspelling"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0030",
+    "title": "Misspelled: 'St Enginering'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep misspells customer name as 'St Enginering'",
+    "steps": [
+      "GET /api/v1/validation/kyp/St Enginering"
+    ],
+    "passed": true,
+    "category": "UX",
+    "severity": "MEDIUM",
+    "response_time_ms": 41.718299966305494,
+    "findings": [
+      "No fuzzy correction for misspelling"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0031",
+    "title": "Misspelled: 'Marsk'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep misspells customer name as 'Marsk'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Marsk"
+    ],
+    "passed": true,
+    "category": "UX",
+    "severity": "MEDIUM",
+    "response_time_ms": 51.1647000676021,
+    "findings": [
+      "No fuzzy correction for misspelling"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0032",
+    "title": "Misspelled: 'ST Enginnering Marine'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep misspells customer name as 'ST Enginnering Marine'",
+    "steps": [
+      "GET /api/v1/validation/kyp/ST Enginnering Marine"
+    ],
+    "passed": true,
+    "category": "UX",
+    "severity": "MEDIUM",
+    "response_time_ms": 35.21290002390742,
+    "findings": [
+      "No fuzzy correction for misspelling"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0033",
+    "title": "Misspelled: 'Batan Fast'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep misspells customer name as 'Batan Fast'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Batan Fast"
+    ],
+    "passed": true,
+    "category": "UX",
+    "severity": "MEDIUM",
+    "response_time_ms": 32.57999999914318,
+    "findings": [
+      "No fuzzy correction for misspelling"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0034",
+    "title": "Misspelled: 'Maerks'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep misspells customer name as 'Maerks'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Maerks"
+    ],
+    "passed": true,
+    "category": "UX",
+    "severity": "MEDIUM",
+    "response_time_ms": 35.42680002283305,
+    "findings": [
+      "No fuzzy correction for misspelling"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0035",
+    "title": "Misspelled: 'Batam Fats Ferry'",
+    "stage": "Customer Discovery",
+    "description": "Sales rep misspells customer name as 'Batam Fats Ferry'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Batam Fats Ferry"
+    ],
+    "passed": true,
+    "category": "UX",
+    "severity": "MEDIUM",
+    "response_time_ms": 46.243099961429834,
+    "findings": [
+      "No fuzzy correction for misspelling"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0036",
+    "title": "Special chars: 'Soci\u00e9t\u00e9 G\u00e9n\u00e9rale...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: 'Soci\u00e9t\u00e9 G\u00e9n\u00e9rale'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Soci%C3%A9t%C3%A9%20G%C3%A9n%C3%A9rale"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 142.16370007488877,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0037",
+    "title": "Special chars: 'M\u00fcller GmbH...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: 'M\u00fcller GmbH'",
+    "steps": [
+      "GET /api/v1/validation/kyp/M%C3%BCller%20GmbH"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.200600046664476,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0038",
+    "title": "Special chars: '\u65e5\u672c\u6d77\u904b...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: '\u65e5\u672c\u6d77\u904b'",
+    "steps": [
+      "GET /api/v1/validation/kyp/%E6%97%A5%E6%9C%AC%E6%B5%B7%E9%81%8B"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.60719993058592,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0039",
+    "title": "Special chars: '\u00d8rsted...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: '\u00d8rsted'",
+    "steps": [
+      "GET /api/v1/validation/kyp/%C3%98rsted"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.48990001156926,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0040",
+    "title": "Special chars: 'RRPS (Friedrichshafen)...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: 'RRPS (Friedrichshafen)'",
+    "steps": [
+      "GET /api/v1/validation/kyp/RRPS%20%28Friedrichshafen%29"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 34.465599921531975,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0041",
+    "title": "Special chars: 'MTU/Rolls-Royce...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: 'MTU/Rolls-Royce'",
+    "steps": [
+      "GET /api/v1/validation/kyp/MTU/Rolls-Royce"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 13.38619994930923,
+    "findings": [
+      "Code: 404, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0042",
+    "title": "Special chars: 'Company <script>...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: 'Company <script>'",
+    "steps": [
+      "GET /api/v1/validation/kyp/Company%20%3Cscript%3E"
+    ],
+    "passed": true,
+    "category": "SECURITY",
+    "severity": "CRITICAL",
+    "response_time_ms": 30.002799932844937,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0043",
+    "title": "Special chars: ''; DROP TABLE--...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: ''; DROP TABLE--'",
+    "steps": [
+      "GET /api/v1/validation/kyp/%27%3B%20DROP%20TABLE--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 37.00460004620254,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0044",
+    "title": "Special chars: 'ST Engineering\nMarine...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: 'ST Engineering\nMarine'",
+    "steps": [
+      "GET /api/v1/validation/kyp/ST%20Engineering%0AMarine"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 33.54149998631328,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0045",
+    "title": "Special chars: '...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: ''",
+    "steps": [
+      "GET /api/v1/validation/kyp/EMPTY"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.62319997884333,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0046",
+    "title": "Special chars: ' ...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: ' '",
+    "steps": [
+      "GET /api/v1/validation/kyp/%20"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.10810001473874,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0047",
+    "title": "Special chars: '   BatamFast   ...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: '   BatamFast   '",
+    "steps": [
+      "GET /api/v1/validation/kyp/%20%20%20BatamFast%20%20%20"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 38.09629997704178,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0048",
+    "title": "Special chars: 'BatamFast\t...'",
+    "stage": "Customer Discovery",
+    "description": "Input with special characters: 'BatamFast\t'",
+    "steps": [
+      "GET /api/v1/validation/kyp/BatamFast%09"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 30.024299980141222,
+    "findings": [
+      "Code: 200, handled: safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0049",
+    "title": "Long name (100 chars)",
+    "stage": "Customer Discovery",
+    "description": "Input of 100 characters",
+    "steps": [
+      "GET /api/v1/validation/kyp/AAAAAAAAAAAAAAAAAAAA... (100 chars)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 41.331900050863624,
+    "findings": [
+      "Code: 200, 41ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0050",
+    "title": "Long name (200 chars)",
+    "stage": "Customer Discovery",
+    "description": "Input of 200 characters",
+    "steps": [
+      "GET /api/v1/validation/kyp/AAAAAAAAAAAAAAAAAAAA... (200 chars)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 32.92550006881356,
+    "findings": [
+      "Code: 200, 33ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0051",
+    "title": "Long name (500 chars)",
+    "stage": "Customer Discovery",
+    "description": "Input of 500 characters",
+    "steps": [
+      "GET /api/v1/validation/kyp/AAAAAAAAAAAAAAAAAAAA... (500 chars)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 37.60479995980859,
+    "findings": [
+      "Code: 200, 38ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0052",
+    "title": "Long name (1000 chars)",
+    "stage": "Customer Discovery",
+    "description": "Input of 1000 characters",
+    "steps": [
+      "GET /api/v1/validation/kyp/AAAAAAAAAAAAAAAAAAAA... (1000 chars)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 34.18660000897944,
+    "findings": [
+      "Code: 200, 34ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CD-0053",
+    "title": "Long name (5000 chars)",
+    "stage": "Customer Discovery",
+    "description": "Input of 5000 characters",
+    "steps": [
+      "GET /api/v1/validation/kyp/AAAAAAAAAAAAAAAAAAAA... (5000 chars)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 49.93910004850477,
+    "findings": [
+      "Code: 200, 50ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0054",
+    "title": "Two-tier: BatamFast (EUR 50,000)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for BatamFast with order value EUR 50,000",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'BatamFast', order_value: 50000}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 1257.9749999567866,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 1258ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0055",
+    "title": "Two-tier: BatamFast (EUR 0)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for BatamFast with order value EUR 0",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'BatamFast', order_value: 0}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 881.1189000261948,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 881ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0056",
+    "title": "Two-tier: BatamFast (EUR 999,999,999)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for BatamFast with order value EUR 999,999,999",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'BatamFast', order_value: 999999999}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 849.799600080587,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 850ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0057",
+    "title": "Two-tier: ST Engineering (EUR 62,630)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for ST Engineering with order value EUR 62,630",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'ST Engineering', order_value: 62630}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 895.5023000016809,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 896ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0058",
+    "title": "Two-tier: ST Engineering (EUR 0)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for ST Engineering with order value EUR 0",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'ST Engineering', order_value: 0}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 873.8613999448717,
+    "findings": [
+      "Overall: CONDITIONAL, Tier1: CONDITIONAL - EDD Required, Tier2: FAILED - Customer not found, 874ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0059",
+    "title": "Two-tier: Maersk (EUR 1,000,000)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for Maersk with order value EUR 1,000,000",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'Maersk', order_value: 1000000}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 844.1653000190854,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 844ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0060",
+    "title": "Two-tier: Neptune (EUR 500,000)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for Neptune with order value EUR 500,000",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'Neptune', order_value: 500000}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 901.0240000206977,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 901ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0061",
+    "title": "Two-tier: blocked marine (EUR 10,000)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for blocked marine with order value EUR 10,000",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'blocked marine', order_value: 10000}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 893.2482999516651,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 893ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0062",
+    "title": "Two-tier: Unknown Corp (EUR 50,000)",
+    "stage": "Due Diligence (KYP)",
+    "description": "Sales rep requests full validation for Unknown Corp with order value EUR 50,000",
+    "steps": [
+      "POST /api/v1/validation/validate {customer: 'Unknown Corp', order_value: 50000}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 877.1741000236943,
+    "findings": [
+      "Overall: BLOCKED, Tier1: CONDITIONAL - EDD Required, Tier2: BLOCKED - Credit check failed, 877ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0063",
+    "title": "Edge value: BatamFast = -1",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with unusual order value: -1",
+    "steps": [
+      "POST /api/v1/validation/validate {order_value: -1}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 29.020900023169816,
+    "findings": [
+      "Code: 422, 29ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0064",
+    "title": "Edge value: BatamFast = 0.001",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with unusual order value: 0.001",
+    "steps": [
+      "POST /api/v1/validation/validate {order_value: 0.001}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 857.055899919942,
+    "findings": [
+      "Code: 200, 857ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0065",
+    "title": "Edge value: BatamFast = 1000000000000000.0",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with unusual order value: 1000000000000000.0",
+    "steps": [
+      "POST /api/v1/validation/validate {order_value: 1000000000000000.0}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 823.5438999254256,
+    "findings": [
+      "Code: 200, 824ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0066",
+    "title": "Edge value: BatamFast = 9999999999999",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with unusual order value: 9999999999999",
+    "steps": [
+      "POST /api/v1/validation/validate {order_value: 9999999999999}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 896.0191999794915,
+    "findings": [
+      "Code: 200, 896ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0067",
+    "title": "Malformed: Empty body",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with malformed request: Empty body",
+    "steps": [
+      "POST /api/v1/validation/validate {}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.006399993784726,
+    "findings": [
+      "Code: 422, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0068",
+    "title": "Malformed: Empty customer",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with malformed request: Empty customer",
+    "steps": [
+      "POST /api/v1/validation/validate {\"customer\": \"\"}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 28.005799977108836,
+    "findings": [
+      "Code: 422, 28ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0069",
+    "title": "Malformed: Missing customer",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with malformed request: Missing customer",
+    "steps": [
+      "POST /api/v1/validation/validate {\"order_value\": 50000}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.821900033392012,
+    "findings": [
+      "Code: 422, 17ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0070",
+    "title": "Malformed: String order_value",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with malformed request: String order_value",
+    "steps": [
+      "POST /api/v1/validation/validate {\"customer\": \"BatamFast\", \"order_value\": \"not_a_number\"}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.08729995880276,
+    "findings": [
+      "Code: 422, 17ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0071",
+    "title": "Malformed: Extra fields",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with malformed request: Extra fields",
+    "steps": [
+      "POST /api/v1/validation/validate {\"customer\": \"BatamFast\", \"extra_field\": true}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 854.5107999816537,
+    "findings": [
+      "Code: 200, 855ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0072",
+    "title": "Malformed: Null customer",
+    "stage": "Due Diligence (KYP)",
+    "description": "Validation with malformed request: Null customer",
+    "steps": [
+      "POST /api/v1/validation/validate {\"customer\": null}"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.61790001951158,
+    "findings": [
+      "Code: 422, 20ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0073",
+    "title": "KYP lookup alias: 'batamfast'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'batamfast'",
+    "steps": [
+      "GET /api/v1/validation/kyp/batamfast"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.236300059594214,
+    "findings": [
+      "Status: REQUIRES_EDD, 32ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0074",
+    "title": "KYP lookup alias: 'batam fast'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'batam fast'",
+    "steps": [
+      "GET /api/v1/validation/kyp/batam%20fast"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.089499989524484,
+    "findings": [
+      "Status: REQUIRES_EDD, 32ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0075",
+    "title": "KYP lookup alias: 'batam fast ferry'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'batam fast ferry'",
+    "steps": [
+      "GET /api/v1/validation/kyp/batam%20fast%20ferry"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 52.16479999944568,
+    "findings": [
+      "Status: REQUIRES_EDD, 52ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0076",
+    "title": "KYP lookup alias: 'batam fast ferry pte ltd'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'batam fast ferry pte ltd'",
+    "steps": [
+      "GET /api/v1/validation/kyp/batam%20fast%20ferry%20pte%20ltd"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 30.20059992559254,
+    "findings": [
+      "Status: REQUIRES_EDD, 30ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0077",
+    "title": "KYP lookup alias: 'maersk'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'maersk'",
+    "steps": [
+      "GET /api/v1/validation/kyp/maersk"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 40.636699995957315,
+    "findings": [
+      "Status: NOT_FOUND, 41ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0078",
+    "title": "KYP lookup alias: 'maersk line'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'maersk line'",
+    "steps": [
+      "GET /api/v1/validation/kyp/maersk%20line"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 30.59939993545413,
+    "findings": [
+      "Status: NOT_FOUND, 31ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0079",
+    "title": "KYP lookup alias: 'ap moller'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'ap moller'",
+    "steps": [
+      "GET /api/v1/validation/kyp/ap%20moller"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 42.05359995830804,
+    "findings": [
+      "Status: NOT_FOUND, 42ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0080",
+    "title": "KYP lookup alias: 'ap moller - maersk'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'ap moller - maersk'",
+    "steps": [
+      "GET /api/v1/validation/kyp/ap%20moller%20-%20maersk"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 31.748700072057545,
+    "findings": [
+      "Status: NOT_FOUND, 32ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0081",
+    "title": "KYP lookup alias: 'a p moller - maersk a/s'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'a p moller - maersk a/s'",
+    "steps": [
+      "GET /api/v1/validation/kyp/a%20p%20moller%20-%20maersk%20a%2Fs"
+    ],
+    "passed": true,
+    "category": "GAP",
+    "severity": "INFO",
+    "response_time_ms": 23.534199921414256,
+    "findings": [
+      "Status: ERROR, 24ms (slash in name)"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0082",
+    "title": "KYP lookup alias: 'neptune'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'neptune'",
+    "steps": [
+      "GET /api/v1/validation/kyp/neptune"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 77.46499998029321,
+    "findings": [
+      "Status: NOT_FOUND, 77ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0083",
+    "title": "KYP lookup alias: 'neptune energy'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'neptune energy'",
+    "steps": [
+      "GET /api/v1/validation/kyp/neptune%20energy"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.262699937447906,
+    "findings": [
+      "Status: NOT_FOUND, 35ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0084",
+    "title": "KYP lookup alias: 'blocked marine'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'blocked marine'",
+    "steps": [
+      "GET /api/v1/validation/kyp/blocked%20marine"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.29490004014224,
+    "findings": [
+      "Status: NOT_FOUND, 32ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0085",
+    "title": "KYP lookup alias: 'blocked'",
+    "stage": "Due Diligence (KYP)",
+    "description": "KYP check using alias/variant: 'blocked'",
+    "steps": [
+      "GET /api/v1/validation/kyp/blocked"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 32.568100024946034,
+    "findings": [
+      "Status: NOT_FOUND, 33ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "DD-0086",
+    "title": "KYP caching: 5 repeated calls",
+    "stage": "Due Diligence (KYP)",
+    "description": "Check if repeated KYP calls benefit from caching",
+    "steps": [
+      "GET /api/v1/validation/kyp/BatamFast x5"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 35.927579971030354,
+    "findings": [
+      "Times: ['34', '31', '34', '33', '47']ms, Avg: 36ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0087",
+    "title": "Credit check: ST Engineering (0022005992)",
+    "stage": "Credit Assessment",
+    "description": "Sales rep checks credit for ST Engineering before quoting",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "HIGH",
+    "response_time_ms": 318.10769997537136,
+    "findings": [
+      "Success: False, 318ms, Error: Client error '400 Bad Request' for url 'https://rrps-dev.it-cpi005-rt.cfapps.eu2"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0088",
+    "title": "Credit check: BatamFast (0000100001)",
+    "stage": "Credit Assessment",
+    "description": "Sales rep checks credit for BatamFast before quoting",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0000100001"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 531.7917000502348,
+    "findings": [
+      "Success: True, 532ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0089",
+    "title": "Credit check: SSZ Suzhou (0022049826)",
+    "stage": "Credit Assessment",
+    "description": "Sales rep checks credit for SSZ Suzhou before quoting",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022049826"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "HIGH",
+    "response_time_ms": 321.02530007250607,
+    "findings": [
+      "Success: False, 321ms, Error: Client error '400 Bad Request' for url 'https://rrps-dev.it-cpi005-rt.cfapps.eu2"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0090",
+    "title": "Credit check: Maersk (0000100002)",
+    "stage": "Credit Assessment",
+    "description": "Sales rep checks credit for Maersk before quoting",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0000100002"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 480.31140002422035,
+    "findings": [
+      "Success: True, 480ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0091",
+    "title": "Credit control area: '0111'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with control area '0111'",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992&credit_control_area=0111"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 327.6239999104291,
+    "findings": [
+      "Code: 200, 328ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0092",
+    "title": "Credit control area: '0001'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with control area '0001'",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992&credit_control_area=0001"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 531.5282000228763,
+    "findings": [
+      "Code: 200, 532ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0093",
+    "title": "Credit control area: '1000'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with control area '1000'",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992&credit_control_area=1000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 324.2224999703467,
+    "findings": [
+      "Code: 200, 324ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0094",
+    "title": "Credit control area: 'AAAA'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with control area 'AAAA'",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992&credit_control_area=AAAA"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 527.4317000294104,
+    "findings": [
+      "Code: 200, 527ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0095",
+    "title": "Credit control area: ''",
+    "stage": "Credit Assessment",
+    "description": "Credit check with control area ''",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992&credit_control_area="
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 372.67319997772574,
+    "findings": [
+      "Code: 200, 373ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0096",
+    "title": "Invalid ID: '0000000000'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0000000000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 522.1915000583977,
+    "findings": [
+      "Code: 200, 522ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0097",
+    "title": "Invalid ID: '9999999999'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=9999999999"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 556.3241000054404,
+    "findings": [
+      "Code: 200, 556ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0098",
+    "title": "Invalid ID: 'ABCDEFGHIJ'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=ABCDEFGHIJ"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 502.4816000368446,
+    "findings": [
+      "Code: 200, 502ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0099",
+    "title": "Invalid ID: '12345'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=12345"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 462.65340002719313,
+    "findings": [
+      "Code: 200, 463ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0100",
+    "title": "Invalid ID: '00220059920'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=00220059920"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 495.72010000701994,
+    "findings": [
+      "Code: 200, 496ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0101",
+    "title": "Invalid ID: ''",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id="
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 363.2384000811726,
+    "findings": [
+      "Code: 200, 363ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0102",
+    "title": "Invalid ID: 'null'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=null"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 543.890199973248,
+    "findings": [
+      "Code: 200, 544ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0103",
+    "title": "Invalid ID: '-1'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=-1"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 316.45649997517467,
+    "findings": [
+      "Code: 200, 316ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0104",
+    "title": "Invalid ID: '0022005992; DROP TABLE'",
+    "stage": "Credit Assessment",
+    "description": "Credit check with invalid/nonexistent customer ID",
+    "steps": [
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992; DROP TABLE"
+    ],
+    "passed": true,
+    "category": "SECURITY",
+    "severity": "INFO",
+    "response_time_ms": 339.6203999873251,
+    "findings": [
+      "Code: 200, 340ms, handled safely"
+    ],
+    "error": null
+  },
+  {
+    "id": "CA-0105",
+    "title": "CPI configuration status",
+    "stage": "Credit Assessment",
+    "description": "Verify SAP CPI is properly configured and connected",
+    "steps": [
+      "GET /api/v1/debug/cpi-config"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 25.962800020352006,
+    "findings": [
+      "CPI type: CPIClient, connected: True"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0106",
+    "title": "Marine intel opportunities feed",
+    "stage": "Opportunity Qualification",
+    "description": "Sales rep checks market opportunities from marine intelligence",
+    "steps": [
+      "GET /api/v1/marine-intel/opportunities"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 68.39450006373227,
+    "findings": [
+      "50 opportunities, 68ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0107",
+    "title": "CPI customer search: ST Engineering",
+    "stage": "Opportunity Qualification",
+    "description": "Sales rep searches SAP CPI for customer 'ST Engineering' during opportunity qualification",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=ST Engineering"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 379.4925999827683,
+    "findings": [
+      "Found 1 customers, expected_match: True, 379ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0108",
+    "title": "CPI customer search: BatamFast",
+    "stage": "Opportunity Qualification",
+    "description": "Sales rep searches SAP CPI for customer 'BatamFast' during opportunity qualification",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=BatamFast"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 500.5570000503212,
+    "findings": [
+      "Found 1 customers, expected_match: True, 501ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0109",
+    "title": "CPI search invalid: 'NONEXISTENT_CORP_12345'",
+    "stage": "Opportunity Qualification",
+    "description": "CPI customer search with invalid name 'NONEXISTENT_CORP_12345'",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=NONEXISTENT_CORP_12345"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 19.97919997666031,
+    "findings": [
+      "Code: 200, 20ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0110",
+    "title": "CPI search invalid: '!@#$%'",
+    "stage": "Opportunity Qualification",
+    "description": "CPI customer search with invalid name '!@#$%'",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=!@#$%"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 36.32920002564788,
+    "findings": [
+      "Code: 200, 36ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0111",
+    "title": "CPI search invalid: '(empty)'",
+    "stage": "Opportunity Qualification",
+    "description": "CPI customer search with invalid name '(empty)'",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name="
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 14.988600043579936,
+    "findings": [
+      "Code: 422, 15ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0112",
+    "title": "Search+Credit combo: STE",
+    "stage": "Opportunity Qualification",
+    "description": "Sales rep searches CPI then checks credit for STE",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=STE -> 200 (513ms)",
+      "GET /api/v1/debug/cpi-kyp?customer_id=0022005992 -> 200 (303ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 816.098399925977,
+    "findings": [
+      "Combined: 816ms (search: 513, credit: 303)"
+    ],
+    "error": null
+  },
+  {
+    "id": "OQ-0113",
+    "title": "Search+Credit combo: BFF",
+    "stage": "Opportunity Qualification",
+    "description": "Sales rep searches CPI then checks credit for BFF",
+    "steps": [
+      "GET /api/v1/debug/cpi-search?name=BFF -> 200 (474ms)",
+      "GET /api/v1/debug/cpi-kyp?customer_id=0000100001 -> 200 (362ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 836.4571999991313,
+    "findings": [
+      "Combined: 836ms (search: 474, credit: 362)"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0114",
+    "title": "IPAS summary overview",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Sales rep checks pending IPAS orders for MS5 entry",
+    "steps": [
+      "GET /api/v1/ipas/summary"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.920300105586648,
+    "findings": [
+      "Pending: 2, engines: 3, items: 7, 15ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0115",
+    "title": "List all IPAS orders",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Sales rep views all pending orders",
+    "steps": [
+      "GET /api/v1/ipas/orders"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.271699939854443,
+    "findings": [
+      "2 orders, 14ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0116",
+    "title": "Order detail: 1207814",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Sales rep reviews IPAS order 1207814 for MS5 entry",
+    "steps": [
+      "GET /api/v1/ipas/orders/1207814"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.307399957440794,
+    "findings": [
+      "Engines: 1, BOM items: 3",
+      "Customer: 0022005992",
+      "Product: 8V2000M72",
+      "All critical fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0117",
+    "title": "BOM item: 1207814/E1/I1",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Verify BOM item XM820010.00012 has material number and quantity",
+    "steps": [
+      "Check engines[0].items[0]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Material: XM820010.00012, Qty: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0118",
+    "title": "BOM item: 1207814/E1/I2",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Verify BOM item XM824000.00038/S has material number and quantity",
+    "steps": [
+      "Check engines[0].items[1]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Material: XM824000.00038/S, Qty: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0119",
+    "title": "BOM item: 1207814/E1/I3",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Verify BOM item XM830200.00007 has material number and quantity",
+    "steps": [
+      "Check engines[0].items[2]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Material: XM830200.00007, Qty: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0120",
+    "title": "Order detail: 1299003",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Sales rep reviews IPAS order 1299003 for MS5 entry",
+    "steps": [
+      "GET /api/v1/ipas/orders/1299003"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 13.832699973136187,
+    "findings": [
+      "Engines: 2, BOM items: 4",
+      "Customer: 0022049826",
+      "Product: 12V2000G65SZ",
+      "All critical fields present"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0121",
+    "title": "BOM item: 1299003/E1/I1",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Verify BOM item XS522010.00005 has material number and quantity",
+    "steps": [
+      "Check engines[0].items[0]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Material: XS522010.00005, Qty: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0122",
+    "title": "BOM item: 1299003/E1/I2",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Verify BOM item XS524000.00019/S has material number and quantity",
+    "steps": [
+      "Check engines[0].items[1]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Material: XS524000.00019/S, Qty: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0123",
+    "title": "BOM item: 1299003/E2/I1",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Verify BOM item XS522010.00005 has material number and quantity",
+    "steps": [
+      "Check engines[1].items[0]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Material: XS522010.00005, Qty: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0124",
+    "title": "BOM item: 1299003/E2/I2",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Verify BOM item XS524000.00019/S has material number and quantity",
+    "steps": [
+      "Check engines[1].items[1]"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Material: XS524000.00019/S, Qty: 1"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0125",
+    "title": "Invalid order: '0000000'",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID '0000000'",
+    "steps": [
+      "GET /api/v1/ipas/orders/0000000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.80259995535016,
+    "findings": [
+      "Code: 404, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0126",
+    "title": "Invalid order: 'INVALID'",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID 'INVALID'",
+    "steps": [
+      "GET /api/v1/ipas/orders/INVALID"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 21.572600002400577,
+    "findings": [
+      "Code: 404, 22ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0127",
+    "title": "Invalid order: '9999999'",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID '9999999'",
+    "steps": [
+      "GET /api/v1/ipas/orders/9999999"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.894300028681755,
+    "findings": [
+      "Code: 404, 20ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0128",
+    "title": "Invalid order: ''",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID ''",
+    "steps": [
+      "GET /api/v1/ipas/orders/EMPTY"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 13.867300003767014,
+    "findings": [
+      "Code: 404, 14ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0129",
+    "title": "Invalid order: '1207814; DROP TABLE'",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID '1207814; DROP TABLE'",
+    "steps": [
+      "GET /api/v1/ipas/orders/1207814%3B%20DROP%20TABLE"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.481800004839897,
+    "findings": [
+      "Code: 404, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0130",
+    "title": "Invalid order: '1207814/../../etc/passwd'",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID '1207814/../../etc/passwd'",
+    "steps": [
+      "GET /api/v1/ipas/orders/1207814/../../etc/passwd"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.206400024704635,
+    "findings": [
+      "Code: 404, 14ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0131",
+    "title": "Invalid order: '-1'",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID '-1'",
+    "steps": [
+      "GET /api/v1/ipas/orders/-1"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.813799924217165,
+    "findings": [
+      "Code: 404, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0132",
+    "title": "Invalid order: '99999999999'",
+    "stage": "Order Configuration (IPAS)",
+    "description": "IPAS order lookup with invalid ID '99999999999'",
+    "steps": [
+      "GET /api/v1/ipas/orders/99999999999"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.262899946421385,
+    "findings": [
+      "Code: 404, 18ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0133",
+    "title": "IPAS XML reload",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Force reload of IPAS XML files",
+    "steps": [
+      "POST /api/v1/ipas/reload"
+    ],
+    "passed": true,
+    "category": "GAP",
+    "severity": "LOW",
+    "response_time_ms": 15.425499994307756,
+    "findings": [
+      "Code: 404, 15ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0134",
+    "title": "MS5 completeness: 1207814",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Check if order 1207814 has all MS5 entry sections",
+    "steps": [
+      "Check sections: ['header', 'customers', 'product', 'commercial', 'delivery', 'classification']"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Present: ['header', 'customers', 'product', 'commercial', 'delivery', 'classification']",
+      "All sections present"
+    ],
+    "error": null
+  },
+  {
+    "id": "OC-0135",
+    "title": "MS5 completeness: 1299003",
+    "stage": "Order Configuration (IPAS)",
+    "description": "Check if order 1299003 has all MS5 entry sections",
+    "steps": [
+      "Check sections: ['header', 'customers', 'product', 'commercial', 'delivery', 'classification']"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Present: ['header', 'customers', 'product', 'commercial', 'delivery', 'classification']",
+      "All sections present"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0136",
+    "title": "FinOps dashboard summary",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Finance ops reviews billing/collections overview",
+    "steps": [
+      "GET /api/v1/finops/summary"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.01609999872744,
+    "findings": [
+      "Billing: 2 items, Overdue: 6, 17ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0137",
+    "title": "All billing items",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "View all billing items across customers",
+    "steps": [
+      "GET /api/v1/finops/billing"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 21.37339999899268,
+    "findings": [
+      "13 billing items, 21ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0138",
+    "title": "Billing filter: customer=0022005992",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing items by customer 0022005992",
+    "steps": [
+      "GET /api/v1/finops/billing?customer_id=0022005992"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.781599937938154,
+    "findings": [
+      "Code: 200, items: 3, 19ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0139",
+    "title": "Billing filter: customer=0000100001",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing items by customer 0000100001",
+    "steps": [
+      "GET /api/v1/finops/billing?customer_id=0000100001"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 20.701400004327297,
+    "findings": [
+      "Code: 200, items: 3, 21ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0140",
+    "title": "Billing filter: customer=INVALID",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing items by customer INVALID",
+    "steps": [
+      "GET /api/v1/finops/billing?customer_id=INVALID"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.555800055153668,
+    "findings": [
+      "Code: 400, items: 0, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0141",
+    "title": "Billing filter: customer=none",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing items by customer ",
+    "steps": [
+      "GET /api/v1/finops/billing?customer_id="
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 20.150399999693036,
+    "findings": [
+      "Code: 200, items: 13, 20ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0142",
+    "title": "Billing filter: status=PENDING_BILLING",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing by status PENDING_BILLING",
+    "steps": [
+      "GET /api/v1/finops/billing?status=PENDING_BILLING"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 20.442000008188188,
+    "findings": [
+      "Code: 200, items: 2, 20ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0143",
+    "title": "Billing filter: status=PENDING_COLLECTION",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing by status PENDING_COLLECTION",
+    "steps": [
+      "GET /api/v1/finops/billing?status=PENDING_COLLECTION"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.827599938958883,
+    "findings": [
+      "Code: 200, items: 5, 19ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0144",
+    "title": "Billing filter: status=OVERDUE",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing by status OVERDUE",
+    "steps": [
+      "GET /api/v1/finops/billing?status=OVERDUE"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.391799996607006,
+    "findings": [
+      "Code: 200, items: 1, 18ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0145",
+    "title": "Billing filter: status=INVALID_STATUS",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Filter billing by status INVALID_STATUS",
+    "steps": [
+      "GET /api/v1/finops/billing?status=INVALID_STATUS"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 18.28170008957386,
+    "findings": [
+      "Code: 400, items: 0, 18ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0146",
+    "title": "Aging report (all customers)",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Finance reviews receivables aging",
+    "steps": [
+      "GET /api/v1/finops/aging"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.173899988643825,
+    "findings": [
+      "Buckets: ['CURRENT', '1-30', '30+'], Total: 3,496,000, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0147",
+    "title": "Aging math: CURRENT",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify bucket CURRENT",
+    "steps": [
+      "Bucket CURRENT: 7 items, 3,074,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Consistent: 7 items = 3,074,000"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0148",
+    "title": "Aging math: 1-30",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify bucket 1-30",
+    "steps": [
+      "Bucket 1-30: 1 items, 95,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Consistent: 1 items = 95,000"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0149",
+    "title": "Aging math: 30+",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify bucket 30+",
+    "steps": [
+      "Bucket 30+: 5 items, 327,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Consistent: 5 items = 327,000"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0150",
+    "title": "Collections overview",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Finance reviews outstanding collections",
+    "steps": [
+      "GET /api/v1/finops/collections"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 19.852699944749475,
+    "findings": [
+      "Code: 200, items: 11, 20ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0151",
+    "title": "Payment terms: 3228005112",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005112"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0152",
+    "title": "Payment terms: 3228005113",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005113"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0153",
+    "title": "Payment terms: 3228005117",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005117"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0154",
+    "title": "Payment terms: 3228005114",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005114"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0155",
+    "title": "Payment terms: 3228005115",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005115"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0156",
+    "title": "Payment terms: 3228005116",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005116"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0157",
+    "title": "Payment terms: 3228005118",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005118"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0158",
+    "title": "Payment terms: 3228005119",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones",
+    "steps": [
+      "Check milestones for doc 3228005119"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 100%, expected ~100%"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0159",
+    "title": "Payment terms: 9200000001",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones (DP request)",
+    "steps": [
+      "Check milestones for doc 9200000001"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 20% (DP request \u2014 partial expected)"
+    ],
+    "error": null
+  },
+  {
+    "id": "FO-0160",
+    "title": "Payment terms: 9200000002",
+    "stage": "Financial Analysis (FinOps)",
+    "description": "Verify payment term milestones (DP request)",
+    "steps": [
+      "Check milestones for doc 9200000002"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Milestones sum: 10% (DP request \u2014 partial expected)"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0161",
+    "title": "New Customer: BatamFast full qualification",
+    "stage": "End-to-End Workflow",
+    "description": "Full sales lifecycle for BatamFast (EUR 126,000)",
+    "steps": [
+      "1. KYP Check: REQUIRES_EDD (31ms)",
+      "2. Two-tier validation: BLOCKED (889ms)",
+      "3. Credit check: OK (486ms)",
+      "4. IPAS orders: 0 matching (18ms)",
+      "5. FinOps billing: 3 items (18ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 1442.4712000181898,
+    "findings": [
+      "KYP: REQUIRES_EDD",
+      "Validation: BLOCKED",
+      "Credit: available",
+      "IPAS: 0 orders",
+      "Billing: 3 items",
+      "Total time: 1442ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0162",
+    "title": "Existing Customer: ST Engineering order review",
+    "stage": "End-to-End Workflow",
+    "description": "Full sales lifecycle for ST Engineering (EUR 62,630)",
+    "steps": [
+      "1. KYP Check: NOT_FOUND (33ms)",
+      "2. Two-tier validation: BLOCKED (869ms)",
+      "3. Credit check: OK (504ms)",
+      "4. IPAS orders: 1 matching (16ms)",
+      "5. FinOps billing: 3 items (19ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 1441.735400003381,
+    "findings": [
+      "KYP: NOT_FOUND",
+      "Validation: BLOCKED",
+      "Credit: available",
+      "IPAS: 1 orders",
+      "Billing: 3 items",
+      "Total time: 1442ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0163",
+    "title": "New Customer: SSZ Suzhou large order",
+    "stage": "End-to-End Workflow",
+    "description": "Full sales lifecycle for SSZ (EUR 682,644)",
+    "steps": [
+      "1. KYP Check: NOT_FOUND (32ms)",
+      "2. Two-tier validation: BLOCKED (867ms)",
+      "3. Credit check: OK (527ms)",
+      "4. IPAS orders: 1 matching (15ms)",
+      "5. FinOps billing: 0 items (21ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 1461.2915999023244,
+    "findings": [
+      "KYP: NOT_FOUND",
+      "Validation: BLOCKED",
+      "Credit: available",
+      "IPAS: 1 orders",
+      "Billing: 0 items",
+      "Total time: 1461ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0164",
+    "title": "Unknown customer: first contact",
+    "stage": "End-to-End Workflow",
+    "description": "Full sales lifecycle for Acme Maritime Corp (EUR 100,000)",
+    "steps": [
+      "1. KYP Check: NOT_FOUND (29ms)",
+      "2. Two-tier validation: BLOCKED (810ms)",
+      "3. Credit check: SKIPPED (no SAP ID)",
+      "4. IPAS orders: 0 matching (15ms)",
+      "5. FinOps billing: 0 items (21ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 874.8294999822974,
+    "findings": [
+      "KYP: NOT_FOUND",
+      "Validation: BLOCKED",
+      "Credit: skipped",
+      "IPAS: 0 orders",
+      "Billing: 0 items",
+      "Total time: 875ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0165",
+    "title": "Blocked partner: compliance rejection",
+    "stage": "End-to-End Workflow",
+    "description": "Full sales lifecycle for blocked marine (EUR 50,000)",
+    "steps": [
+      "1. KYP Check: NOT_FOUND (38ms)",
+      "2. Two-tier validation: BLOCKED (862ms)",
+      "3. Credit check: SKIPPED (no SAP ID)",
+      "4. IPAS orders: 0 matching (17ms)",
+      "5. FinOps billing: 0 items (21ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 938.1279998924583,
+    "findings": [
+      "KYP: NOT_FOUND",
+      "Validation: BLOCKED",
+      "Credit: skipped",
+      "IPAS: 0 orders",
+      "Billing: 0 items",
+      "Total time: 938ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0166",
+    "title": "Daily pipeline review workflow",
+    "stage": "End-to-End Workflow",
+    "description": "Sales rep reviews full pipeline: IPAS pending, FinOps overdue, aging, order details",
+    "steps": [
+      "1. IPAS Summary: 2 pending (13ms)",
+      "2. FinOps Summary: 6 overdue (22ms)",
+      "3. Aging Report (17ms)",
+      "4. IPAS Orders list: 2 orders (16ms)",
+      "5. Order detail 1299003 (17ms)",
+      "5. Order detail 1207814 (16ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 101.29710007458925,
+    "findings": [
+      "Total time: 101ms for 6 API calls"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0167",
+    "title": "Full review: Batam Fast Ferry Pte. Ltd.",
+    "stage": "End-to-End Workflow",
+    "description": "Complete customer review: KYP \u2192 Credit \u2192 Opps \u2192 Billing",
+    "steps": [
+      "KYP: REQUIRES_EDD (32ms)",
+      "Credit: 200 (313ms)",
+      "Opps: 200 (24ms)",
+      "Billing: 3 items (17ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 385.93069987837225,
+    "findings": [
+      "Total: 386ms, 4 calls"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0168",
+    "title": "Full review: ST Engineering Marine Ltd",
+    "stage": "End-to-End Workflow",
+    "description": "Complete customer review: KYP \u2192 Credit \u2192 Opps \u2192 Billing",
+    "steps": [
+      "KYP: NOT_FOUND (32ms)",
+      "Credit: 200 (342ms)",
+      "Opps: 200 (22ms)",
+      "Billing: 3 items (19ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 415.19039997365326,
+    "findings": [
+      "Total: 415ms, 4 calls"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0169",
+    "title": "Full review: SSZ Suzhou",
+    "stage": "End-to-End Workflow",
+    "description": "Complete customer review: KYP \u2192 Credit \u2192 Opps \u2192 Billing",
+    "steps": [
+      "KYP: NOT_FOUND (31ms)",
+      "Credit: 200 (519ms)",
+      "Opps: 200 (20ms)",
+      "Billing: 0 items (20ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 589.5334000233561,
+    "findings": [
+      "Total: 590ms, 4 calls"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0170",
+    "title": "Full review: Maersk",
+    "stage": "End-to-End Workflow",
+    "description": "Complete customer review: KYP \u2192 Credit \u2192 Opps \u2192 Billing",
+    "steps": [
+      "KYP: NOT_FOUND (32ms)",
+      "Credit: 200 (491ms)",
+      "Opps: 200 (22ms)",
+      "Billing: 2 items (17ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 561.322099994868,
+    "findings": [
+      "Total: 561ms, 4 calls"
+    ],
+    "error": null
+  },
+  {
+    "id": "E2E-0171",
+    "title": "Rapid customer KYP comparison",
+    "stage": "End-to-End Workflow",
+    "description": "Sales manager compares KYP status across all customers",
+    "steps": [
+      "Batam Fast Ferry Pte. Ltd.: REQUIRES_EDD (43ms)",
+      "ST Engineering Marine Ltd: NOT_FOUND (32ms)",
+      "SSZ Suzhou: NOT_FOUND (52ms)",
+      "Maersk: NOT_FOUND (29ms)"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 156.40760003589094,
+    "findings": [
+      "4 customers compared in 156ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0172",
+    "title": "IPAS vs FinOps customer overlap",
+    "stage": "Cross-Module Consistency",
+    "description": "Check customer overlap between IPAS orders and FinOps billing (informational)",
+    "steps": [
+      "Compare customer IDs between IPAS orders and FinOps billing"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Shared: {'0022005992'}",
+      "IPAS-only: {'0022049826'}",
+      "Billing-only: {'0000100006', '0021000090', '0000100002', '0000100001'}"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0173",
+    "title": "Order value sanity: 1299003",
+    "stage": "Cross-Module Consistency",
+    "description": "Verify order value is reasonable (CNY 682,644.24)",
+    "steps": [
+      "Check 1299003: CNY 682,644.24"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "CNY 682,644.24 \u2014 reasonable"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0174",
+    "title": "Order value sanity: 1207814",
+    "stage": "Cross-Module Consistency",
+    "description": "Verify order value is reasonable (EUR 62,630.00)",
+    "steps": [
+      "Check 1207814: EUR 62,630.00"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "EUR 62,630.00 \u2014 reasonable"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0175",
+    "title": "KYP \u2192 Validation consistency",
+    "stage": "Cross-Module Consistency",
+    "description": "KYP status should be reflected in two-tier validation Tier 1",
+    "steps": [
+      "KYP: REQUIRES_EDD",
+      "Validation Tier1: CONDITIONAL - EDD Required"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "KYP says 'REQUIRES_EDD', Validation Tier1 says 'CONDITIONAL - EDD Required' \u2014 consistent"
+    ],
+    "error": null
+  },
+  {
+    "id": "XM-0176",
+    "title": "FinOps billing amount consistency",
+    "stage": "Cross-Module Consistency",
+    "description": "Summary billing amount vs sum of billing items",
+    "steps": [
+      "Summary: 1,806,000",
+      "Sum of PENDING_BILLING items: 1,806,000"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "LOW",
+    "response_time_ms": 0,
+    "findings": [
+      "Summary: 1,806,000, Items sum: 1,806,000"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0177",
+    "title": "Injection: ' OR '1'='1",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ' OR '1'='1",
+    "steps": [
+      "GET /api/v1/validation/kyp/%27%20OR%20%271%27%3D%271"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 29.49300000909716,
+    "findings": [
+      "Code: 200, reflected: False, 29ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0178",
+    "title": "Injection: ' OR '1'='1",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ' OR '1'='1",
+    "steps": [
+      "GET /api/v1/ipas/orders/%27%20OR%20%271%27%3D%271"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.818299937061965,
+    "findings": [
+      "Code: 404, reflected: False, 18ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0179",
+    "title": "Injection: '; DROP TABLE customers;-",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: '; DROP TABLE customers;--",
+    "steps": [
+      "GET /api/v1/validation/kyp/%27%3B%20DROP%20TABLE%20customers%3B-"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 38.99040003307164,
+    "findings": [
+      "Code: 200, reflected: False, 39ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0180",
+    "title": "Injection: '; DROP TABLE customers;-",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: '; DROP TABLE customers;--",
+    "steps": [
+      "GET /api/v1/ipas/orders/%27%3B%20DROP%20TABLE%20customers%3B--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.205099945887923,
+    "findings": [
+      "Code: 404, reflected: False, 15ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0181",
+    "title": "Injection: 1 UNION SELECT * FROM use",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: 1 UNION SELECT * FROM users",
+    "steps": [
+      "GET /api/v1/validation/kyp/1%20UNION%20SELECT%20%2A%20FROM%20use"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 34.34829995967448,
+    "findings": [
+      "Code: 200, reflected: False, 34ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0182",
+    "title": "Injection: 1 UNION SELECT * FROM use",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: 1 UNION SELECT * FROM users",
+    "steps": [
+      "GET /api/v1/ipas/orders/1%20UNION%20SELECT%20%2A%20FROM%20users"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.897399978712201,
+    "findings": [
+      "Code: 404, reflected: False, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0183",
+    "title": "Injection: admin'--",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: admin'--",
+    "steps": [
+      "GET /api/v1/validation/kyp/admin%27--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 37.61609992943704,
+    "findings": [
+      "Code: 200, reflected: False, 38ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0184",
+    "title": "Injection: admin'--",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: admin'--",
+    "steps": [
+      "GET /api/v1/ipas/orders/admin%27--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.851199954748154,
+    "findings": [
+      "Code: 404, reflected: False, 18ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0185",
+    "title": "Injection: ' OR 1=1--",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ' OR 1=1--",
+    "steps": [
+      "GET /api/v1/validation/kyp/%27%20OR%201%3D1--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 29.666900052689016,
+    "findings": [
+      "Code: 200, reflected: False, 30ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0186",
+    "title": "Injection: ' OR 1=1--",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ' OR 1=1--",
+    "steps": [
+      "GET /api/v1/ipas/orders/%27%20OR%201%3D1--"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 13.840700034052134,
+    "findings": [
+      "Code: 404, reflected: False, 14ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0187",
+    "title": "Injection: ${7*7}",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ${7*7}",
+    "steps": [
+      "GET /api/v1/validation/kyp/%24%7B7%2A7%7D"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 36.14839992951602,
+    "findings": [
+      "Code: 200, reflected: False, 36ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0188",
+    "title": "Injection: ${7*7}",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ${7*7}",
+    "steps": [
+      "GET /api/v1/ipas/orders/%24%7B7%2A7%7D"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 20.637599984183908,
+    "findings": [
+      "Code: 404, reflected: False, 21ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0189",
+    "title": "Injection: {{7*7}}",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: {{7*7}}",
+    "steps": [
+      "GET /api/v1/validation/kyp/%7B%7B7%2A7%7D%7D"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 29.225799953565,
+    "findings": [
+      "Code: 200, reflected: False, 29ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0190",
+    "title": "Injection: {{7*7}}",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: {{7*7}}",
+    "steps": [
+      "GET /api/v1/ipas/orders/%7B%7B7%2A7%7D%7D"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.226900042966008,
+    "findings": [
+      "Code: 404, reflected: False, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0191",
+    "title": "Injection: <script>alert(1)</script>",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: <script>alert(1)</script>",
+    "steps": [
+      "GET /api/v1/validation/kyp/%3Cscript%3Ealert%281%29%3C/script%3E"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.804599970579147,
+    "findings": [
+      "Code: 404, reflected: False, 16ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0192",
+    "title": "Injection: <script>alert(1)</script>",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: <script>alert(1)</script>",
+    "steps": [
+      "GET /api/v1/ipas/orders/%3Cscript%3Ealert%281%29%3C/script%3E"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.008599915541708,
+    "findings": [
+      "Code: 404, reflected: False, 14ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0193",
+    "title": "Injection: ../../../etc/passwd",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ../../../etc/passwd",
+    "steps": [
+      "GET /api/v1/validation/kyp/../../../etc/passwd"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 25.727099971845746,
+    "findings": [
+      "Code: 404, reflected: False, 26ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0194",
+    "title": "Injection: ../../../etc/passwd",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: ../../../etc/passwd",
+    "steps": [
+      "GET /api/v1/ipas/orders/../../../etc/passwd"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.22349994815886,
+    "findings": [
+      "Code: 404, reflected: False, 17ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0195",
+    "title": "Injection: %00",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: %00",
+    "steps": [
+      "GET /api/v1/validation/kyp/%2500"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 28.770199976861477,
+    "findings": [
+      "Code: 200, reflected: False, 29ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0196",
+    "title": "Injection: %00",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: %00",
+    "steps": [
+      "GET /api/v1/ipas/orders/%2500"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 14.950399985536933,
+    "findings": [
+      "Code: 404, reflected: False, 15ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0197",
+    "title": "Injection: \u0000",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: \u0000",
+    "steps": [
+      "GET /api/v1/validation/kyp/%00"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 11.829199967905879,
+    "findings": [
+      "Code: 400, reflected: False, 12ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0198",
+    "title": "Injection: \u0000",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Injection payload in URL: \u0000",
+    "steps": [
+      "GET /api/v1/ipas/orders/%00"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 41.98979993816465,
+    "findings": [
+      "Code: 400, reflected: False, 42ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0199",
+    "title": "Burst: 20 rapid requests",
+    "stage": "Adversarial / Edge Cases",
+    "description": "20 rapid-fire requests to test throttling/stability",
+    "steps": [
+      "GET /api/v1/ipas/summary x20"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.476095026358962,
+    "findings": [
+      "Avg: 17ms, Max: 43ms, Min: 13ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0200",
+    "title": "Concurrent: 5 parallel requests",
+    "stage": "Adversarial / Edge Cases",
+    "description": "5 different endpoints called concurrently",
+    "steps": [
+      "Parallel: ['/api/v1/ipas/summary', '/api/v1/finops/summary', '/api/v1/validation/kyp/BatamFast', '/api/v1/finops/aging', '/api/v1/ipas/orders']"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 80.11500001884997,
+    "findings": [
+      "Wall clock: 80ms, Sum individual: 293ms, Parallelism: 3.7x"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0201",
+    "title": "Stress: 50 concurrent requests",
+    "stage": "Adversarial / Edge Cases",
+    "description": "50 concurrent requests to test system stability",
+    "steps": [
+      "50x GET /api/v1/ipas/summary"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 236.15700006484985,
+    "findings": [
+      "Success: 50/50, Failures: 0, Wall: 236ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0202",
+    "title": "Wrong method: PUT /api/v1/ipas/orders",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Send PUT request to read-only endpoint",
+    "steps": [
+      "PUT /api/v1/ipas/orders"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Code: 405"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0203",
+    "title": "Wrong method: DELETE /api/v1/ipas/orders",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Send DELETE request to read-only endpoint",
+    "steps": [
+      "DELETE /api/v1/ipas/orders"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Code: 405"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0204",
+    "title": "Wrong method: PATCH /api/v1/ipas/orders",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Send PATCH request to read-only endpoint",
+    "steps": [
+      "PATCH /api/v1/ipas/orders"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 0,
+    "findings": [
+      "Code: 405"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0205",
+    "title": "Header: Invalid API key",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Test with Invalid API key",
+    "steps": [
+      "Set X-API-Key: wrong-key"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.03059994522482,
+    "findings": [
+      "Code: 401"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0206",
+    "title": "Header: Empty API key",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Test with Empty API key",
+    "steps": [
+      "Set X-API-Key: "
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 13.151800027117133,
+    "findings": [
+      "Code: 401"
+    ],
+    "error": null
+  },
+  {
+    "id": "ADV-0207",
+    "title": "Header: Wrong content type",
+    "stage": "Adversarial / Edge Cases",
+    "description": "Test with Wrong content type",
+    "steps": [
+      "Set Content-Type: application/xml"
+    ],
+    "passed": true,
+    "category": "SECURITY",
+    "severity": "CRITICAL",
+    "response_time_ms": 15.41879994329065,
+    "findings": [
+      "Code: 200"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0208",
+    "title": "Benchmark: health",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /health (threshold: 500ms)",
+    "steps": [
+      "GET /health x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.293833351383608,
+    "findings": [
+      "Avg: 17ms, Max: 20ms, Threshold: 500ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0209",
+    "title": "Benchmark: metrics",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /metrics (threshold: 500ms)",
+    "steps": [
+      "GET /metrics x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.674700029194355,
+    "findings": [
+      "Avg: 16ms, Max: 19ms, Threshold: 500ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0210",
+    "title": "Benchmark: summary",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/ipas/summary (threshold: 2000ms)",
+    "steps": [
+      "GET /api/v1/ipas/summary x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.730100041565795,
+    "findings": [
+      "Avg: 18ms, Max: 21ms, Threshold: 2000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0211",
+    "title": "Benchmark: orders",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/ipas/orders (threshold: 2000ms)",
+    "steps": [
+      "GET /api/v1/ipas/orders x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.178233346280953,
+    "findings": [
+      "Avg: 15ms, Max: 18ms, Threshold: 2000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0212",
+    "title": "Benchmark: 1207814",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/ipas/orders/1207814 (threshold: 2000ms)",
+    "steps": [
+      "GET /api/v1/ipas/orders/1207814 x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.444799947241941,
+    "findings": [
+      "Avg: 15ms, Max: 16ms, Threshold: 2000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0213",
+    "title": "Benchmark: summary",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/finops/summary (threshold: 3000ms)",
+    "steps": [
+      "GET /api/v1/finops/summary x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.599433311261237,
+    "findings": [
+      "Avg: 18ms, Max: 20ms, Threshold: 3000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0214",
+    "title": "Benchmark: billing",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/finops/billing (threshold: 3000ms)",
+    "steps": [
+      "GET /api/v1/finops/billing x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.07940007528911,
+    "findings": [
+      "Avg: 15ms, Max: 16ms, Threshold: 3000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0215",
+    "title": "Benchmark: aging",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/finops/aging (threshold: 3000ms)",
+    "steps": [
+      "GET /api/v1/finops/aging x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.973399992721777,
+    "findings": [
+      "Avg: 18ms, Max: 19ms, Threshold: 3000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0216",
+    "title": "Benchmark: collections",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/finops/collections (threshold: 3000ms)",
+    "steps": [
+      "GET /api/v1/finops/collections x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.222299999246994,
+    "findings": [
+      "Avg: 15ms, Max: 18ms, Threshold: 3000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0217",
+    "title": "Benchmark: BatamFast",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/validation/kyp/BatamFast (threshold: 3000ms)",
+    "steps": [
+      "GET /api/v1/validation/kyp/BatamFast x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 15.936799968282381,
+    "findings": [
+      "Avg: 16ms, Max: 17ms, Threshold: 3000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0218",
+    "title": "Benchmark: cpi-config",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/debug/cpi-config (threshold: 2000ms)",
+    "steps": [
+      "GET /api/v1/debug/cpi-config x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 16.865833313204348,
+    "findings": [
+      "Avg: 17ms, Max: 21ms, Threshold: 2000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0219",
+    "title": "Benchmark: entity-registry",
+    "stage": "Performance & Concurrency",
+    "description": "Response time benchmark for /api/v1/debug/entity-registry (threshold: 2000ms)",
+    "steps": [
+      "GET /api/v1/debug/entity-registry x3"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 17.167099945557613,
+    "findings": [
+      "Avg: 17ms, Max: 19ms, Threshold: 2000ms"
+    ],
+    "error": null
+  },
+  {
+    "id": "PERF-0220",
+    "title": "Full workflow latency",
+    "stage": "Performance & Concurrency",
+    "description": "Complete sales workflow: KYP \u2192 Validation \u2192 IPAS \u2192 FinOps (5 calls)",
+    "steps": [
+      "5 sequential API calls"
+    ],
+    "passed": true,
+    "category": "PASS",
+    "severity": "INFO",
+    "response_time_ms": 86.57149993814528,
+    "findings": [
+      "Total: 87ms for 5 calls, avg: 17ms/call"
+    ],
+    "error": null
+  }
+]
