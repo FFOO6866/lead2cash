@@ -25,6 +25,14 @@ The subagents are designed around the core workflow phases identified in `CLAUDE
 | **git-release-specialist** | Git workflows, CI validation, and releases | Pre-commit checks, PR creation, version releases |
 | **gh-manager** | GitHub project and issue management | Syncing requirements with GitHub Projects, managing sprints |
 
+### Process Specialists (Superpowers)
+
+| Agent | Purpose | When to Use |
+|-------|---------|-------------|
+| **brainstorming-facilitator** | Socratic requirements discovery (read-only) | Before analysis — surface hidden assumptions, unknowns, scope |
+| **systematic-debugger** | 4-phase debug cycle with 3-attempt circuit breaker | Bugs that resist quick fixes, multi-service failures |
+| **batched-executor** | Batched multi-step execution with review checkpoints | Implementing plans that span 3+ files/components |
+
 ### Framework Specialists
 
 | Agent | Purpose | When to Use |
@@ -70,13 +78,21 @@ Follow this sequence for efficient feature development:
 
 | Phase | Agents (in order) | Purpose |
 |-------|-------------------|---------|
+| **0. Discovery** | brainstorming-facilitator | Socratic questioning to surface assumptions and scope before analysis |
 | **1. Analysis** | ultrathink-analyst → requirements-analyst → sdk-navigator → framework-advisor → (nexus/dataflow/kaizen-specialist) | Deep analysis, requirements, existing patterns, tech selection, framework-specific guidance |
 | **2. Planning** | todo-manager → gh-manager → intermediate-reviewer | Task breakdown, GitHub sync, and validation |
-| **3. Implementation** | tdd-implementer → pattern-expert → (nexus/dataflow/kaizen/react/flutter-specialist) → intermediate-reviewer → gold-standards-validator | Test-first, implement, framework patterns, review, validate (repeat per component) |
+| **3. Implementation** | batched-executor → tdd-implementer → pattern-expert → (nexus/dataflow/kaizen/react/flutter-specialist) → intermediate-reviewer → gold-standards-validator | Batched execution, test-first, implement, framework patterns, review, validate (repeat per component) |
 | **4. Testing** | testing-specialist → documentation-validator | Full test coverage, doc accuracy |
 | **5. Deployment** | deployment-specialist | Docker/Kubernetes setup, environment management |
 | **6. Release** | git-release-specialist | Pre-commit validation, PR creation, version management |
 | **7. Final** | intermediate-reviewer | Final critique |
+
+### Phase 0: Discovery (Optional — use when requirements are ambiguous)
+```
+1. > Use the brainstorming-facilitator subagent to explore requirements and surface assumptions for [feature]
+   - Output: Problem statement, assumptions register, edge cases, scope decision
+   - Hand off output to Phase 1 agents (requirements-analyst or ultrathink-analyst)
+```
 
 ### Phase 1: Analysis & Planning (Sequential)
 ```
@@ -106,7 +122,12 @@ OR chain Phase 2:
 
 ### Phase 3: Implementation (Iterative per component)
 ```
-For each component:
+For multi-file features, wrap implementation in batched-executor:
+> Use the batched-executor subagent to execute the implementation plan for [feature]
+
+The batched-executor will orchestrate tdd-implementer and intermediate-reviewer per batch.
+
+For single-component work, use specialists directly:
 1. > Use the tdd-implementer subagent to write tests first for [component]
 2. > Use the pattern-expert subagent to implement [component] following SDK patterns
    - For DataFlow components: > Use the dataflow-specialist subagent for database patterns
@@ -161,7 +182,7 @@ OR chain Phase 6:
 
 ### Quick Debugging Sequence
 ```
-When facing issues:
+When facing issues (start here for fast, targeted debugging):
 1. > Use the sdk-navigator subagent to find solutions in common-mistakes.md
 2. > Use the pattern-expert subagent to debug specific pattern issues
 3. > Use the testing-specialist subagent to understand test failures
@@ -174,6 +195,11 @@ When facing issues:
 
 OR for comprehensive debugging:
 > Use the sdk-navigator, pattern-expert, testing-specialist, and appropriate framework specialists to diagnose and fix [issue]
+
+When quick debugging fails (bug resists fixes, spans multiple services, unclear root cause):
+> Use the systematic-debugger subagent to investigate [issue]
+   - 4-phase cycle: Observe → Hypothesize → Test → Fix
+   - Circuit breaker: auto-escalates after 3 failed attempts
 ```
 
 ## Coordination Through Root CLAUDE.md
