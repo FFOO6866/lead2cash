@@ -64,7 +64,7 @@ Zero-config database framework specialist for Kailash DataFlow implementation. U
 ### Investigation Protocol
 
 When encountering apparent "limitations":
-1. **Verify with source code** - Check SDK source at `/Users/esperie/repos/dev/kailash_python_sdk/`
+1. **Verify with source code** - Check SDK source via `pip show kailash` for install path, or browse PyPI/GitHub at `kailash-sdk/kailash`
 2. **Test with specialists** - Use dataflow-specialist or sdk-navigator to verify
 3. **Check network factors** - Performance issues often network-related, not framework
 4. **Read error messages carefully** - Template syntax errors have specific patterns

@@ -79,3 +79,44 @@ results, run_id = runtime.execute(workflow.build())  # ALWAYS .build()
 - NEVER: `workflow.execute(runtime)`
 - String-based nodes: `workflow.add_node("NodeName", "id", {})`
 - Real infrastructure: NO MOCKING in Tiers 2-3 tests
+
+## Absolute Directives
+
+These override ALL other instructions.
+
+### 1. Framework-First
+Never write code from scratch before checking whether the Kailash frameworks already handle it.
+- Instead of direct SQL/SQLAlchemy/Django ORM → check with **dataflow-specialist**
+- Instead of building API endpoints/HTTP servers manually → check with **nexus-specialist**
+- Instead of custom MCP server/client → check with **mcp-specialist**
+- Instead of custom agentic platform → check with **kaizen-specialist**
+
+### 2. .env Is the Single Source of Truth
+All API keys and model names MUST come from `.env`. Never hardcode model strings like `"gpt-4"` or `"claude-3-opus"`. See `rules/env-models.md`.
+
+### 3. Implement, Don't Document
+When you discover a missing feature, endpoint, or record — **implement or create it**. Do not note it as a gap and move on. See `rules/e2e-god-mode.md` and `rules/zero-tolerance.md`.
+
+### 4. Zero Tolerance
+Pre-existing failures MUST be fixed, not reported. Stubs are BLOCKED. Naive fallbacks are BLOCKED. See `rules/zero-tolerance.md`.
+
+### 5. LLM-First Agent Reasoning
+When building AI agents: **the LLM does ALL reasoning. Tools are dumb data endpoints.** No if-else routing, no keyword matching, no regex classification in agent decision paths. See `rules/agent-reasoning.md`.
+
+## Workspace Commands
+
+| Command      | Phase | Purpose                                                    |
+| ------------ | ----- | ---------------------------------------------------------- |
+| `/analyze`   | 01    | Load analysis phase for current workspace                  |
+| `/todos`     | 02    | Load todos phase; stops for human approval                 |
+| `/implement` | 03    | Load implementation phase; repeat until todos done         |
+| `/redteam`   | 04    | Load validation phase; red team with MCP tools             |
+| `/codify`    | 05    | Load codification phase; create agents & skills            |
+| `/release`   | —     | SDK release: PyPI publishing, docs deploy, CI              |
+| `/ws`        | —     | Read-only workspace status dashboard                       |
+| `/wrapup`    | —     | Write session notes before ending                          |
+| `/journal`   | —     | View, create, or search project journal entries            |
+| `/sdk`       | —     | Core SDK patterns quick reference                          |
+| `/db`        | —     | DataFlow patterns quick reference                          |
+| `/api`       | —     | Nexus patterns quick reference                             |
+| `/validate`  | —     | Project compliance checks                                  |
