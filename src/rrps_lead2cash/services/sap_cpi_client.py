@@ -13,13 +13,12 @@ Auth flow:
 
 import logging
 import os
+import re
 import xml.etree.ElementTree as ET
 from typing import Any, Dict, List, Optional
 
+import defusedxml.ElementTree as SafeET  # M0-T07: XXE-safe parsing for external input
 import requests
-import urllib3
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 logger = logging.getLogger(__name__)
 
@@ -31,14 +30,30 @@ class SAPCPIClient:
     Uses OAuth2 client_credentials + CSRF token authentication.
     """
 
+    # Input validation patterns (M0-T05)
+    _CUSTOMER_ID_RE = re.compile(r"^[0-9]{1,10}$")
+    _CCA_RE = re.compile(r"^[0-9A-Z]{1,10}$")
+
     def __init__(self) -> None:
-        self._base_url = os.getenv("SAP_CPI_BASE_URL", "")
+        # M1-T05: support both env var names (production uses SAP_CPI_DEV_URL)
+        self._base_url = os.getenv("SAP_CPI_BASE_URL", "") or os.getenv(
+            "SAP_CPI_DEV_URL", ""
+        )
         self._token_url = os.getenv("SAP_CPI_TOKEN_URL", "")
         self._client_id = os.getenv("SAP_CPI_CLIENT_ID", "")
         self._client_secret = os.getenv("SAP_CPI_CLIENT_SECRET", "")
         self._kyp_iflow = os.getenv("SAP_CPI_KYP_IFLOW", "Integrum/RequestTableData")
-        self._opp_iflow = os.getenv("SAP_CPI_OPPORTUNITY_IFLOW", "Integrum/GetOpportunity")
+        self._opp_iflow = os.getenv(
+            "SAP_CPI_OPPORTUNITY_IFLOW", "Integrum/GetOpportunity"
+        )
         self._timeout = int(os.getenv("SAP_CPI_TIMEOUT", "30"))
+
+        # TLS verification — defaults to True (system certs), configurable via env (M0-T04)
+        ca_bundle = os.getenv("SAP_CPI_CA_BUNDLE", "")
+        if ca_bundle and ca_bundle.lower() not in ("true", "1", "yes"):
+            self._verify = ca_bundle  # path to a CA bundle file
+        else:
+            self._verify = True  # system certs
 
         # Cached OAuth token with expiry tracking
         self._access_token: Optional[str] = None
@@ -47,7 +62,12 @@ class SAPCPIClient:
     @property
     def is_configured(self) -> bool:
         """Check if CPI credentials are configured."""
-        return bool(self._base_url and self._token_url and self._client_id and self._client_secret)
+        return bool(
+            self._base_url
+            and self._token_url
+            and self._client_id
+            and self._client_secret
+        )
 
     # ------------------------------------------------------------------
     # OAuth2 Token
@@ -56,14 +76,20 @@ class SAPCPIClient:
     def _get_access_token(self, force_refresh: bool = False) -> str:
         """Get OAuth2 Bearer token via client_credentials grant."""
         import time
+
         # Check if cached token is still valid (with 60s buffer)
-        if (self._access_token and not force_refresh
-                and self._token_expires_at
-                and time.time() < self._token_expires_at - 60):
+        if (
+            self._access_token
+            and not force_refresh
+            and self._token_expires_at
+            and time.time() < self._token_expires_at - 60
+        ):
             return self._access_token
 
         if not self.is_configured:
-            raise SAPCPIConfigError("SAP CPI credentials not configured (missing BASE_URL, TOKEN_URL, CLIENT_ID, or CLIENT_SECRET)")
+            raise SAPCPIConfigError(
+                "SAP CPI credentials not configured (missing BASE_URL, TOKEN_URL, CLIENT_ID, or CLIENT_SECRET)"
+            )
 
         logger.info("Requesting OAuth2 token from %s", self._token_url)
         try:
@@ -72,13 +98,15 @@ class SAPCPIClient:
                 data={"grant_type": "client_credentials"},
                 auth=(self._client_id, self._client_secret),
                 timeout=self._timeout,
-                verify=False,
+                verify=self._verify,
             )
         except requests.exceptions.RequestException as exc:
             raise SAPCPIConnectionError(f"Failed to get OAuth token: {exc}") from exc
 
         if resp.status_code != 200:
-            raise SAPCPIAuthError(f"OAuth token request failed: HTTP {resp.status_code}")
+            raise SAPCPIAuthError(
+                f"OAuth token request failed: HTTP {resp.status_code}"
+            )
 
         token_data = resp.json()
         self._access_token = token_data["access_token"]
@@ -97,7 +125,9 @@ class SAPCPIClient:
             "X-CSRF-Token": "Fetch",
         }
         try:
-            resp = requests.get(url, headers=headers, timeout=self._timeout, verify=False)
+            resp = requests.get(
+                url, headers=headers, timeout=self._timeout, verify=self._verify
+            )
         except requests.exceptions.RequestException as exc:
             raise SAPCPIConnectionError(f"Failed to fetch CSRF token: {exc}") from exc
 
@@ -108,7 +138,9 @@ class SAPCPIClient:
             return self._get_csrf_token(url, _retry=True)
 
         if resp.status_code not in (200, 201):
-            raise SAPCPIConnectionError(f"CSRF token fetch failed: HTTP {resp.status_code}")
+            raise SAPCPIConnectionError(
+                f"CSRF token fetch failed: HTTP {resp.status_code}"
+            )
 
         csrf = resp.headers.get("X-CSRF-Token", "")
         return csrf, resp.cookies
@@ -117,7 +149,9 @@ class SAPCPIClient:
     # CPI POST helper
     # ------------------------------------------------------------------
 
-    def _post_to_cpi(self, iflow_path: str, xml_payload: str, _retry: bool = False) -> requests.Response:
+    def _post_to_cpi(
+        self, iflow_path: str, xml_payload: str, _retry: bool = False
+    ) -> requests.Response:
         """POST XML payload to a CPI iFlow with auth + CSRF."""
         url = f"{self._base_url}/http/{iflow_path}"
         csrf_token, cookies = self._get_csrf_token(url)
@@ -136,10 +170,12 @@ class SAPCPIClient:
                 headers=headers,
                 cookies=cookies,
                 timeout=self._timeout,
-                verify=False,
+                verify=self._verify,
             )
         except requests.exceptions.RequestException as exc:
-            raise SAPCPIConnectionError(f"CPI call to {iflow_path} failed: {exc}") from exc
+            raise SAPCPIConnectionError(
+                f"CPI call to {iflow_path} failed: {exc}"
+            ) from exc
 
         if resp.status_code == 401 and not _retry:
             # Token expired — refresh and retry exactly once
@@ -148,7 +184,9 @@ class SAPCPIClient:
             return self._post_to_cpi(iflow_path, xml_payload, _retry=True)
 
         if resp.status_code not in (200, 201):
-            raise SAPCPIError(f"CPI {iflow_path} returned HTTP {resp.status_code}: {resp.text[:500]}")
+            raise SAPCPIError(
+                f"CPI {iflow_path} returned HTTP {resp.status_code}: {resp.text[:500]}"
+            )
 
         return resp
 
@@ -156,7 +194,9 @@ class SAPCPIClient:
     # Credit Check (BAPI_CR_ACC_GETDETAIL)
     # ------------------------------------------------------------------
 
-    def get_credit_check(self, customer_id: str, credit_control_area: str = "0111") -> Dict[str, Any]:
+    def get_credit_check(
+        self, customer_id: str, credit_control_area: str = "0111"
+    ) -> Dict[str, Any]:
         """
         Get credit limit and exposure for a customer.
 
@@ -167,16 +207,28 @@ class SAPCPIClient:
         Returns:
             Dict with credit_limit, credit_exposure, utilization_pct, status.
         """
-        xml_payload = f"""<?xml version="1.0" encoding="UTF-8"?>
-<KYPRequest>
-    <CUSTOMERNO>{customer_id}</CUSTOMERNO>
-    <CreditControlArea>{credit_control_area}</CreditControlArea>
-</KYPRequest>"""
+        # M0-T05: validate inputs before building XML (prevent injection)
+        if not self._CUSTOMER_ID_RE.match(customer_id):
+            raise SAPCPIError(f"Invalid customer_id format: must be 1-10 digits")
+        if not self._CCA_RE.match(credit_control_area):
+            raise SAPCPIError(
+                f"Invalid credit_control_area format: must be 1-10 alphanumeric chars"
+            )
+
+        # Build XML safely using ElementTree instead of f-strings
+        root = ET.Element("KYPRequest")
+        ET.SubElement(root, "CUSTOMERNO").text = customer_id
+        ET.SubElement(root, "CreditControlArea").text = credit_control_area
+        xml_payload = '<?xml version="1.0" encoding="UTF-8"?>' + ET.tostring(
+            root, encoding="unicode"
+        )
 
         resp = self._post_to_cpi(self._kyp_iflow, xml_payload)
         return self._parse_credit_response(resp.text, customer_id)
 
-    def _parse_credit_response(self, response_text: str, customer_id: str) -> Dict[str, Any]:
+    def _parse_credit_response(
+        self, response_text: str, customer_id: str
+    ) -> Dict[str, Any]:
         """Parse the CPI credit check response.
 
         The CPI iFlow (Integrum/RequestTableData) returns JSON with this structure:
@@ -212,10 +264,10 @@ class SAPCPIClient:
         except (_json.JSONDecodeError, ValueError):
             pass
 
-        # Fall back to XML parsing
+        # Fall back to XML parsing (use defusedxml for external input)
         try:
-            root = ET.fromstring(response_text)
-        except ET.ParseError:
+            root = SafeET.fromstring(response_text)
+        except SafeET.ParseError:
             result["errors"].append("Failed to parse CPI response (not JSON or XML)")
             result["status"] = "ERROR"
             return result
@@ -247,7 +299,9 @@ class SAPCPIClient:
         self._finalize_credit_result(result, customer_id)
         return result
 
-    def _parse_credit_json(self, data: Dict, customer_id: str, result: Dict) -> Dict[str, Any]:
+    def _parse_credit_json(
+        self, data: Dict, customer_id: str, result: Dict
+    ) -> Dict[str, Any]:
         """Parse JSON credit response from CPI."""
         # Customer address
         addr = data.get("CUSTOMERADDRESS", {})
@@ -273,7 +327,9 @@ class SAPCPIClient:
         credit = data.get("CREDIT", {})
         if credit:
             result["credit_limit"] = self._safe_float(credit.get("CREDIT_LIMIT", 0))
-            result["credit_exposure"] = self._safe_float(credit.get("CREDIT_EXPOSURE", 0))
+            result["credit_exposure"] = self._safe_float(
+                credit.get("CREDIT_EXPOSURE", 0)
+            )
             # CPI does NOT return CURRENCY — resolve from entity registry
             result["currency"] = credit.get("CURRENCY", "")
 
@@ -322,14 +378,18 @@ class SAPCPIClient:
         """Look up customer in entity registry (cached singleton)."""
         if SAPCPIClient._entity_registry is None:
             from .entity_registry import EntityRegistry
+
             SAPCPIClient._entity_registry = EntityRegistry()
         return SAPCPIClient._entity_registry.resolve(customer_id)
 
     @staticmethod
     def _safe_float(value: Any) -> float:
-        """Safely convert a value to float."""
+        """Safely convert a value to float, rejecting NaN/Inf."""
+        import math
+
         try:
-            return float(value)
+            result = float(value)
+            return result if math.isfinite(result) else 0.0
         except (ValueError, TypeError):
             return 0.0
 
@@ -355,12 +415,20 @@ class SAPCPIClient:
         Returns:
             Dict with opportunities list and metadata.
         """
-        xml_payload = f"""<GetOpportunity><CustomerNo>{customer_id}</CustomerNo></GetOpportunity>"""
+        # M0-T05: validate input before building XML
+        if not self._CUSTOMER_ID_RE.match(customer_id):
+            raise SAPCPIError(f"Invalid customer_id format: must be 1-10 digits")
+
+        root = ET.Element("GetOpportunity")
+        ET.SubElement(root, "CustomerNo").text = customer_id
+        xml_payload = ET.tostring(root, encoding="unicode")
 
         resp = self._post_to_cpi(self._opp_iflow, xml_payload)
         return self._parse_opportunity_response(resp.text, customer_id)
 
-    def _parse_opportunity_response(self, response_text: str, customer_id: str) -> Dict[str, Any]:
+    def _parse_opportunity_response(
+        self, response_text: str, customer_id: str
+    ) -> Dict[str, Any]:
         """Parse the CPI GetOpportunity response.
 
         The iFlow returns JSON with nested Message1/Message2 structure:
@@ -398,15 +466,19 @@ class SAPCPIClient:
         except (_json.JSONDecodeError, ValueError):
             pass
 
-        # Fall back to XML
+        # Fall back to XML (use defusedxml for external input)
         try:
-            root = ET.fromstring(response_text)
+            root = SafeET.fromstring(response_text)
             return self._parse_opportunity_xml(root, customer_id, result)
-        except ET.ParseError:
-            result["errors"].append("Failed to parse CPI opportunity response (not JSON or XML)")
+        except SafeET.ParseError:
+            result["errors"].append(
+                "Failed to parse CPI opportunity response (not JSON or XML)"
+            )
             return result
 
-    def _parse_opportunity_json(self, data: Dict, customer_id: str, result: Dict) -> Dict[str, Any]:
+    def _parse_opportunity_json(
+        self, data: Dict, customer_id: str, result: Dict
+    ) -> Dict[str, Any]:
         """Parse the actual JSON response from GetOpportunity iFlow.
 
         Handles the nested Message1/Message2 structure where each top-level
@@ -443,7 +515,9 @@ class SAPCPIClient:
         result["count"] = len(unique_opps)
         return result
 
-    def _map_opportunity_fields(self, opp_data: Dict, customer_id: str) -> Dict[str, Any]:
+    def _map_opportunity_fields(
+        self, opp_data: Dict, customer_id: str
+    ) -> Dict[str, Any]:
         """Map CPI opportunity fields to our standard format."""
         return {
             "opportunity_id": str(opp_data.get("ID", "")),
@@ -452,7 +526,9 @@ class SAPCPIClient:
             "status_code": opp_data.get("LifeCycleStatusCode", ""),
             "revenue": self._safe_float(opp_data.get("ExpectedRevenueAmount", 0)),
             "currency": opp_data.get("ExpectedRevenueAmountCurrencyCode", ""),
-            "win_probability": self._safe_float(opp_data.get("MTUChanceCode_TXT_SDK", 0)),
+            "win_probability": self._safe_float(
+                opp_data.get("MTUChanceCode_TXT_SDK", 0)
+            ),
             "win_probability_text": opp_data.get("MTUChancecontent_SDKText", ""),
             "start_date": opp_data.get("ExpectedProcessingStartDate", ""),
             "end_date": opp_data.get("ExpectedProcessingEndDate", ""),
@@ -461,7 +537,9 @@ class SAPCPIClient:
             "account_id": customer_id,
         }
 
-    def _parse_opportunity_xml(self, root: ET.Element, customer_id: str, result: Dict) -> Dict[str, Any]:
+    def _parse_opportunity_xml(
+        self, root: ET.Element, customer_id: str, result: Dict
+    ) -> Dict[str, Any]:
         """Parse XML opportunity response (fallback)."""
         field_map = {
             "ID": "opportunity_id",
@@ -478,7 +556,9 @@ class SAPCPIClient:
             if tag == "Opportunity":
                 opp: Dict[str, Any] = {"account_id": customer_id}
                 for child in opp_elem:
-                    child_tag = child.tag.split("}")[-1] if "}" in child.tag else child.tag
+                    child_tag = (
+                        child.tag.split("}")[-1] if "}" in child.tag else child.tag
+                    )
                     text = (child.text or "").strip()
                     if child_tag in field_map and text:
                         key = field_map[child_tag]
@@ -498,21 +578,26 @@ class SAPCPIClient:
 # Custom Exceptions
 # ============================================================================
 
+
 class SAPCPIError(Exception):
     """Base exception for SAP CPI client errors."""
+
     pass
 
 
 class SAPCPIConfigError(SAPCPIError):
     """SAP CPI configuration is missing or invalid."""
+
     pass
 
 
 class SAPCPIConnectionError(SAPCPIError):
     """Failed to connect to SAP CPI."""
+
     pass
 
 
 class SAPCPIAuthError(SAPCPIError):
     """SAP CPI authentication failed."""
+
     pass

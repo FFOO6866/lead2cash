@@ -15,8 +15,9 @@ Source XML files are read from a configurable directory (IPAS_XML_DIR env var).
 
 import logging
 import os
-import xml.etree.ElementTree as ET
 from pathlib import Path
+
+import defusedxml.ElementTree as ET  # M0-T07: XXE protection
 from typing import Dict, List, Optional
 
 from ..config import config
@@ -112,17 +113,19 @@ class IPASXMLParser:
         for order_num, order in self._orders.items():
             total_engines += order.total_engines
             total_value += order.total_value
-            order_summaries.append({
-                "order_number": order_num,
-                "engine_type": order.header.engine_type,
-                "sold_to_party": order.header.sold_to_party,
-                "total_engines": order.total_engines,
-                "total_bom_items": order.total_bom_items,
-                "total_value": order.total_value,
-                "currency": order.header.currency_code,
-                "document_date": order.header.document_date,
-                "source_file": order.source_file,
-            })
+            order_summaries.append(
+                {
+                    "order_number": order_num,
+                    "engine_type": order.header.engine_type,
+                    "sold_to_party": order.header.sold_to_party,
+                    "total_engines": order.total_engines,
+                    "total_bom_items": order.total_bom_items,
+                    "total_value": order.total_value,
+                    "currency": order.header.currency_code,
+                    "document_date": order.header.document_date,
+                    "source_file": order.source_file,
+                }
+            )
 
         return IPASSummary(
             total_orders=len(self._orders),
@@ -156,7 +159,11 @@ class IPASXMLParser:
         root = tree.getroot()
 
         if root.tag != "IPAS_Order":
-            logger.warning("Skipping %s — root element is '%s', expected 'IPAS_Order'", xml_file, root.tag)
+            logger.warning(
+                "Skipping %s — root element is '%s', expected 'IPAS_Order'",
+                xml_file,
+                root.tag,
+            )
             return None
 
         doc_props = self._parse_document_properties(root)
@@ -259,8 +266,12 @@ class IPASXMLParser:
                 shipping_type=self._text(eng_el, "Shipping_Type"),
                 packaging_group=self._text(eng_el, "Packaging_Group"),
                 gross_price=gross_price,
-                absolute_discount=float(self._text(eng_el, "Absolute_Discount", "0") or "0"),
-                acceptance_with_customer=self._text(eng_el, "Acceptance_With_Customer", "0"),
+                absolute_discount=float(
+                    self._text(eng_el, "Absolute_Discount", "0") or "0"
+                ),
+                acceptance_with_customer=self._text(
+                    eng_el, "Acceptance_With_Customer", "0"
+                ),
                 exhaust_regulation=self._text(eng_el, "Exhaust_Regulation"),
                 take_from_stock=self._text(eng_el, "Take_From_Stock", "0"),
                 items=items,
@@ -274,19 +285,21 @@ class IPASXMLParser:
         items: List[IPASBOMItem] = []
         for item_el in engine_el.findall("Item"):
             item_type = item_el.get("Type", "M")
-            items.append(IPASBOMItem(
-                item_number=self._text(item_el, "Item_Number"),
-                engine_number=self._text(item_el, "Engine_Number"),
-                material=self._text(item_el, "Material"),
-                material_desc=self._text(item_el, "Material_Desc"),
-                quantity=self._int(item_el, "Quantity", 1),
-                item_type=item_type,
-                assembly_note=self._text(item_el, "Assembly_Note"),
-                delivery_date=self._text(item_el, "Delivery_Date"),
-                packaging_group=self._text(item_el, "Packaging_Group"),
-                ship_to_party=self._text(item_el, "Ship_To_Party"),
-                sub_object_number=self._text(item_el, "Sub_Object_Number"),
-            ))
+            items.append(
+                IPASBOMItem(
+                    item_number=self._text(item_el, "Item_Number"),
+                    engine_number=self._text(item_el, "Engine_Number"),
+                    material=self._text(item_el, "Material"),
+                    material_desc=self._text(item_el, "Material_Desc"),
+                    quantity=self._int(item_el, "Quantity", 1),
+                    item_type=item_type,
+                    assembly_note=self._text(item_el, "Assembly_Note"),
+                    delivery_date=self._text(item_el, "Delivery_Date"),
+                    packaging_group=self._text(item_el, "Packaging_Group"),
+                    ship_to_party=self._text(item_el, "Ship_To_Party"),
+                    sub_object_number=self._text(item_el, "Sub_Object_Number"),
+                )
+            )
         return items
 
     def _parse_partners(self, root: ET.Element) -> List[IPASPartner]:
@@ -298,25 +311,29 @@ class IPASXMLParser:
         partners: List[IPASPartner] = []
 
         for cust_el in pi.findall("Customer"):
-            partners.append(IPASPartner(
-                type=cust_el.get("Type", "Unknown"),
-                customer_code=self._text(cust_el, "Customer_Code"),
-                name1=self._text(cust_el, "Name1"),
-                name2=self._text(cust_el, "Name2"),
-                country=self._text(cust_el, "Country"),
-                city=self._text(cust_el, "City"),
-            ))
+            partners.append(
+                IPASPartner(
+                    type=cust_el.get("Type", "Unknown"),
+                    customer_code=self._text(cust_el, "Customer_Code"),
+                    name1=self._text(cust_el, "Name1"),
+                    name2=self._text(cust_el, "Name2"),
+                    country=self._text(cust_el, "Country"),
+                    city=self._text(cust_el, "City"),
+                )
+            )
 
         for emp_el in pi.findall("Employee"):
-            partners.append(IPASPartner(
-                type=emp_el.get("Type", "Unknown"),
-                partner_id=self._text(emp_el, "Partner_ID"),
-                first_name=self._text(emp_el, "First_Name"),
-                last_name=self._text(emp_el, "Last_Name"),
-                department=self._text(emp_el, "Department_Desc"),
-                phone=self._text(emp_el, "Phone"),
-                email=self._text(emp_el, "Mail"),
-            ))
+            partners.append(
+                IPASPartner(
+                    type=emp_el.get("Type", "Unknown"),
+                    partner_id=self._text(emp_el, "Partner_ID"),
+                    first_name=self._text(emp_el, "First_Name"),
+                    last_name=self._text(emp_el, "Last_Name"),
+                    department=self._text(emp_el, "Department_Desc"),
+                    phone=self._text(emp_el, "Phone"),
+                    email=self._text(emp_el, "Mail"),
+                )
+            )
 
         return partners
 
@@ -346,4 +363,5 @@ class IPASXMLParser:
 
 class IPASParseError(Exception):
     """Error parsing IPAS XML file."""
+
     pass

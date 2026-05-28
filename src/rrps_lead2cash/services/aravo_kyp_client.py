@@ -12,6 +12,7 @@ Used for Tier 1 due diligence validation during opportunity qualification (Epic 
 """
 
 import logging
+import os
 import time
 from difflib import SequenceMatcher
 from typing import List, Optional, Tuple
@@ -66,6 +67,19 @@ class AravoKYPClient:
         self._verify_ssl = config.aravo_verify_ssl
         self._cache_ttl = cache_ttl
 
+        # M0-T10: SSL bypass in production requires explicit acknowledgment
+        if not self._verify_ssl and config.environment == "production":
+            ack = os.getenv("ARAVO_SSL_OVERRIDE_ACKNOWLEDGED", "").lower()
+            if ack not in ("true", "1", "yes"):
+                logger.error(
+                    "ARAVO_VERIFY_SSL=false in production without ARAVO_SSL_OVERRIDE_ACKNOWLEDGED=true — forcing SSL on"
+                )
+                self._verify_ssl = True
+            else:
+                logger.warning(
+                    "Aravo SSL verification DISABLED in production (ARAVO_SSL_OVERRIDE_ACKNOWLEDGED=true)"
+                )
+
         # In-memory report cache
         self._cached_meta: Optional[AravoReportMeta] = None
         self._cached_engagements: Optional[List[AravoEngagement]] = None
@@ -75,7 +89,9 @@ class AravoKYPClient:
     # Public API
     # ------------------------------------------------------------------
 
-    def fetch_report(self, force_refresh: bool = False) -> Tuple[AravoReportMeta, List[AravoEngagement]]:
+    def fetch_report(
+        self, force_refresh: bool = False
+    ) -> Tuple[AravoReportMeta, List[AravoEngagement]]:
         """
         Fetch the full KYP report from Aravo (with TTL cache).
 
@@ -91,18 +107,17 @@ class AravoKYPClient:
             AravoAuthError: If authentication fails.
         """
         if not force_refresh and self._is_cache_valid():
-            logger.debug("Returning cached Aravo report (%d engagements)", len(self._cached_engagements))
+            logger.debug(
+                "Returning cached Aravo report (%d engagements)",
+                len(self._cached_engagements),
+            )
             return self._cached_meta, self._cached_engagements
 
         if not self._auth_token:
-            raise AravoConfigError(
-                "ARAVO_AUTH_TOKEN environment variable must be set"
-            )
+            raise AravoConfigError("ARAVO_AUTH_TOKEN environment variable must be set")
 
         if not config.aravo_report_id:
-            raise AravoConfigError(
-                "ARAVO_REPORT_ID environment variable must be set"
-            )
+            raise AravoConfigError("ARAVO_REPORT_ID environment variable must be set")
 
         headers = {
             "Accept": "application/json",
@@ -367,10 +382,14 @@ class AravoKYPClient:
 
         # Evaluate risk rating
         if engagement.risk_rating == "Very High":
-            issues.append("Engagement risk rating is VERY HIGH — requires enhanced due diligence")
+            issues.append(
+                "Engagement risk rating is VERY HIGH — requires enhanced due diligence"
+            )
             blocking = True
         elif engagement.risk_rating == "High":
-            issues.append("Engagement risk rating is HIGH — additional review may be required")
+            issues.append(
+                "Engagement risk rating is HIGH — additional review may be required"
+            )
 
         # Evaluate E&C review
         if engagement.ec_review_status == "Pending":
@@ -383,7 +402,10 @@ class AravoKYPClient:
         # Determine overall KYP status
         if blocking:
             kyp_status = "BLOCKED"
-        elif engagement.onboarding_status != "Approved" or engagement.third_party_status != "Approved":
+        elif (
+            engagement.onboarding_status != "Approved"
+            or engagement.third_party_status != "Approved"
+        ):
             kyp_status = "PENDING"
         elif issues:
             kyp_status = "CONDITIONAL"
@@ -417,19 +439,23 @@ class AravoKYPClient:
 
 class AravoError(Exception):
     """Base exception for Aravo KYP client errors."""
+
     pass
 
 
 class AravoConfigError(AravoError):
     """Aravo configuration is missing or invalid."""
+
     pass
 
 
 class AravoConnectionError(AravoError):
     """Failed to connect to or receive response from Aravo API."""
+
     pass
 
 
 class AravoAuthError(AravoError):
     """Aravo API authentication failed."""
+
     pass
