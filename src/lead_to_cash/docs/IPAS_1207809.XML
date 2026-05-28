@@ -1,0 +1,159 @@
+<IPAS_Order>
+  <DocumentProperties>
+    <Created>20250225 10:00:00</Created>
+    <Type>IPAS</Type>
+    <Format_Version>1.0</Format_Version>
+    <Source>IPAS7.1</Source>
+    <Target_ID>11</Target_ID>
+    <Target_Desc>MS5</Target_Desc>
+    <Message_ID>1207809001</Message_ID>
+    <Draft_Version>0</Draft_Version>
+  </DocumentProperties>
+  <Header>
+    <IPAS_Order_Status>2</IPAS_Order_Status>
+    <IPAS_Project_Number>120780901</IPAS_Project_Number>
+    <IPAS_Order_Number>1207809</IPAS_Order_Number>
+    <IPAS_Order_Version>00</IPAS_Order_Version>
+    <Document_Date>20250225</Document_Date>
+    <Initiator_Region>02</Initiator_Region>
+    <Target_Region>02</Target_Region>
+    <Purchased_From_Region>02</Purchased_From_Region>
+    <Producing_Factory>02</Producing_Factory>
+    <Delivery_Location>21</Delivery_Location>
+    <O3_Order_Number />
+    <Purchase_Order_Number>TEST-PO4</Purchase_Order_Number>
+    <Purchase_Order_Date>20250225</Purchase_Order_Date>
+    <Engine_Type>MG20V4000A5</Engine_Type>
+    <Series>4000</Series>
+    <Cylinder>20</Cylinder>
+    <Power>2000</Power>
+    <Engine_Speed>1500</Engine_Speed>
+    <Distr_Channel>10</Distr_Channel>
+    <Application_coarse>03</Application_coarse>
+    <Application_fine>0300</Application_fine>
+    <Application_Group>3D</Application_Group>
+    <Type_Of_Service>323</Type_Of_Service>
+    <Propulsion_Type>99</Propulsion_Type>
+    <Propulsion>00</Propulsion>
+    <Business_Type>2</Business_Type>
+    <IPAS_Object_Type>99</IPAS_Object_Type>
+    <Project_Type>1</Project_Type>
+    <Sold_To_Party>0022005992</Sold_To_Party>
+    <Bill_To_Party>0022005992</Bill_To_Party>
+    <Ship_To_Party>0022005992</Ship_To_Party>
+    <Direct_Ship>0</Direct_Ship>
+    <End_Customer>0022005992</End_Customer>
+    <End_Customer_Country>SG</End_Customer_Country>
+    <End_Customer_Group>11</End_Customer_Group>
+    <Employee_Commercial />
+    <Employee_Technical />
+    <Employee_Electronical />
+    <Employee_OperationsApprover />
+    <Customer_Contact />
+    <Incoterms_1>FCA</Incoterms_1>
+    <Incoterms_2>Singapore</Incoterms_2>
+    <Terms_Of_Payment>Z090</Terms_Of_Payment>
+    <Currency_Code>EUR</Currency_Code>
+    <Invoice_Language>EN</Invoice_Language>
+    <Delivery_Note_Language>EN</Delivery_Note_Language>
+    <Classification_Society />
+    <Emission_Cert_Authority />
+    <Flag_State>000</Flag_State>
+    <Construction_No_Vessel />
+    <Shipbuilder_Yard />
+    <Category_Aggregat_Assembly>00</Category_Aggregat_Assembly>
+    <Category_Aggregat_Test_Stand>00</Category_Aggregat_Test_Stand>
+    <Power_Pack>9</Power_Pack>
+    <Penalty>0</Penalty>
+    <Clearance_Sales_Assembly>0</Clearance_Sales_Assembly>
+    <Aggregation_Standard_Parts>0</Aggregation_Standard_Parts>
+    <Scope_Of_Supply_Complete />
+    <Demagnesation>0</Demagnesation>
+    <Serial_Number_Postfix />
+    <Tognum_End_Customer />
+    <Distributor />
+    <Ordering_Location>12</Ordering_Location>
+    <Project_System_Rel>X</Project_System_Rel>
+    <Billing_Plan_Rel>X</Billing_Plan_Rel>
+    <Product_Category>3</Product_Category>
+    <Power_Unit>KW</Power_Unit>
+  </Header>
+  <Engines>
+    <Engine>
+      <Engine_Number>0001</Engine_Number>
+      <Engine_Type>MG20V4000A5</Engine_Type>
+      <Quantity>1</Quantity>
+      <Delivery_Date>20260401</Delivery_Date>
+      <Ship_To_Party>0022005992</Ship_To_Party>
+      <Shipping_Type>03</Shipping_Type>
+      <Packing_Type />
+      <Packaging_Group>1</Packaging_Group>
+      <Gross_Price>166666.50</Gross_Price>
+      <Absolute_Discount>0.00</Absolute_Discount>
+      <Acceptance_With_Customer>0</Acceptance_With_Customer>
+      <Exhaust_Regulation>09</Exhaust_Regulation>
+      <Take_From_Stock>0</Take_From_Stock>
+      <Stock_Order_Number>0</Stock_Order_Number>
+      <Stock_Order_Item_Number>0</Stock_Order_Item_Number>
+      <Stock_Engine_Serial_Number />
+      <Item Type="L">
+        <Item_Number>0001</Item_Number>
+        <Engine_Number>0001</Engine_Number>
+        <Material>MG20V4000A5</Material>
+        <Material_Desc />
+        <Quantity>1</Quantity>
+        <Assembly_Note>M</Assembly_Note>
+        <Delivery_Date>20260401</Delivery_Date>
+        <Packaging_Group>1</Packaging_Group>
+        <Ship_To_Party />
+        <Sub_Object_Number />
+      </Item>
+      <no_of_item>1</no_of_item>
+    </Engine>
+    <no_of_engine>1</no_of_engine>
+  </Engines>
+  <IPAS_Objects>
+    <IPAS_Object>
+      <IPAS_Object_Number />
+      <IPAS_Object_Type />
+      <Sub_Object>
+        <Sub_Object_Number />
+        <Sub_Object_Type />
+        <IPAS_Object_Number />
+        <Engine_Number />
+        <Product_Model />
+        <Product_Model_Year />
+        <Product_Model_Version />
+        <Master_SOS_Change_Date />
+      </Sub_Object>
+      <no_of_sub_object>1</no_of_sub_object>
+    </IPAS_Object>
+    <no_of_ipas_object>1</no_of_ipas_object>
+  </IPAS_Objects>
+  <Partner_Information>
+    <Customer Type="Bill-to">
+      <Customer_Code />
+      <Name1 />
+      <Name2 />
+      <Country />
+      <City />
+      <Street />
+      <House_No />
+      <Region />
+      <ZIP_Code />
+    </Customer>
+    <no_of_customer>1</no_of_customer>
+    <Employee Type="Commercial_Contact">
+      <Partner_ID />
+      <First_Name />
+      <Middle_Name />
+      <Last_Name />
+      <Global_Employee_Number />
+      <Department_Desc />
+      <Phone />
+      <Fax />
+      <Mail />
+    </Employee>
+    <no_of_employee>1</no_of_employee>
+  </Partner_Information>
+</IPAS_Order>

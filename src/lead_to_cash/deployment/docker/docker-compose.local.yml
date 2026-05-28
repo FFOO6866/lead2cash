@@ -1,0 +1,123 @@
+# Docker Compose for Lead to Cash Application - LOCAL DEVELOPMENT
+# Use this for local testing before deploying to rr-kailash.ai
+# ==============================================================================
+
+services:
+  # ==========================================================================
+  # Lead to Cash Application (Development Mode)
+  # ==========================================================================
+  lead-to-cash:
+    build:
+      context: ../../../..
+      dockerfile: src/lead_to_cash/deployment/docker/Dockerfile
+    container_name: lead-to-cash-local
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      # Development settings
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+
+      # Database Configuration
+      - DATABASE_URL=postgresql://dev_user:dev_password@postgres:5432/lead_to_cash_dev
+
+      # Redis Configuration
+      - REDIS_URL=redis://:dev_redis_pass@redis:6379/0
+
+      # Security (development values - NOT for production!)
+      - SECRET_KEY=dev_secret_key_not_for_production_use_only
+      - JWT_SECRET_KEY=dev_jwt_key_not_for_production_use_only
+
+      # CORS (allow all in development)
+      - CORS_ORIGINS=*
+
+      # SDK Configuration
+      - SDK_LOG_LEVEL=DEBUG
+      - SDK_ENABLE_MONITORING=true
+
+      # API Configuration
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - WORKERS=1
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount source code for hot reload
+      - ../../../../src/lead_to_cash:/app/src/lead_to_cash:cached
+      - ../../../../sdk-users:/app/sdk-users:cached
+      - app_logs:/app/logs
+    networks:
+      - lead-to-cash-local
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ==========================================================================
+  # PostgreSQL Database (Development)
+  # ==========================================================================
+  postgres:
+    image: pgvector/pgvector:pg15
+    container_name: lead-to-cash-postgres-local
+    environment:
+      POSTGRES_DB: lead_to_cash_dev
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+    ports:
+      - "5433:5432"  # Different port to avoid conflicts
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+      - ../config/init-scripts:/docker-entrypoint-initdb.d:ro
+    networks:
+      - lead-to-cash-local
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user -d lead_to_cash_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================================================
+  # Redis Cache (Development)
+  # ==========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: lead-to-cash-redis-local
+    ports:
+      - "6380:6379"  # Different port to avoid conflicts
+    volumes:
+      - redis_data_local:/data
+    networks:
+      - lead-to-cash-local
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "dev_redis_pass", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: redis-server --requirepass dev_redis_pass
+
+# ==============================================================================
+# Volumes
+# ==============================================================================
+volumes:
+  postgres_data_local:
+    driver: local
+  redis_data_local:
+    driver: local
+  app_logs:
+    driver: local
+
+# ==============================================================================
+# Networks
+# ==============================================================================
+networks:
+  lead-to-cash-local:
+    driver: bridge

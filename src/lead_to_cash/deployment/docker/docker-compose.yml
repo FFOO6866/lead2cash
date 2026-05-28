@@ -1,0 +1,225 @@
+# Docker Compose for Lead to Cash Application
+# Production deployment for rr.kailash.ai
+# ==============================================================================
+# nginx runs on the host and handles TLS termination
+# See deployment/nginx/lead-to-cash.conf for nginx configuration
+#
+# Usage:
+#   GHCR (pre-built):  docker pull ghcr.io/.../lead-to-cash:latest && docker-compose up -d
+#   Local build:       docker-compose build && docker-compose up -d
+# ==============================================================================
+
+services:
+  # ==========================================================================
+  # Lead to Cash Application
+  # ==========================================================================
+  lead-to-cash:
+    # GHCR image (used if pulled first, otherwise builds locally)
+    image: ghcr.io/integrum-global/rr_lead_to_cash/lead-to-cash:latest
+    build:
+      # Context is 'current' subdirectory when deployed to /opt/lead-to-cash/
+      # The deployment script extracts code to /opt/lead-to-cash/current/
+      context: current
+      dockerfile: src/lead_to_cash/deployment/docker/Dockerfile
+      args:
+        BUILD_VERSION: ${BUILD_VERSION:-latest}
+        BUILD_DATE: ${BUILD_DATE:-}
+        BUILD_REVISION: ${BUILD_REVISION:-}
+    container_name: lead-to-cash-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    # Load environment variables from .env file (for secrets like SAP_CPI_*, API keys)
+    env_file:
+      - .env
+    environment:
+      # Application Configuration
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DEBUG=${DEBUG:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+
+      # Database Configuration
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-lead_to_cash}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-lead_to_cash}
+      - DATABASE_POOL_SIZE=${DATABASE_POOL_SIZE:-20}
+      - DATABASE_MAX_OVERFLOW=${DATABASE_MAX_OVERFLOW:-40}
+
+      # Entity Registry Database (for company identity resolution)
+      - ENTITY_REGISTRY_DATABASE_URL=postgresql://${POSTGRES_USER:-lead_to_cash}:${POSTGRES_PASSWORD}@postgres:5432/entity_registry
+
+      # Redis Configuration
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - REDIS_EXPIRE_SECONDS=${REDIS_EXPIRE_SECONDS:-7200}
+
+      # Security Configuration
+      - SECRET_KEY=${SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - JWT_EXPIRE_MINUTES=${JWT_EXPIRE_MINUTES:-480}
+
+      # CORS Configuration
+      - CORS_ORIGINS=${CORS_ORIGINS:-https://rr.kailash.ai}
+
+      # Kailash SDK Configuration
+      - SDK_LOG_LEVEL=${SDK_LOG_LEVEL:-INFO}
+      - SDK_ENABLE_MONITORING=${SDK_ENABLE_MONITORING:-true}
+      - SDK_MAX_CONCURRENCY=${SDK_MAX_CONCURRENCY:-10}
+
+      # API Configuration
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_BASE_URL=https://rr.kailash.ai
+      - WORKERS=${WORKERS:-4}
+
+      # Nexus Configuration
+      - NEXUS_ENABLE_API=true
+      - NEXUS_ENABLE_CLI=true
+      - NEXUS_ENABLE_MCP=${NEXUS_ENABLE_MCP:-true}
+
+      # SAP CPI Configuration
+      - SAP_CPI_DEV_URL=${SAP_CPI_DEV_URL:-}
+      - SAP_CPI_QA_URL=${SAP_CPI_QA_URL:-}
+      - SAP_CPI_PROD_URL=${SAP_CPI_PROD_URL:-}
+      - SAP_CPI_CLIENT_ID=${SAP_CPI_CLIENT_ID:-}
+      - SAP_CPI_CLIENT_SECRET=${SAP_CPI_CLIENT_SECRET:-}
+      - SAP_CPI_TOKEN_URL=${SAP_CPI_TOKEN_URL:-}
+
+      # External API Keys (Data Sources)
+      - PERPLEXITY_API_KEY=${PERPLEXITY_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - EODHD_API_KEY=${EODHD_API_KEY:-}
+      - NEWSAPI_API_KEY=${NEWSAPI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - app_logs:/app/logs
+      - app_data:/app/data
+      - app_outputs:/app/outputs
+    networks:
+      - lead-to-cash-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+
+  # ==========================================================================
+  # PostgreSQL Database with pgvector
+  # ==========================================================================
+  postgres:
+    image: pgvector/pgvector:pg15
+    container_name: lead-to-cash-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-lead_to_cash}
+      POSTGRES_USER: ${POSTGRES_USER:-lead_to_cash}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.UTF-8"
+    # NOTE: No port exposure in production - access via internal network only
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../config/init-scripts:/docker-entrypoint-initdb.d:ro
+    networks:
+      - lead-to-cash-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-lead_to_cash} -d ${POSTGRES_DB:-lead_to_cash}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    command: >
+      postgres
+      -c max_connections=100
+      -c shared_buffers=256MB
+      -c effective_cache_size=512MB
+      -c maintenance_work_mem=64MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c work_mem=4MB
+      -c min_wal_size=1GB
+      -c max_wal_size=4GB
+
+  # ==========================================================================
+  # Redis Cache
+  # ==========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: lead-to-cash-redis
+    # NOTE: No port exposure in production - access via internal network only
+    volumes:
+      - redis_data:/data
+    networks:
+      - lead-to-cash-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD}
+      --maxmemory 1gb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --appendfsync everysec
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+
+# ==============================================================================
+# Volumes
+# ==============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  app_logs:
+    driver: local
+  app_data:
+    driver: local
+  app_outputs:
+    driver: local
+
+# ==============================================================================
+# Networks
+# ==============================================================================
+networks:
+  lead-to-cash-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
