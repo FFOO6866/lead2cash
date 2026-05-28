@@ -119,7 +119,10 @@ class DatabasePool:
             return {"status": "healthy"}
         except Exception as exc:
             logger.error("Database health check failed: %s", exc)
-            return {"status": "unhealthy", "error": str(exc)}
+            return {
+                "status": "unhealthy",
+                "error": "database connectivity check failed",
+            }
         finally:
             if conn is not None:
                 self.putconn(conn)

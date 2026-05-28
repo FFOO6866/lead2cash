@@ -39,6 +39,19 @@ ALLOWED_EVENT_TYPES = frozenset(
     }
 )
 
+# Allowed transaction statuses (must match CHECK constraint in schema.sql)
+ALLOWED_STATUSES = frozenset(
+    {
+        "draft",
+        "in_progress",
+        "validated",
+        "submitted",
+        "posted",
+        "failed",
+        "cancelled",
+    }
+)
+
 # Allowed provenance sources (must match CHECK constraint in schema.sql)
 ALLOWED_SOURCES = frozenset(
     {
@@ -95,6 +108,10 @@ class AuditStore:
             Dict with the inserted row data.
         """
         cid = _validate_uuid(correlation_id)
+        if status not in ALLOWED_STATUSES:
+            raise ValueError(
+                f"Invalid status '{status}'. Must be one of: {sorted(ALLOWED_STATUSES)}"
+            )
         conn = self._pool.getconn()
         try:
             with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
@@ -132,6 +149,10 @@ class AuditStore:
             Updated row dict, or None if no matching transaction.
         """
         cid = _validate_uuid(correlation_id)
+        if status is not None and status not in ALLOWED_STATUSES:
+            raise ValueError(
+                f"Invalid status '{status}'. Must be one of: {sorted(ALLOWED_STATUSES)}"
+            )
 
         # Build dynamic SET clause — parameterized
         sets: List[str] = []

@@ -21,7 +21,9 @@ CREATE TABLE IF NOT EXISTS transactions (
     correlation_id  UUID            PRIMARY KEY,
     vbeln           VARCHAR(10)     NULL,           -- SAP sales document number
     idoc_snapshot   JSONB           NULL,           -- Latest IDoc payload snapshot
-    status          VARCHAR(20)     NOT NULL DEFAULT 'draft',
+    status          VARCHAR(20)     NOT NULL DEFAULT 'draft'
+                    CHECK (status IN ('draft','in_progress','validated',
+                                      'submitted','posted','failed','cancelled')),
     created_at      TIMESTAMPTZ     NOT NULL DEFAULT NOW(),
     updated_at      TIMESTAMPTZ     NULL,
     user_id         VARCHAR(100)    NULL
