@@ -15,7 +15,6 @@ Source XML files are read from a configurable directory (IPAS_XML_DIR env var).
 
 import logging
 import math
-import os
 from pathlib import Path
 
 import defusedxml.ElementTree as SafeET  # M0-T07: XXE protection for parsing
