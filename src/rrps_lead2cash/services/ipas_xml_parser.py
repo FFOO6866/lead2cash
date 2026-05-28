@@ -17,8 +17,11 @@ import logging
 import os
 from pathlib import Path
 
-import defusedxml.ElementTree as ET  # M0-T07: XXE protection
+import defusedxml.ElementTree as SafeET  # M0-T07: XXE protection for parsing
 from typing import Dict, List, Optional
+from xml.etree.ElementTree import (
+    Element,
+)  # stdlib type only (defusedxml has no Element)
 
 from ..config import config
 from ..core.models import (
@@ -155,7 +158,7 @@ class IPASXMLParser:
 
     def _parse_file(self, xml_file: Path) -> Optional[IPASOrder]:
         """Parse a single IPAS XML file into an IPASOrder."""
-        tree = ET.parse(xml_file)
+        tree = SafeET.parse(xml_file)
         root = tree.getroot()
 
         if root.tag != "IPAS_Order":
@@ -186,7 +189,7 @@ class IPASXMLParser:
             source_file=xml_file.name,
         )
 
-    def _parse_document_properties(self, root: ET.Element) -> IPASDocumentProperties:
+    def _parse_document_properties(self, root: Element) -> IPASDocumentProperties:
         """Parse DocumentProperties section."""
         dp = root.find("DocumentProperties")
         if dp is None:
@@ -203,7 +206,7 @@ class IPASXMLParser:
             draft_version=self._text(dp, "Draft_Version", "0"),
         )
 
-    def _parse_header(self, root: ET.Element) -> IPASHeader:
+    def _parse_header(self, root: Element) -> IPASHeader:
         """Parse Header section."""
         h = root.find("Header")
         if h is None:
@@ -242,7 +245,7 @@ class IPASXMLParser:
             power_unit=self._text(h, "Power_Unit", "KW"),
         )
 
-    def _parse_engines(self, root: ET.Element) -> List[IPASEngine]:
+    def _parse_engines(self, root: Element) -> List[IPASEngine]:
         """Parse Engines section with nested BOM Items."""
         engines_el = root.find("Engines")
         if engines_el is None:
@@ -280,7 +283,7 @@ class IPASXMLParser:
 
         return engines
 
-    def _parse_bom_items(self, engine_el: ET.Element) -> List[IPASBOMItem]:
+    def _parse_bom_items(self, engine_el: Element) -> List[IPASBOMItem]:
         """Parse BOM Item elements within an Engine."""
         items: List[IPASBOMItem] = []
         for item_el in engine_el.findall("Item"):
@@ -302,7 +305,7 @@ class IPASXMLParser:
             )
         return items
 
-    def _parse_partners(self, root: ET.Element) -> List[IPASPartner]:
+    def _parse_partners(self, root: Element) -> List[IPASPartner]:
         """Parse Partner_Information section."""
         pi = root.find("Partner_Information")
         if pi is None:
@@ -342,7 +345,7 @@ class IPASXMLParser:
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _text(parent: ET.Element, tag: str, default: str = "") -> str:
+    def _text(parent: Element, tag: str, default: str = "") -> str:
         """Get text content of a child element, or default if missing/empty."""
         el = parent.find(tag)
         if el is None or el.text is None:
@@ -350,7 +353,7 @@ class IPASXMLParser:
         return el.text.strip() if el.text.strip() else default
 
     @staticmethod
-    def _int(parent: ET.Element, tag: str, default: int = 0) -> int:
+    def _int(parent: Element, tag: str, default: int = 0) -> int:
         """Get integer content of a child element."""
         el = parent.find(tag)
         if el is None or el.text is None:

@@ -12,6 +12,7 @@ Auth flow:
 """
 
 import logging
+import math
 import os
 import re
 import xml.etree.ElementTree as ET
@@ -385,8 +386,6 @@ class SAPCPIClient:
     @staticmethod
     def _safe_float(value: Any) -> float:
         """Safely convert a value to float, rejecting NaN/Inf."""
-        import math
-
         try:
             result = float(value)
             return result if math.isfinite(result) else 0.0
