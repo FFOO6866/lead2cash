@@ -10,7 +10,7 @@ All queries use parameterized %s placeholders — NO f-string SQL.
 import json
 import logging
 import uuid as _uuid
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import psycopg2.extras
