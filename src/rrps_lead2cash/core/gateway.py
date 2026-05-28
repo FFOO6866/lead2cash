@@ -23,6 +23,8 @@ from kailash.runtime.local import LocalRuntime
 
 from .models import TwoTierValidationRequest, CustomerValidationRequest
 from ..services.aravo_kyp_client import AravoError
+from ..db.connection import DatabasePool, set_pool
+from ..db.audit_store import AuditStore
 
 
 class WorkflowExecuteRequest(BaseModel):
@@ -88,12 +90,15 @@ ipas_parser: Optional[IPASXMLParser] = None
 finops: Optional[FinOpsSimulator] = None
 cpi_client: Optional[SAPCPIClient] = None
 entity_registry: Optional[EntityRegistry] = None
+db_pool: Optional[DatabasePool] = None
+audit_store: Optional[AuditStore] = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager"""
     global runtime, validation_service, ipas_parser, finops, cpi_client, entity_registry
+    global db_pool, audit_store
 
     # Startup
     logger.info("Starting RRPS Lead-to-Cash Gateway")
@@ -104,17 +109,52 @@ async def lifespan(app: FastAPI):
     finops = FinOpsSimulator()
     cpi_client = SAPCPIClient()
     entity_registry = EntityRegistry()
+
+    # Initialize PostgreSQL connection pool
+    from ..config import config as app_config
+
+    database_url = app_config.database_url
+    if database_url:
+        try:
+            db_pool = DatabasePool(database_url)
+            db_pool.initialize()
+            set_pool(db_pool)
+
+            # Apply schema on first run (idempotent — IF NOT EXISTS)
+            schema_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)), "db", "schema.sql"
+            )
+            if os.path.exists(schema_path):
+                db_pool.run_schema(schema_path)
+
+            audit_store = AuditStore(db_pool)
+            health = db_pool.health_check()
+            logger.info("PostgreSQL initialized: %s", health["status"])
+        except Exception:
+            logger.exception("PostgreSQL initialization failed — running without DB")
+            db_pool = None
+            audit_store = None
+    else:
+        logger.warning("DATABASE_URL not set — PostgreSQL disabled")
+
     logger.info(
-        "Services initialized: IPAS(%d orders), FinOps, CPI(configured=%s), EntityRegistry(%d customers)",
+        "Services initialized: IPAS(%d orders), FinOps, CPI(configured=%s), "
+        "EntityRegistry(%d customers), DB(%s)",
         ipas_count,
         cpi_client.is_configured,
         len(entity_registry.list_customers()),
+        "connected" if db_pool and db_pool.is_initialized else "disabled",
     )
 
     yield
 
     # Shutdown
     logger.info("Shutting down RRPS Lead-to-Cash Gateway")
+    if db_pool is not None:
+        db_pool.close()
+        db_pool = None
+    audit_store = None
+    set_pool(None)
     runtime = None
     validation_service = None
     ipas_parser = None
@@ -183,11 +223,20 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
+    """Health check endpoint — includes database connectivity status."""
+    db_status = None
+    if db_pool is not None:
+        db_status = db_pool.health_check()
+
+    overall = "healthy"
+    if db_status and db_status.get("status") == "unhealthy":
+        overall = "degraded"
+
     return {
-        "status": "healthy",
+        "status": overall,
         "service": "rrps-lead-to-cash",
         "environment": os.getenv("ENVIRONMENT", "development"),
+        "database": db_status if db_status else {"status": "not_configured"},
     }
 
 
