@@ -93,7 +93,7 @@ class ValidationService:
                         all_conditions.append(issue)
         except AravoError as exc:
             logger.error("Tier 1 KYP check failed: %s", exc)
-            all_issues.append(f"KYP check unavailable: {exc}")
+            all_issues.append("KYP compliance check temporarily unavailable")
 
         # -- Tier 2: SAP/ECC (via CPI — TE-12 implementation) --
         # Tier 2 is wired when TE-12 (SAP Customer Master Client) is implemented.
@@ -102,7 +102,9 @@ class ValidationService:
         # is connected — NOT simulated data.
         tier2_result = None
         if tier2_result is None:
-            all_conditions.append("SAP master data validation pending (TE-12 not yet implemented)")
+            all_conditions.append(
+                "SAP master data validation pending (TE-12 not yet implemented)"
+            )
 
         # -- Determine combined status --
         status = self._determine_combined_status(tier1_result, tier2_result)

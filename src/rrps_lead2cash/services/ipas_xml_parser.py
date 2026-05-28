@@ -14,6 +14,7 @@ Source XML files are read from a configurable directory (IPAS_XML_DIR env var).
 """
 
 import logging
+import math
 import os
 from pathlib import Path
 
@@ -254,11 +255,9 @@ class IPASXMLParser:
         engines: List[IPASEngine] = []
         for eng_el in engines_el.findall("Engine"):
             items = self._parse_bom_items(eng_el)
-            gross_price_text = self._text(eng_el, "Gross_Price", "0").strip()
-            try:
-                gross_price = float(gross_price_text)
-            except ValueError:
-                gross_price = 0.0
+            gross_price = self._safe_float(
+                self._text(eng_el, "Gross_Price", "0").strip()
+            )
 
             engine = IPASEngine(
                 engine_number=self._text(eng_el, "Engine_Number"),
@@ -269,7 +268,7 @@ class IPASXMLParser:
                 shipping_type=self._text(eng_el, "Shipping_Type"),
                 packaging_group=self._text(eng_el, "Packaging_Group"),
                 gross_price=gross_price,
-                absolute_discount=float(
+                absolute_discount=self._safe_float(
                     self._text(eng_el, "Absolute_Discount", "0") or "0"
                 ),
                 acceptance_with_customer=self._text(
@@ -351,6 +350,15 @@ class IPASXMLParser:
         if el is None or el.text is None:
             return default
         return el.text.strip() if el.text.strip() else default
+
+    @staticmethod
+    def _safe_float(value: str) -> float:
+        """Safely convert a string to float, rejecting NaN/Inf."""
+        try:
+            result = float(value)
+            return result if math.isfinite(result) else 0.0
+        except (ValueError, TypeError):
+            return 0.0
 
     @staticmethod
     def _int(parent: Element, tag: str, default: int = 0) -> int:
