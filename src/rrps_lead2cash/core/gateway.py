@@ -11,7 +11,7 @@ import os
 import logging
 import re
 from typing import Dict, Any, Optional
-from fastapi import FastAPI, HTTPException, Request, Depends, Security
+from fastapi import FastAPI, HTTPException, Depends, Security
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import APIKeyHeader
@@ -198,6 +198,7 @@ async def execute_workflow(
     _key: str = Depends(verify_api_key),
 ):
     """Execute a workflow by name (authenticated, validated input)."""
+    _validate_query(workflow_name)
     global runtime
 
     if runtime is None:
@@ -217,7 +218,7 @@ async def execute_workflow(
         else:
             return {
                 "workflow": workflow_name,
-                "message": f"Workflow '{workflow_name}' is not implemented yet",
+                "message": "Workflow is not implemented yet",
                 "status": "placeholder",
                 "available_workflows": ["get_status"],
             }
@@ -529,7 +530,7 @@ async def customer_full_lookup(query: str, _key: str = Depends(verify_api_key)):
             content={
                 "matched": False,
                 "query": query,
-                "message": f"Customer '{query}' not found",
+                "message": "Customer not found",
                 "suggestions": [
                     {"name": c["name"], "id": c["customer_id"]} for _, c in suggestions
                 ],
@@ -675,9 +676,7 @@ async def finops_billing_status(sales_order: str, _key: str = Depends(verify_api
         raise HTTPException(status_code=503, detail="FinOps service not initialized")
     result = finops.get_billing_status(sales_order)
     if result is None:
-        raise HTTPException(
-            status_code=404, detail=f"No billing data for sales order {sales_order}"
-        )
+        raise HTTPException(status_code=404, detail="Billing data not found")
     return result.model_dump()
 
 
@@ -694,9 +693,7 @@ async def finops_aging(customer_id: str, _key: str = Depends(verify_api_key)):
         raise HTTPException(status_code=503, detail="FinOps service not initialized")
     result = finops.get_aging_analysis(customer_id)
     if result is None:
-        raise HTTPException(
-            status_code=404, detail=f"No aging data for customer {customer_id}"
-        )
+        raise HTTPException(status_code=404, detail="Aging data not found")
     return result.model_dump()
 
 
@@ -715,9 +712,7 @@ async def finops_financial_summary(
         raise HTTPException(status_code=503, detail="FinOps service not initialized")
     result = finops.get_financial_summary(customer_id)
     if result is None:
-        raise HTTPException(
-            status_code=404, detail=f"No financial data for customer {customer_id}"
-        )
+        raise HTTPException(status_code=404, detail="Financial data not found")
     return result.model_dump()
 
 

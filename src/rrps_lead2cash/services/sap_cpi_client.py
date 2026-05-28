@@ -16,7 +16,7 @@ import math
 import os
 import re
 import xml.etree.ElementTree as ET
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import defusedxml.ElementTree as SafeET  # M0-T07: XXE-safe parsing for external input
 import requests
