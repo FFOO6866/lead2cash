@@ -27,14 +27,20 @@ logger = logging.getLogger(__name__)
 # FinOps Models
 # ============================================================================
 
+
 class DownPayment(BaseModel):
     """Single down payment record (maps to SAP BKPF/BSEG)."""
+
     billing_doc: str = Field(..., description="SAP billing document number")
     percentage: float = Field(..., description="Down payment percentage")
     amount: float = Field(..., description="Down payment amount in local currency")
     currency: str = Field(default="EUR", description="Currency code")
-    financial_doc: str = Field(default="", description="SAP financial document (BKPF BELNR)")
-    clearing_date: str = Field(default="", description="Clearing entry date (BSEG AUGCP)")
+    financial_doc: str = Field(
+        default="", description="SAP financial document (BKPF BELNR)"
+    )
+    clearing_date: str = Field(
+        default="", description="Clearing entry date (BSEG AUGCP)"
+    )
     clearing_doc: str = Field(default="", description="Clearing document (BSEG AUGBL)")
     status: str = Field(default="OPEN", description="CLEARED, OPEN, or OVERDUE")
     company_code: str = Field(default="0011", description="SAP company code (BUKRS)")
@@ -42,22 +48,34 @@ class DownPayment(BaseModel):
 
 class BillingStatus(BaseModel):
     """Billing overview for an order."""
+
     sales_order: str = Field(..., description="SAP sales order number")
     customer_id: str = Field(..., description="SAP customer number")
     customer_name: str = Field(default="", description="Customer name")
     order_value: float = Field(default=0.0, description="Total order value")
     currency: str = Field(default="EUR", description="Currency code")
     payment_terms_desc: str = Field(default="", description="Payment terms description")
-    down_payments: List[DownPayment] = Field(default_factory=list, description="Down payment details")
+    down_payments: List[DownPayment] = Field(
+        default_factory=list, description="Down payment details"
+    )
     total_billed: float = Field(default=0.0, description="Total amount billed")
-    total_collected: float = Field(default=0.0, description="Total amount collected/cleared")
+    total_collected: float = Field(
+        default=0.0, description="Total amount collected/cleared"
+    )
     outstanding: float = Field(default=0.0, description="Outstanding balance")
-    billing_plan_active: bool = Field(default=True, description="Billing plan is active")
+    billing_plan_active: bool = Field(
+        default=True, description="Billing plan is active"
+    )
     status: str = Field(default="ON_TRACK", description="ON_TRACK, AT_RISK, OVERDUE")
+    source: str = Field(
+        default="CPI_SIMULATOR",
+        description="Data source: CPI_SIMULATOR (not real SAP data)",
+    )
 
 
 class AgingBucket(BaseModel):
     """Single aging bucket for receivables analysis."""
+
     bucket: str = Field(..., description="Aging bucket label")
     amount: float = Field(default=0.0, description="Amount in bucket")
     currency: str = Field(default="EUR", description="Currency code")
@@ -66,18 +84,30 @@ class AgingBucket(BaseModel):
 
 class AgingAnalysis(BaseModel):
     """Receivables aging analysis for a customer."""
+
     customer_id: str = Field(..., description="SAP customer number")
     customer_name: str = Field(default="", description="Customer name")
     company_code: str = Field(default="0011", description="SAP company code")
-    total_receivables: float = Field(default=0.0, description="Total outstanding receivables")
+    total_receivables: float = Field(
+        default=0.0, description="Total outstanding receivables"
+    )
     currency: str = Field(default="EUR", description="Currency code")
-    buckets: List[AgingBucket] = Field(default_factory=list, description="Aging buckets")
-    risk_level: str = Field(default="LOW", description="LOW, MEDIUM, HIGH based on aging profile")
+    buckets: List[AgingBucket] = Field(
+        default_factory=list, description="Aging buckets"
+    )
+    risk_level: str = Field(
+        default="LOW", description="LOW, MEDIUM, HIGH based on aging profile"
+    )
     as_of_date: str = Field(default="", description="Analysis date")
+    source: str = Field(
+        default="CPI_SIMULATOR",
+        description="Data source: CPI_SIMULATOR (not real SAP data)",
+    )
 
 
 class FinancialSummary(BaseModel):
     """Financial summary for a customer across all orders."""
+
     customer_id: str
     customer_name: str
     total_order_value: float
@@ -283,6 +313,7 @@ _BILLING_BY_ORDER: Dict[str, BillingStatus] = {
 # Service
 # ============================================================================
 
+
 class FinOpsSimulator:
     """
     Simulated FinOps service for POV demo.
@@ -335,7 +366,9 @@ class FinOpsSimulator:
                 total_receivables=total_outstanding,
                 currency=currency,
                 buckets=[
-                    AgingBucket(bucket="CURRENT", amount=total_outstanding, currency=currency),
+                    AgingBucket(
+                        bucket="CURRENT", amount=total_outstanding, currency=currency
+                    ),
                     AgingBucket(bucket="1-30", amount=0.0, currency=currency),
                     AgingBucket(bucket="31-60", amount=0.0, currency=currency),
                     AgingBucket(bucket="61-90", amount=0.0, currency=currency),
@@ -364,12 +397,15 @@ class FinOpsSimulator:
             name = orders[0].customer_name if orders else ""
             total = sum(o.order_value for o in orders)
             outstanding = sum(o.outstanding for o in orders)
-            results.append({
-                "customer_id": cid,
-                "customer_name": name,
-                "order_count": len(orders),
-                "total_order_value": total,
-                "total_outstanding": outstanding,
-                "currency": orders[0].currency if orders else "EUR",
-            })
+            results.append(
+                {
+                    "customer_id": cid,
+                    "customer_name": name,
+                    "order_count": len(orders),
+                    "total_order_value": total,
+                    "total_outstanding": outstanding,
+                    "currency": orders[0].currency if orders else "EUR",
+                    "source": "CPI_SIMULATOR",
+                }
+            )
         return results
