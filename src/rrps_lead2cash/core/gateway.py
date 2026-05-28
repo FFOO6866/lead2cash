@@ -47,6 +47,8 @@ def _validate_query(value: str) -> str:
     """Validate a search query path parameter (length + character safety)."""
     if not value or len(value) > 100:
         raise HTTPException(status_code=400, detail="Query must be 1-100 characters")
+    if not _SAFE_QUERY_PATTERN.match(value):
+        raise HTTPException(status_code=400, detail="Query contains invalid characters")
     return value
 
 
@@ -131,16 +133,21 @@ app = FastAPI(
 
 # Add CORS middleware — restrict origins in production (M0-T06)
 _cors_origins = os.getenv("CORS_ORIGINS", "")
+_is_production = os.getenv("ENVIRONMENT") == "production"
 if not _cors_origins:
-    _cors_origins = (
-        "https://rr.kailash.ai" if os.getenv("ENVIRONMENT") == "production" else "*"
-    )
+    _cors_origins = "https://rr.kailash.ai" if _is_production else "*"
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_cors_origins.split(","),
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=(
+        ["GET", "POST", "PUT", "DELETE", "OPTIONS"] if _is_production else ["*"]
+    ),
+    allow_headers=(
+        ["Authorization", "Content-Type", "X-API-Key", "Accept"]
+        if _is_production
+        else ["*"]
+    ),
 )
 
 
@@ -280,6 +287,7 @@ async def get_kyp_assessment(customer_name: str, _key: str = Depends(verify_api_
     - Approval status
     - Issues and conditions
     """
+    _validate_query(customer_name)
     if validation_service is None:
         raise HTTPException(
             status_code=503, detail="Validation service not initialized"
@@ -428,11 +436,12 @@ async def ipas_get_order(order_id: str, _key: str = Depends(verify_api_key)):
     Returns full order detail including header, engines, BOM items,
     and partner information — structured for MS5 SAP order creation.
     """
+    _validate_sap_id(order_id, "order_id")
     if ipas_parser is None:
         raise HTTPException(status_code=503, detail="IPAS parser not initialized")
     order = ipas_parser.get_order(order_id)
     if order is None:
-        raise HTTPException(status_code=404, detail=f"IPAS order {order_id} not found")
+        raise HTTPException(status_code=404, detail="IPAS order not found")
     return order.model_dump()
 
 

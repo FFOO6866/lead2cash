@@ -278,9 +278,9 @@ class SAPCPIClient:
             text = (elem.text or "").strip()
 
             if tag == "CREDIT_LIMIT" and text:
-                result["credit_limit"] = float(text)
+                result["credit_limit"] = self._safe_float(text)
             elif tag == "CREDIT_EXPOSURE" and text:
-                result["credit_exposure"] = float(text)
+                result["credit_exposure"] = self._safe_float(text)
             elif tag == "CURRENCY" and text:
                 result["currency"] = text
             elif tag == "NAME1" and text and not result["customer_name"]:
