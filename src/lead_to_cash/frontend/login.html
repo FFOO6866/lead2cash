@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RRPS Sales Ops Agent - Login">
+    <title>Login | Rolls-Royce Power Systems</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙</text></svg>" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Brand Colors */
+            --rrps-navy: #002244;
+            --rrps-navy-dark: #001833;
+            --rrps-navy-light: #003366;
+
+            /* Accent Colors */
+            --rrps-accent: #0066B3;
+            --rrps-accent-hover: #0052A3;
+            --rrps-accent-light: #E6F0FA;
+
+            /* Metallic Tones */
+            --rrps-silver: #A7A9AC;
+            --rrps-bronze: #B08D57;
+
+            /* Neutral Colors */
+            --rrps-white: #FFFFFF;
+            --rrps-light: #F5F7FA;
+            --rrps-gray-100: #F1F5F9;
+            --rrps-gray-200: #E2E8F0;
+            --rrps-gray-400: #94A3B8;
+            --rrps-gray-600: #475569;
+            --rrps-gray-800: #1E293B;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 34, 68, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 34, 68, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 34, 68, 0.1);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 34, 68, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background: var(--rrps-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Engine Background - Immersive, extends beyond viewport */
+        .engine-background {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 140vw;
+            min-width: 1400px;
+            height: auto;
+            opacity: 0.10;
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+        }
+
+        /* Login Card - Floating over engine */
+        .login-card {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 44px 40px;
+            box-shadow:
+                0 32px 64px -12px rgba(0, 34, 68, 0.20),
+                0 0 0 1px rgba(255, 255, 255, 0.9),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 34, 68, 0.06);
+            margin: 20px;
+            will-change: transform;
+        }
+
+        /* Logo */
+        .login-logo {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .login-logo h1 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--rrps-navy);
+            margin-bottom: 4px;
+        }
+
+        .login-logo h1 span {
+            color: var(--rrps-accent);
+        }
+
+        .login-logo .subtitle {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--rrps-silver);
+        }
+
+        /* Divider line under logo */
+        .logo-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rrps-navy), var(--rrps-accent));
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Form Styles */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--rrps-gray-800);
+        }
+
+        .form-input {
+            height: 50px;
+            padding: 0 16px;
+            border: 1.5px solid var(--rrps-gray-200);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--rrps-gray-800);
+            background: var(--rrps-light);
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--rrps-accent);
+            background: var(--rrps-white);
+            box-shadow: 0 0 0 4px var(--rrps-accent-light);
+        }
+
+        .form-input::placeholder {
+            color: var(--rrps-gray-400);
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--rrps-navy);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: var(--rrps-gray-600);
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            font-size: 13px;
+            color: var(--rrps-accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: var(--rrps-accent-hover);
+            text-decoration: underline;
+        }
+
+        /* Login Button */
+        .login-btn {
+            height: 52px;
+            background: linear-gradient(135deg, var(--rrps-navy) 0%, var(--rrps-navy-light) 100%);
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--rrps-white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+
+        .login-btn:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 36px 24px;
+                margin: 16px;
+                border-radius: 16px;
+            }
+
+            .login-logo h1 {
+                font-size: 16px;
+            }
+
+            .login-header h2 {
+                font-size: 22px;
+            }
+
+            .form-input {
+                height: 48px;
+            }
+
+            .login-btn {
+                height: 50px;
+            }
+        }
+
+        /* Loading State */
+        .login-btn.loading {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .login-btn.loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top-color: var(--rrps-white);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes spin {
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        /* Error State */
+        .form-input.error {
+            border-color: #EF4444;
+            background: #FEF2F2;
+        }
+
+        .error-message {
+            font-size: 12px;
+            color: #EF4444;
+            display: none;
+        }
+
+        .form-group.has-error .error-message {
+            display: block;
+        }
+
+        .form-hint {
+            display: block;
+            font-size: 12px;
+            color: var(--rrps-gray-400);
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Engine Background Image -->
+    <img src="/static/images/mtu-engine.png" alt="" class="engine-background" aria-hidden="true" width="1400" height="900" decoding="async">
+
+    <!-- Login Card -->
+    <div class="login-card">
+        <div class="login-logo">
+            <h1>ROLLS-ROYCE <span>POWER SYSTEMS</span></h1>
+            <p class="subtitle">Agentic AI System</p>
+            <div class="logo-divider"></div>
+        </div>
+
+        <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <input
+                    type="text"
+                    class="form-input"
+                    id="username"
+                    placeholder="firstname.lastname"
+                    required
+                    autocomplete="username"
+                >
+                <span class="error-message">Please enter your username</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input
+                    type="password"
+                    class="form-input"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                >
+                <span class="error-message">Password is required</span>
+            </div>
+
+            <div class="form-row">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                Sign In
+            </button>
+
+        </form>
+
+    </div>
+
+    <script>
+        // Username validation regex - must match backend
+        const USERNAME_PATTERN = /^[a-zA-Z0-9._-]+$/;
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Validate inputs
+            if (!username || !password) {
+                showError('Please enter both username and password');
+                return;
+            }
+
+            // Validate username format (catch @ symbol and other invalid chars)
+            if (!USERNAME_PATTERN.test(username)) {
+                if (username.includes('@')) {
+                    showError('Please use your username (e.g., kianseng.tee), not your email address');
+                } else {
+                    showError('Username can only contain letters, numbers, dots, underscores, and hyphens');
+                }
+                return;
+            }
+
+            btn.classList.add('loading');
+            btn.textContent = 'Signing in...';
+
+            try {
+                const response = await fetch('/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Login successful - redirect to chat
+                    window.location.href = '/chat';
+                } else {
+                    // Handle error responses
+                    let errorMsg = 'Invalid username or password';
+                    if (data.detail) {
+                        // Handle Pydantic validation errors (422)
+                        if (Array.isArray(data.detail)) {
+                            const firstError = data.detail[0];
+                            if (firstError && firstError.msg) {
+                                errorMsg = firstError.msg.replace('Value error, ', '');
+                            }
+                        } else {
+                            errorMsg = data.detail;
+                        }
+                    }
+                    showError(errorMsg);
+                    btn.classList.remove('loading');
+                    btn.textContent = 'Sign In';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Unable to connect to server. Please try again.');
+                btn.classList.remove('loading');
+                btn.textContent = 'Sign In';
+            }
+        }
+
+        function escapeHtml(str) {
+            if (str == null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function showError(message) {
+            // Check if error banner exists, create if not
+            let errorBanner = document.getElementById('errorBanner');
+            if (!errorBanner) {
+                errorBanner = document.createElement('div');
+                errorBanner.id = 'errorBanner';
+                errorBanner.style.cssText = `
+                    background: #FEF2F2;
+                    border: 1px solid #EF4444;
+                    border-radius: 8px;
+                    padding: 12px 16px;
+                    margin-bottom: 16px;
+                    color: #B91C1C;
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                `;
+                const form = document.getElementById('loginForm');
+                form.insertBefore(errorBanner, form.firstChild);
+            }
+            errorBanner.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="#EF4444" stroke-width="1.5"/>
+                    <path d="M10 6V10M10 14H10.01" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>${escapeHtml(message)}</span>
+            `;
+            errorBanner.style.display = 'flex';
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                if (errorBanner) {
+                    errorBanner.style.display = 'none';
+                }
+            }, 5000);
+        }
+
+        // Form validation
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.required && !this.value) {
+                    this.parentElement.classList.add('has-error');
+                    this.classList.add('error');
+                } else {
+                    this.parentElement.classList.remove('has-error');
+                    this.classList.remove('error');
+                }
+            });
+
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.remove('has-error');
+                this.classList.remove('error');
+                // Hide error banner when user starts typing
+                const errorBanner = document.getElementById('errorBanner');
+                if (errorBanner) {
+                    errorBanner.style.display = 'none';
+                }
+            });
+        });
+
+        // Note: auto-redirect to /chat if already logged in was removed.
+        // The /api/v1/auth/me API path and /chat page path have different auth
+        // logic (API accepts JWT-only, /chat requires session when Redis is up),
+        // which caused an infinite redirect loop. Users who are already logged in
+        // can navigate to /chat directly.
+    </script>
+</body>
+</html>

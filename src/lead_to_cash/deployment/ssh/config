@@ -1,0 +1,45 @@
+# SSH Configuration for Lead to Cash Deployment
+# ==============================================================================
+# Usage: Copy this to ~/.ssh/config or include it with:
+#   Include /path/to/this/config
+#
+# Then connect with: ssh rr-kailash
+# ==============================================================================
+
+Host rr-kailash
+    HostName rr-kailash.ai
+    User ubuntu
+    IdentityFile ~/.ssh/rr-kailash.pem
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    Compression yes
+    LogLevel ERROR
+
+Host rr-kailash-verbose
+    HostName rr-kailash.ai
+    User ubuntu
+    IdentityFile ~/.ssh/rr-kailash.pem
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    Compression yes
+    LogLevel VERBOSE
+
+# ==============================================================================
+# Setup Instructions:
+# ==============================================================================
+# 1. Copy PEM file to SSH directory:
+#    cp src/lead_to_cash/rr-kailash.pem ~/.ssh/rr-kailash.pem
+#
+# 2. Set correct permissions:
+#    chmod 600 ~/.ssh/rr-kailash.pem
+#
+# 3. Add this config to your SSH config:
+#    cat src/lead_to_cash/deployment/ssh/config >> ~/.ssh/config
+#
+# 4. Test connection:
+#    ssh rr-kailash
+# ==============================================================================

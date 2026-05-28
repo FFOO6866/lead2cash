@@ -1,0 +1,68 @@
+# =============================================================================
+# RRPS Lead-to-Cash User Configuration
+# =============================================================================
+# This file defines users who can authenticate to the system.
+#
+# User Fields:
+# - user_id: Unique identifier for the user
+# - username: Login username
+# - password_hash: bcrypt hashed password
+# - first_name: User's first/given name (used for avatar initials)
+# - last_name: User's last/family name
+# - roles: List of RBAC roles (admin, sales_ops, financeops, viewer)
+# - tenant_id: Multi-tenant identifier (default: "default")
+# - status: Account status (active, inactive, suspended)
+#
+# Avatar Initials:
+# The avatar displays initials derived from first_name.
+# Example: first_name="Kian Seng" -> avatar shows "KS"
+#
+# To generate a new password hash:
+#   python -c "from lead_to_cash.core.auth import AuthManager; print(AuthManager.hash_password('your_password'))"
+#
+# SECURITY:
+# - Never commit plaintext passwords
+# - Use strong passwords (12+ chars, mixed case, numbers, symbols)
+# - Rotate passwords periodically
+# =============================================================================
+
+users:
+  # Primary admin user
+  - user_id: "kianseng.tee"
+    username: "kianseng.tee"
+    # Password rotated 2026-02-04
+    password_hash: "$2b$12$EIJmnq5QbNR69nKbaqKHAeGehoQe6SCWnL9r8Hu2XRyms6ePI1ulq"
+    first_name: "Kian Seng"
+    last_name: "Tee"
+    roles:
+      - admin
+      - sales_ops
+    tenant_id: "default"
+    default_region: "APAC"
+    status: "active"
+
+  # Demo sales operations user
+  - user_id: "demo.salesops"
+    username: "demo.salesops"
+    # Password rotated 2026-02-19
+    password_hash: "$2b$12$.9KbunbG13xqpbkcTfn0uOSfTZfy7JvO8Le2KiNcakRsfzp1.PHNm"
+    first_name: "Demo"
+    last_name: "Sales Ops"
+    roles:
+      - sales_ops
+    tenant_id: "default"
+    default_region: "APAC"
+    status: "active"
+
+  # Finance operations user
+  - user_id: "sewsen.goh"
+    username: "sewsen.goh"
+    # Password rotated 2026-02-04
+    password_hash: "$2b$12$POnNFUTPzxuFcmTuAJrFouM.BfMn0rYQdIVcBolS5hTMkv4DHcuM."
+    first_name: "Sew Sen"
+    last_name: "Goh"
+    roles:
+      - financeops
+    tenant_id: "default"
+    default_region: "APAC"
+    status: "active"
